@@ -1,0 +1,35 @@
+{
+  "id": "scenario_7_missing_installation_requirement",
+  "name": "Specification Omitting Installation Practice Standard",
+  "standard_number": "IS 12615",
+  "edition_year": 2018,
+  "title": "Spec Lacking IS 900 Code",
+  "clauses": [
+    "11 kW, 415 V, 50 Hz motor as per IS 12615:2018 with IP55 protection."
+  ],
+  "parameters": [
+    {
+      "name": "rated_power",
+      "value": "11",
+      "unit": "kW"
+    },
+    {
+      "name": "voltage",
+      "value": "415",
+      "unit": "V"
+    },
+    {
+      "name": "frequency",
+      "value": "50",
+      "unit": "Hz"
+    },
+    {
+      "name": "enclosure_ip",
+      "value": "IP55",
+      "unit": null
+    }
+  ],
+  "expected_gap_types": [
+    "MISSING_INSTALLATION_REQUIREMENT"
+  ]
+}

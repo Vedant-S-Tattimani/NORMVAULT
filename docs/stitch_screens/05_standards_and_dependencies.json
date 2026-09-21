@@ -1,0 +1,363 @@
+{
+  "screenshot": {
+    "name": "projects/10495873035675457844/screens/8e150ae0cfd04f33b7a5550b7df60b72/fileEntries/screenshot",
+    "downloadUrl": "https://lh3.googleusercontent.com/aida/AEtjO1Wccz8qOKlVaLrs_CLez8g8AIpazwAtIxLPMCtbSZX8qnBiheGqpBszFXZGVlJodLi8k0b_jRqR0tyn5GxD1UmjePihyVN90UU-3oQ1_0N8q7psriKVEuijDxP0W1EXGh_Db_95yMANR6irkJBvyrWTnOq-xgSirsQCn0YE09e8g_7O-QGQhxnjDfZNSvje_LAis04h_j9AuDvXZlQAhSgRJNmQXGsUNe3iVYrGlqGY4mjJYKr4gGoj5cpJ"
+  },
+  "htmlCode": {
+    "name": "projects/10495873035675457844/screens/8e150ae0cfd04f33b7a5550b7df60b72/fileEntries/html",
+    "downloadUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJyEgxzdGl0Y2hfZmlsZXMaYgosc3RpdGNoX2h0bWxfMDAwNjViZjhiNWI3M2ZiNTA5MzRlZWExZDIwNDJiOWUSCxIHEOnBo4HBDhgBkgEkCgpwcm9qZWN0X2lkEhZCFDEwNDk1ODczMDM1Njc1NDU3ODQ0&filename=&opi=89354086",
+    "mimeType": "text/html"
+  },
+  "id": "8e150ae0cfd04f33b7a5550b7df60b72",
+  "generatedBy": "figaro_agent",
+  "width": "2560",
+  "height": "3722",
+  "title": "NORMVAULT - Indian Standards & Dependencies",
+  "prompt": "Generate the Indian Standards Knowledge Intelligence & Technical Dependency Graph screen for NORMVAULT.\nScreen Header:\n- Title: 'Indian Standards Catalog & Dependency Intelligence'\n- Subtitle: 'Authoritative Bureau of Indian Standards (BIS) knowledge graph tracking editions, amendments, normative references, test methods, and statutory Quality Control Orders (QCO).'\n- Standard Selected: 'IS 12615:2018 - Line Operated Three-Phase Induction Motors (IE Code)'\n- Family distinction banner:\n  \"STANDARD FAMILY: IS 12615  |  CURRENT EDITION: 2018 (Incorporating Amendments 1 & 2)  |  SUPERSEDES: IS 12615:2011 & IS 325:1996\"\n  Note explicitly: Indian Standard Family \u2260 Standard Edition.\n\nTop Navigation Tabs within Page:\n[Overview & Scope] [Normative Dependencies & Graph] [Edition & Amendments Timeline] [QCO & Certification Mandates]\n\nInteractive Technical Dependency Graph Visualizer:\nA structured, inspectable node and relationship flow diagram (Linear/Apple developer tools aesthetic with crisp technical cards and connector lines):\n- Root Node: 'IS 12615:2018 (Line Operated Induction Motors)' [Center-top, Cobalt border, tag: Primary Standard]\n  Connector branches with dependency types:\n  * Branch 1 -> Normative Reference Node: 'IS 325:1996 (General Purpose Induction Motors - Historical Reference)'\n  * Branch 2 -> Test Method Node: 'IS 15999 (Part 2/Sec 1):2020 (Standard Methods for Determining Losses and Efficiency from Tests)'\n    - Sub-branch -> Test Instrument Calibration: 'IS/ISO/IEC 17025 (NABL Accredited Laboratory Testing)'\n  * Branch 3 -> Dimensions & Frame Standard Node: 'IS 1231:1974 (Dimensions of Three-Phase Foot-Mounted Induction Motors)'\n  * Branch 4 -> Safety Standard Node: 'IS/IEC 60034-5:2020 (Degrees of Protection Provided by Enclosure - IP Code)'\n  * Branch 5 -> Statutory Mandate Node: 'DPIIT Electric Motors (Quality Control) Order, 2024' [Amber border, tag: MANDATORY QCO]\n    - Sub-node: 'BIS Scheme-I Product Certification (ISI Mark Mandatory for manufacturing, sales, import)'\n\nEdition & Currentness Tracker Panel (Right or Bottom split):\n- 'Currentness Verification':\n  * Edition 2018: CURRENT (Status: Authoritative)\n  * Amendment 1 (2021): Verified (Harmonized with IEC 60034-30-1)\n  * Amendment 2 (2023): Verified (Clarified tolerance on stray load loss determination)\n  * Edition 2011: SUPERSEDED (Warning: 4 tenders in India still cite 2011)\n  * IS 325:1996: WITHDRAWN for general purpose motors in 0.75kW - 375kW range\n- Warning Banner:\n  \"TENDER CITATION ALERT: Any procurement specification citing IS 325 for motors >= 0.75 kW is citing a withdrawn standard. Requirement must be updated to IS 12615:2018 to avoid supplier disputes.\"\n\nStatutory QCO Evidence Drawer:\n- Reference: S.O. 1284(E) published in Gazette of India.\n- Exemption Thresholds, Enforcement Dates, and Penalties under BIS Act 2016 Section 29.\nTechnical, rigorous, high-clarity enterprise workstation interface.",
+  "name": "projects/10495873035675457844/screens/8e150ae0cfd04f33b7a5550b7df60b72",
+  "theme": {
+    "colorMode": "LIGHT",
+    "font": "INTER",
+    "roundness": "ROUND_FOUR",
+    "customColor": "#1d4ed8",
+    "headlineFont": "INTER",
+    "bodyFont": "INTER",
+    "labelFont": "JETBRAINS_MONO",
+    "namedColors": {
+      "on_tertiary_fixed_variant": "#005320",
+      "tertiary_container": "#006b2c",
+      "surface_container_lowest": "#ffffff",
+      "inverse_on_surface": "#eaf1ff",
+      "surface_container_high": "#dce9ff",
+      "tertiary": "#00501f",
+      "surface_container_low": "#eff4ff",
+      "background": "#f8f9ff",
+      "primary": "#0037b0",
+      "tertiary_fixed": "#7ffc97",
+      "secondary_fixed": "#dae2fd",
+      "error_container": "#ffdad6",
+      "on_error_container": "#93000a",
+      "inverse_surface": "#233144",
+      "on_primary_container": "#cad3ff",
+      "on_secondary_fixed_variant": "#3f465c",
+      "on_background": "#0d1c2e",
+      "primary_container": "#1d4ed8",
+      "surface": "#f8f9ff",
+      "on_primary_fixed_variant": "#0039b5",
+      "surface_tint": "#2151da",
+      "secondary": "#565e74",
+      "surface_dim": "#ccdbf3",
+      "on_primary": "#ffffff",
+      "on_secondary": "#ffffff",
+      "tertiary_fixed_dim": "#62df7d",
+      "on_tertiary": "#ffffff",
+      "on_primary_fixed": "#001551",
+      "surface_variant": "#d5e3fc",
+      "secondary_fixed_dim": "#bec6e0",
+      "on_error": "#ffffff",
+      "surface_bright": "#f8f9ff",
+      "secondary_container": "#dae2fd",
+      "on_tertiary_container": "#71ee8a",
+      "on_surface": "#0d1c2e",
+      "surface_container_highest": "#d5e3fc",
+      "outline": "#747686",
+      "inverse_primary": "#b7c4ff",
+      "primary_fixed_dim": "#b7c4ff",
+      "outline_variant": "#c4c5d7",
+      "primary_fixed": "#dce1ff",
+      "on_surface_variant": "#434655",
+      "on_tertiary_fixed": "#002109",
+      "surface_container": "#e6eeff",
+      "error": "#ba1a1a",
+      "on_secondary_container": "#5c647a",
+      "on_secondary_fixed": "#131b2e"
+    },
+    "colorVariant": "FIDELITY",
+    "overridePrimaryColor": "#1d4ed8",
+    "overrideSecondaryColor": "#0f172a",
+    "overrideTertiaryColor": "#16a34a",
+    "overrideNeutralColor": "#475569",
+    "spacingScale": 2,
+    "typography": {
+      "headline-xl-mobile": {
+        "fontFamily": "Inter",
+        "fontSize": "24px",
+        "fontWeight": "600",
+        "lineHeight": "32px",
+        "letterSpacing": "-0.02em"
+      },
+      "headline-lg": {
+        "fontFamily": "Inter",
+        "fontSize": "24px",
+        "fontWeight": "600",
+        "lineHeight": "32px",
+        "letterSpacing": "-0.02em"
+      },
+      "headline-sm": {
+        "fontFamily": "Inter",
+        "fontSize": "15px",
+        "fontWeight": "600",
+        "lineHeight": "22px",
+        "letterSpacing": "-0.01em"
+      },
+      "code-md": {
+        "fontFamily": "JetBrains Mono",
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "lineHeight": "18px",
+        "letterSpacing": "-0.01em"
+      },
+      "body-sm": {
+        "fontFamily": "Inter",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "lineHeight": "18px",
+        "letterSpacing": "0em"
+      },
+      "code-sm": {
+        "fontFamily": "JetBrains Mono",
+        "fontSize": "11px",
+        "fontWeight": "500",
+        "lineHeight": "16px",
+        "letterSpacing": "0em"
+      },
+      "label-caps": {
+        "fontFamily": "Inter",
+        "fontSize": "11px",
+        "fontWeight": "600",
+        "lineHeight": "16px",
+        "letterSpacing": "0.05em"
+      },
+      "body-lg": {
+        "fontFamily": "Inter",
+        "fontSize": "15px",
+        "fontWeight": "400",
+        "lineHeight": "24px",
+        "letterSpacing": "-0.005em"
+      },
+      "headline-xl": {
+        "fontFamily": "Inter",
+        "fontSize": "32px",
+        "fontWeight": "600",
+        "lineHeight": "40px",
+        "letterSpacing": "-0.025em"
+      },
+      "headline-lg-mobile": {
+        "fontFamily": "Inter",
+        "fontSize": "20px",
+        "fontWeight": "600",
+        "lineHeight": "28px",
+        "letterSpacing": "-0.015em"
+      },
+      "body-md": {
+        "fontFamily": "Inter",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "lineHeight": "20px",
+        "letterSpacing": "0em"
+      },
+      "headline-md": {
+        "fontFamily": "Inter",
+        "fontSize": "18px",
+        "fontWeight": "600",
+        "lineHeight": "26px",
+        "letterSpacing": "-0.015em"
+      }
+    },
+    "spacing": {
+      "space-xl": "1.5rem",
+      "space-sm": "0.5rem",
+      "gutter": "1rem",
+      "gutter-desktop": "1.5rem",
+      "margin-tablet": "1.5rem",
+      "margin-desktop": "2rem",
+      "margin": "1rem",
+      "space-lg": "1rem",
+      "space-xs": "0.25rem",
+      "space-md": "0.75rem"
+    },
+    "headlineFontFamily": "Inter",
+    "bodyFontFamily": "Inter",
+    "labelFontFamily": "JetBrains Mono"
+  },
+  "deviceType": "DESKTOP",
+  "screenType": "DESIGN",
+  "screenMetadata": {
+    "agentType": "PRO_AGENT",
+    "status": "COMPLETE"
+  },
+  "designSystem": {
+    "name": "assets/612011d185ba404ea38e00adc328cbf0",
+    "designSystem": {
+      "displayName": "NormVault Audit Intelligence",
+      "styleGuidelines": "## Brand & Style\n\nThis design system targets institutional compliance officers, EPC project engineers, procurement heads, and defense-grade auditors navigating Indian regulatory frameworks (BIS, IS, IRC, CPWD, RDSO). It embodies an **Audit-Grade Institutional** design philosophy: an unapologetic rejection of tech-bubble vanity in favor of ruthless clarity, forensic traceability, and dense evidentiary confidence.\n\nThe aesthetic bridges Apple\u2019s typographic restraint, Linear\u2019s compact spatial rhythm, Stripe\u2019s enterprise polish, and the strict determinism of mission-critical developer tools. Every visual element exists solely to validate or interrogate compliance data. \n\n### Core Aesthetic Rules\n- **Anti-Decorative Stance:** Strictly prohibit multi-color ambient radial gradients, glassmorphism, faux-3D extrusions, or decorative particle effects. Machine-learning assertions must appear as verifiable citations, never as \"magical\" sparkling interfaces.\n- **Evidence-First Layouts:** Data points, parameter cross-references, clause numbers, and validation statuses must be visible without hovering or drilling down whenever possible.\n- **High-Fidelity Materiality:** Off-white grounded canvases juxtaposed against crisp white functional modules, framed by structural, hair-thin divider boundaries.\n\n## Layout & Spacing\n\nThe layout model is a structural 12-column adaptive system engineered for dense side-by-side inspections: source document on the left, automated clause audit on the right.\n\n### Layout Geometry\n- **Desktop (1280px+):** Fixed full-height split viewport (3-column navigation / side-by-side split screen), `margin-desktop: 2rem`, `gutter-desktop: 1.5rem`.\n- **Tablet (768px - 1279px):** 8-column layout with collapsible drawer for secondary clause references, `margin-tablet: 1.5rem`, `gutter: 1rem`.\n- **Mobile (Below 768px):** Single-column stacked card view with persistent bottom status dock, `margin: 1rem`, `gutter: 1rem`.\n\n### Spatial Rhythms\nSpacing favors condensed vertical alignment (`space-sm` and `space-md` dominate) to eliminate unnecessary scroll travel during technical cross-checks. Component internals follow strict 4px/8px modular units.\n\n## Elevation & Depth\n\nVisual depth is achieved through **low-contrast structural outlines** and **tonal stacking** rather than heavy drop shadows.\n\n### Elevation Architecture\n1. **Level 0 (Canvas Base):** Background (`#F8F9FA`). No border, no shadow.\n2. **Level 1 (Card & Inspector Modules):** Background (`#FFFFFF`), border 1px solid `#E2E8F0`. Shadow: `0 1px 2px 0 rgba(15, 23, 42, 0.04)`.\n3. **Level 2 (Active Focus & Flyout Panels):** Background (`#FFFFFF`), border 1px solid `#CBD5E1`. Shadow: `0 4px 12px 0 rgba(15, 23, 42, 0.08)`.\n4. **Level 3 (Audit Modals & Clause Overlays):** Background (`#FFFFFF`), border 1px solid `#94A3B8`. Shadow: `0 12px 32px -4px rgba(15, 23, 42, 0.12)`.\n\nNo ambient multi-source colored lights or blurred backdrops are permitted. Modals and drawers use clean 1px hairline delimiters to segment toolbars from content panes.\n\n## Components\n\n### 1. Buttons\n- **Primary:** Solid `#1D4ED8`, text `#FFFFFF`, border none, height 36px (or compact 28px for data table toolbars). Hover: `#1E40AF`. Active: `#1E3A8A`. Focus: 2px ring `#1D4ED8` offset by 2px `#FFFFFF`.\n- **Secondary / Ghost:** White background, border 1px solid `#E2E8F0`, text `#0F172A`. Hover: `#F8F9FA` with border `#CBD5E1`.\n- **Destructive:** White background, border 1px solid `#FEE2E2`, text `#DC2626`. Hover: `#FEF2F2`.\n\n### 2. Audit Badges & Status Chips\n- **Verified:** Background `#DCFCE7`, border 1px solid `#86EFAC`, text `#16A34A`, `JetBrains Mono` 11px font, weight 500. Prefixed with an explicit check glyph.\n- **Deviation:** Background `#FEF3C7`, border 1px solid `#FCD34D`, text `#D97706`, `JetBrains Mono` 11px font, weight 500.\n- **Blocking:** Background `#FEE2E2`, border 1px solid `#FCA5A5`, text `#DC2626`, `JetBrains Mono` 11px font, weight 500.\n- **Standard Tag:** Background `#F1F5F9`, border 1px solid `#E2E8F0`, text `#475569`, `JetBrains Mono` 11px font.\n\n### 3. Inputs & Form Fields\n- Height 36px, background `#FFFFFF`, border 1px solid `#CBD5E1`, border-radius 4px, font size 13px, text `#0F172A`.\n- Active/Focus: Border `#1D4ED8`, shadow `0 0 0 1px #1D4ED8`.\n- Helper labels: Capitalized, `label-caps` (11px, weight 600, `#64748B`).\n\n### 4. Cards & Inspector Modules\n- Grounded white surface (`#FFFFFF`), hairline perimeter `1px solid #E2E8F0`.\n- Split headers with a fixed 40px height, bottom border `1px solid #E2E8F0`, housing breadcrumbed clause IDs, publication dates, and action toggles.\n\n### 5. Checkboxes & Selection Controls\n- Square 16px \u00d7 16px, 3px border radius, border 1.5px solid `#CBD5E1`.\n- Checked state: `#1D4ED8` background with pure white check mark icon.\n\n### 6. Domain-Specific Component: Clause Diff Inspector\n- Side-by-side terminal-inspired text view.\n- Left side: Tender Specification text (with deleted/deviated segments highlighted in `#FEE2E2` with strike-through).\n- Right side: Official Indian Standard canonical text (with missing mandatory requirements highlighted in `#DCFCE7`).\n- Footer displays exact citation lineage: Standard Code, Revision Year, Clause, Sub-clause, and Table Number.",
+      "theme": {
+        "colorMode": "LIGHT",
+        "font": "INTER",
+        "roundness": "ROUND_FOUR",
+        "customColor": "#1d4ed8",
+        "headlineFont": "INTER",
+        "bodyFont": "INTER",
+        "labelFont": "JETBRAINS_MONO",
+        "namedColors": {
+          "primary_container": "#1d4ed8",
+          "on_primary": "#ffffff",
+          "outline_variant": "#c4c5d7",
+          "surface_bright": "#f8f9ff",
+          "surface_container_lowest": "#ffffff",
+          "on_tertiary_container": "#71ee8a",
+          "inverse_primary": "#b7c4ff",
+          "on_background": "#0d1c2e",
+          "secondary_fixed_dim": "#bec6e0",
+          "surface_tint": "#2151da",
+          "on_secondary_container": "#5c647a",
+          "on_secondary": "#ffffff",
+          "secondary_container": "#dae2fd",
+          "on_tertiary": "#ffffff",
+          "background": "#f8f9ff",
+          "on_surface_variant": "#434655",
+          "on_secondary_fixed": "#131b2e",
+          "surface_dim": "#ccdbf3",
+          "on_primary_fixed": "#001551",
+          "on_primary_fixed_variant": "#0039b5",
+          "surface_variant": "#d5e3fc",
+          "surface_container_highest": "#d5e3fc",
+          "on_primary_container": "#cad3ff",
+          "on_error": "#ffffff",
+          "outline": "#747686",
+          "secondary": "#565e74",
+          "primary": "#0037b0",
+          "primary_fixed_dim": "#b7c4ff",
+          "surface_container_low": "#eff4ff",
+          "error_container": "#ffdad6",
+          "inverse_surface": "#233144",
+          "tertiary_fixed": "#7ffc97",
+          "on_secondary_fixed_variant": "#3f465c",
+          "tertiary_container": "#006b2c",
+          "primary_fixed": "#dce1ff",
+          "inverse_on_surface": "#eaf1ff",
+          "on_tertiary_fixed": "#002109",
+          "surface_container": "#e6eeff",
+          "on_surface": "#0d1c2e",
+          "tertiary_fixed_dim": "#62df7d",
+          "surface": "#f8f9ff",
+          "on_error_container": "#93000a",
+          "on_tertiary_fixed_variant": "#005320",
+          "secondary_fixed": "#dae2fd",
+          "tertiary": "#00501f",
+          "error": "#ba1a1a",
+          "surface_container_high": "#dce9ff"
+        },
+        "designMd": "---\nname: NormVault Audit Intelligence\ncolors:\n  surface: '#f8f9ff'\n  surface-dim: '#ccdbf3'\n  surface-bright: '#f8f9ff'\n  surface-container-lowest: '#ffffff'\n  surface-container-low: '#eff4ff'\n  surface-container: '#e6eeff'\n  surface-container-high: '#dce9ff'\n  surface-container-highest: '#d5e3fc'\n  on-surface: '#0d1c2e'\n  on-surface-variant: '#434655'\n  inverse-surface: '#233144'\n  inverse-on-surface: '#eaf1ff'\n  outline: '#747686'\n  outline-variant: '#c4c5d7'\n  surface-tint: '#2151da'\n  primary: '#0037b0'\n  on-primary: '#ffffff'\n  primary-container: '#1d4ed8'\n  on-primary-container: '#cad3ff'\n  inverse-primary: '#b7c4ff'\n  secondary: '#565e74'\n  on-secondary: '#ffffff'\n  secondary-container: '#dae2fd'\n  on-secondary-container: '#5c647a'\n  tertiary: '#00501f'\n  on-tertiary: '#ffffff'\n  tertiary-container: '#006b2c'\n  on-tertiary-container: '#71ee8a'\n  error: '#ba1a1a'\n  on-error: '#ffffff'\n  error-container: '#ffdad6'\n  on-error-container: '#93000a'\n  primary-fixed: '#dce1ff'\n  primary-fixed-dim: '#b7c4ff'\n  on-primary-fixed: '#001551'\n  on-primary-fixed-variant: '#0039b5'\n  secondary-fixed: '#dae2fd'\n  secondary-fixed-dim: '#bec6e0'\n  on-secondary-fixed: '#131b2e'\n  on-secondary-fixed-variant: '#3f465c'\n  tertiary-fixed: '#7ffc97'\n  tertiary-fixed-dim: '#62df7d'\n  on-tertiary-fixed: '#002109'\n  on-tertiary-fixed-variant: '#005320'\n  background: '#f8f9ff'\n  on-background: '#0d1c2e'\n  surface-variant: '#d5e3fc'\ntypography:\n  headline-xl:\n    fontFamily: Inter\n    fontSize: 32px\n    fontWeight: '600'\n    lineHeight: 40px\n    letterSpacing: -0.025em\n  headline-xl-mobile:\n    fontFamily: Inter\n    fontSize: 24px\n    fontWeight: '600'\n    lineHeight: 32px\n    letterSpacing: -0.02em\n  headline-lg:\n    fontFamily: Inter\n    fontSize: 24px\n    fontWeight: '600'\n    lineHeight: 32px\n    letterSpacing: -0.02em\n  headline-lg-mobile:\n    fontFamily: Inter\n    fontSize: 20px\n    fontWeight: '600'\n    lineHeight: 28px\n    letterSpacing: -0.015em\n  headline-md:\n    fontFamily: Inter\n    fontSize: 18px\n    fontWeight: '600'\n    lineHeight: 26px\n    letterSpacing: -0.015em\n  headline-sm:\n    fontFamily: Inter\n    fontSize: 15px\n    fontWeight: '600'\n    lineHeight: 22px\n    letterSpacing: -0.01em\n  body-lg:\n    fontFamily: Inter\n    fontSize: 15px\n    fontWeight: '400'\n    lineHeight: 24px\n    letterSpacing: -0.005em\n  body-md:\n    fontFamily: Inter\n    fontSize: 13px\n    fontWeight: '400'\n    lineHeight: 20px\n    letterSpacing: 0em\n  body-sm:\n    fontFamily: Inter\n    fontSize: 12px\n    fontWeight: '400'\n    lineHeight: 18px\n    letterSpacing: 0em\n  code-md:\n    fontFamily: JetBrains Mono\n    fontSize: 13px\n    fontWeight: '500'\n    lineHeight: 18px\n    letterSpacing: -0.01em\n  code-sm:\n    fontFamily: JetBrains Mono\n    fontSize: 11px\n    fontWeight: '500'\n    lineHeight: 16px\n    letterSpacing: 0em\n  label-caps:\n    fontFamily: Inter\n    fontSize: 11px\n    fontWeight: '600'\n    lineHeight: 16px\n    letterSpacing: 0.05em\nrounded:\n  sm: 0.125rem\n  DEFAULT: 0.25rem\n  md: 0.375rem\n  lg: 0.5rem\n  xl: 0.75rem\n  full: 9999px\nspacing:\n  gutter: 1rem\n  gutter-desktop: 1.5rem\n  margin: 1rem\n  margin-tablet: 1.5rem\n  margin-desktop: 2rem\n  space-xs: 0.25rem\n  space-sm: 0.5rem\n  space-md: 0.75rem\n  space-lg: 1rem\n  space-xl: 1.5rem\n---\n\n## Brand & Style\n\nThis design system targets institutional compliance officers, EPC project engineers, procurement heads, and defense-grade auditors navigating Indian regulatory frameworks (BIS, IS, IRC, CPWD, RDSO). It embodies an **Audit-Grade Institutional** design philosophy: an unapologetic rejection of tech-bubble vanity in favor of ruthless clarity, forensic traceability, and dense evidentiary confidence.\n\nThe aesthetic bridges Apple\u2019s typographic restraint, Linear\u2019s compact spatial rhythm, Stripe\u2019s enterprise polish, and the strict determinism of mission-critical developer tools. Every visual element exists solely to validate or interrogate compliance data. \n\n### Core Aesthetic Rules\n- **Anti-Decorative Stance:** Strictly prohibit multi-color ambient radial gradients, glassmorphism, faux-3D extrusions, or decorative particle effects. Machine-learning assertions must appear as verifiable citations, never as \"magical\" sparkling interfaces.\n- **Evidence-First Layouts:** Data points, parameter cross-references, clause numbers, and validation statuses must be visible without hovering or drilling down whenever possible.\n- **High-Fidelity Materiality:** Off-white grounded canvases juxtaposed against crisp white functional modules, framed by structural, hair-thin divider boundaries.\n\n## Colors\n\nThe system uses a calibrated light mode to optimize long-session contrast ratios and legibility during intensive technical document auditing.\n\n### Palette Architecture\n- **Surface Canvas (`#F8F9FA` / `#F3F4F6`):** Ground foundation providing quiet warm-gray separation from standard browser chrome.\n- **Surface Surface / Card (`#FFFFFF`):** Work surfaces, tabular views, and active clause inspectors.\n- **Structural Borders (`#E2E8F0` / `#CBD5E1`):** Precision 1px division rules creating structural cadence without visual noise.\n- **Ink Primary (`#0F172A`):** Blue-black typography for headings, clause numbers, and verified data values.\n- **Ink Secondary (`#475569`):** Slate-gray for contextual notes, metadata descriptions, and secondary metrics.\n- **Institutional Cobalt (`#1D4ED8` primary, `#2563EB` interactive):** Intentional, functional blue used for interactive links, focused inputs, and explicit action triggers.\n\n### Audit Status Palette\n- **Verified / Passed:** Deep Emerald (`#16A34A`) on Soft Mint (`#DCFCE7`). Indicates clause compliance backed by cryptographic hash or official publication mapping.\n- **Review Required / Discrepancy:** Burnished Amber (`#D97706`) on Warm Sand (`#FEF3C7`). Flags specification mismatches, superseded standards, or parameter deviations.\n- **Critical / Blocking:** Regulatory Crimson (`#DC2626`) on Muted Rose (`#FEE2E2`). Restrictive alerts, prohibited vendor materials, or non-negotiable tender non-compliances.\n- **Institutional Neutral:** Slate Gray (`#64748B`) on Cool Mist (`#F1F5F9`). Applied to standard categorizations, metadata pills, and archived clauses.\n\n## Typography\n\nTypography prioritizes high-density data parsing over expressive branding. The pairing unites **Inter** for clean UI hierarchy and text reading with **JetBrains Mono** for all regulatory artifacts, clause identifiers, hash fingerprints, test methods, and quantitative units.\n\n### Type Rules\n- All clause numbers (e.g., `IS 456:2000 Cl. 5.3.1`), test results (`78.4 N/mm\u00b2`), and document IDs must be rendered strictly in `JetBrains Mono`.\n- `label-caps` is styled uppercase with `letterSpacing: 0.05em` and reserved for table header columns, section dividers, and operational audit tabs.\n- Tabular figures (`font-variant-numeric: tabular-nums`) must be active across all numerical displays to prevent layout jitter in live recalculations and standard comparisons.\n\n## Layout & Spacing\n\nThe layout model is a structural 12-column adaptive system engineered for dense side-by-side inspections: source document on the left, automated clause audit on the right.\n\n### Layout Geometry\n- **Desktop (1280px+):** Fixed full-height split viewport (3-column navigation / side-by-side split screen), `margin-desktop: 2rem`, `gutter-desktop: 1.5rem`.\n- **Tablet (768px - 1279px):** 8-column layout with collapsible drawer for secondary clause references, `margin-tablet: 1.5rem`, `gutter: 1rem`.\n- **Mobile (Below 768px):** Single-column stacked card view with persistent bottom status dock, `margin: 1rem`, `gutter: 1rem`.\n\n### Spatial Rhythms\nSpacing favors condensed vertical alignment (`space-sm` and `space-md` dominate) to eliminate unnecessary scroll travel during technical cross-checks. Component internals follow strict 4px/8px modular units.\n\n## Elevation & Depth\n\nVisual depth is achieved through **low-contrast structural outlines** and **tonal stacking** rather than heavy drop shadows.\n\n### Elevation Architecture\n1. **Level 0 (Canvas Base):** Background (`#F8F9FA`). No border, no shadow.\n2. **Level 1 (Card & Inspector Modules):** Background (`#FFFFFF`), border 1px solid `#E2E8F0`. Shadow: `0 1px 2px 0 rgba(15, 23, 42, 0.04)`.\n3. **Level 2 (Active Focus & Flyout Panels):** Background (`#FFFFFF`), border 1px solid `#CBD5E1`. Shadow: `0 4px 12px 0 rgba(15, 23, 42, 0.08)`.\n4. **Level 3 (Audit Modals & Clause Overlays):** Background (`#FFFFFF`), border 1px solid `#94A3B8`. Shadow: `0 12px 32px -4px rgba(15, 23, 42, 0.12)`.\n\nNo ambient multi-source colored lights or blurred backdrops are permitted. Modals and drawers use clean 1px hairline delimiters to segment toolbars from content panes.\n\n## Shapes\n\nThe design system employs a **Soft (Level 1)** corner discipline.\n\n- **Standard Elements (inputs, buttons, badges):** `rounded` (0.25rem / 4px).\n- **Surface Cards & Data Grids:** `rounded-lg` (0.5rem / 8px).\n- **Dialogs & Audit Drawers:** `rounded-lg` (0.5rem / 8px).\n- **Pills / Status Chips:** Restricted to `0.25rem` or full pill (`9999px`) exclusively for state validation badges.\n\nThis constrained rounding preserves the technical, structured blueprint aesthetic and maximizes available internal surface area for data.\n\n## Components\n\n### 1. Buttons\n- **Primary:** Solid `#1D4ED8`, text `#FFFFFF`, border none, height 36px (or compact 28px for data table toolbars). Hover: `#1E40AF`. Active: `#1E3A8A`. Focus: 2px ring `#1D4ED8` offset by 2px `#FFFFFF`.\n- **Secondary / Ghost:** White background, border 1px solid `#E2E8F0`, text `#0F172A`. Hover: `#F8F9FA` with border `#CBD5E1`.\n- **Destructive:** White background, border 1px solid `#FEE2E2`, text `#DC2626`. Hover: `#FEF2F2`.\n\n### 2. Audit Badges & Status Chips\n- **Verified:** Background `#DCFCE7`, border 1px solid `#86EFAC`, text `#16A34A`, `JetBrains Mono` 11px font, weight 500. Prefixed with an explicit check glyph.\n- **Deviation:** Background `#FEF3C7`, border 1px solid `#FCD34D`, text `#D97706`, `JetBrains Mono` 11px font, weight 500.\n- **Blocking:** Background `#FEE2E2`, border 1px solid `#FCA5A5`, text `#DC2626`, `JetBrains Mono` 11px font, weight 500.\n- **Standard Tag:** Background `#F1F5F9`, border 1px solid `#E2E8F0`, text `#475569`, `JetBrains Mono` 11px font.\n\n### 3. Inputs & Form Fields\n- Height 36px, background `#FFFFFF`, border 1px solid `#CBD5E1`, border-radius 4px, font size 13px, text `#0F172A`.\n- Active/Focus: Border `#1D4ED8`, shadow `0 0 0 1px #1D4ED8`.\n- Helper labels: Capitalized, `label-caps` (11px, weight 600, `#64748B`).\n\n### 4. Cards & Inspector Modules\n- Grounded white surface (`#FFFFFF`), hairline perimeter `1px solid #E2E8F0`.\n- Split headers with a fixed 40px height, bottom border `1px solid #E2E8F0`, housing breadcrumbed clause IDs, publication dates, and action toggles.\n\n### 5. Checkboxes & Selection Controls\n- Square 16px \u00d7 16px, 3px border radius, border 1.5px solid `#CBD5E1`.\n- Checked state: `#1D4ED8` background with pure white check mark icon.\n\n### 6. Domain-Specific Component: Clause Diff Inspector\n- Side-by-side terminal-inspired text view.\n- Left side: Tender Specification text (with deleted/deviated segments highlighted in `#FEE2E2` with strike-through).\n- Right side: Official Indian Standard canonical text (with missing mandatory requirements highlighted in `#DCFCE7`).\n- Footer displays exact citation lineage: Standard Code, Revision Year, Clause, Sub-clause, and Table Number.",
+        "colorVariant": "FIDELITY",
+        "overridePrimaryColor": "#1d4ed8",
+        "overrideSecondaryColor": "#0f172a",
+        "overrideTertiaryColor": "#16a34a",
+        "overrideNeutralColor": "#475569",
+        "spacingScale": 2,
+        "typography": {
+          "body-md": {
+            "fontFamily": "Inter",
+            "fontSize": "13px",
+            "fontWeight": "400",
+            "lineHeight": "20px",
+            "letterSpacing": "0em"
+          },
+          "headline-xl-mobile": {
+            "fontFamily": "Inter",
+            "fontSize": "24px",
+            "fontWeight": "600",
+            "lineHeight": "32px",
+            "letterSpacing": "-0.02em"
+          },
+          "headline-lg": {
+            "fontFamily": "Inter",
+            "fontSize": "24px",
+            "fontWeight": "600",
+            "lineHeight": "32px",
+            "letterSpacing": "-0.02em"
+          },
+          "headline-sm": {
+            "fontFamily": "Inter",
+            "fontSize": "15px",
+            "fontWeight": "600",
+            "lineHeight": "22px",
+            "letterSpacing": "-0.01em"
+          },
+          "label-caps": {
+            "fontFamily": "Inter",
+            "fontSize": "11px",
+            "fontWeight": "600",
+            "lineHeight": "16px",
+            "letterSpacing": "0.05em"
+          },
+          "code-md": {
+            "fontFamily": "JetBrains Mono",
+            "fontSize": "13px",
+            "fontWeight": "500",
+            "lineHeight": "18px",
+            "letterSpacing": "-0.01em"
+          },
+          "body-sm": {
+            "fontFamily": "Inter",
+            "fontSize": "12px",
+            "fontWeight": "400",
+            "lineHeight": "18px",
+            "letterSpacing": "0em"
+          },
+          "code-sm": {
+            "fontFamily": "JetBrains Mono",
+            "fontSize": "11px",
+            "fontWeight": "500",
+            "lineHeight": "16px",
+            "letterSpacing": "0em"
+          },
+          "headline-lg-mobile": {
+            "fontFamily": "Inter",
+            "fontSize": "20px",
+            "fontWeight": "600",
+            "lineHeight": "28px",
+            "letterSpacing": "-0.015em"
+          },
+          "headline-md": {
+            "fontFamily": "Inter",
+            "fontSize": "18px",
+            "fontWeight": "600",
+            "lineHeight": "26px",
+            "letterSpacing": "-0.015em"
+          },
+          "headline-xl": {
+            "fontFamily": "Inter",
+            "fontSize": "32px",
+            "fontWeight": "600",
+            "lineHeight": "40px",
+            "letterSpacing": "-0.025em"
+          },
+          "body-lg": {
+            "fontFamily": "Inter",
+            "fontSize": "15px",
+            "fontWeight": "400",
+            "lineHeight": "24px",
+            "letterSpacing": "-0.005em"
+          }
+        },
+        "spacing": {
+          "gutter-desktop": "1.5rem",
+          "space-sm": "0.5rem",
+          "gutter": "1rem",
+          "space-xl": "1.5rem",
+          "space-md": "0.75rem",
+          "space-xs": "0.25rem",
+          "margin-desktop": "2rem",
+          "space-lg": "1rem",
+          "margin": "1rem",
+          "margin-tablet": "1.5rem"
+        },
+        "headlineFontFamily": "Inter",
+        "bodyFontFamily": "Inter",
+        "labelFontFamily": "JetBrains Mono"
+      }
+    },
+    "version": "1"
+  }
+}

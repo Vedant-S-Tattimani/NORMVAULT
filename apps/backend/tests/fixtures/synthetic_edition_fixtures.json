@@ -1,0 +1,117 @@
+{
+  "test_scenarios": [
+    {
+      "id": "scenario_1_current_edition",
+      "name": "Standard with Single Active Current Edition",
+      "standard_number": "IS 12615",
+      "edition_year": 2018,
+      "tender_text": "Supply of 15 kW energy efficient three-phase induction motor conforming to IS 12615:2018 with IE3 efficiency class.",
+      "expected_status": "CURRENT",
+      "expected_cited_year": 2018,
+      "expected_warning": null
+    },
+    {
+      "id": "scenario_2_superseded_edition",
+      "name": "Procurement Citing Superseded Standard Edition",
+      "standard_number": "IS 325",
+      "edition_year": 1996,
+      "tender_text": "Squirrel cage induction motor manufactured in accordance with IS 325:1996 for continuous industrial duty.",
+      "expected_status": "SUPERSEDED",
+      "expected_cited_year": 1996,
+      "expected_superseded_by": "IS 12615:2018",
+      "expected_warning_contains": "Procurement document explicitly cites IS 325:1996. A newer edition exists"
+    },
+    {
+      "id": "scenario_3_withdrawn_edition",
+      "name": "Procurement Citing Withdrawn Standard",
+      "standard_number": "IS 996",
+      "edition_year": 1979,
+      "tender_text": "Single phase AC induction motors conforming strictly to IS 996:1979.",
+      "expected_status": "WITHDRAWN",
+      "expected_cited_year": 1979,
+      "expected_warning_contains": "officially WITHDRAWN"
+    },
+    {
+      "id": "scenario_4_edition_with_amendments",
+      "name": "Edition with Active Sequential Amendment Chain",
+      "standard_number": "IS 12615",
+      "edition_year": 2018,
+      "tender_text": "Supply of motors as per IS 12615:2018 with Amendment 1.",
+      "expected_status": "CURRENT",
+      "expected_has_amendments": true,
+      "expected_amendment_number": 1
+    },
+    {
+      "id": "scenario_5_explicit_tender_edition",
+      "name": "Explicit Tender Edition Citation Extraction",
+      "standard_number": "IS 12615",
+      "tender_text": "All motors shall comply with IS 12615:2018 (Energy Efficient Three Phase Induction Motors).",
+      "expected_status": "CURRENT",
+      "expected_cited_year": 2018,
+      "expected_citation_type": "EXPLICIT_WITH_YEAR"
+    },
+    {
+      "id": "scenario_6_unspecified_tender_edition",
+      "name": "Ambiguous Tender Citing Standard Without Edition Year",
+      "standard_number": "IS 12615",
+      "tender_text": "Supply of industrial three phase electric motors as per IS 12615.",
+      "expected_status": "EDITION_UNSPECIFIED",
+      "expected_cited_year": null,
+      "expected_resolved_year": 2018,
+      "expected_warning_contains": "Edition not specified in procurement document."
+    },
+    {
+      "id": "scenario_7_conflicting_edition_citations",
+      "name": "Conflicting Edition Years Across Different Tender Clauses",
+      "standard_number": "IS 12615",
+      "tender_text": "Clause 3.1: Equipment shall be tested in accordance with IS 12615:2018. Clause 7.2: Motor nameplate must certify compliance with IS 12615:2024.",
+      "expected_status": "CONFLICTING_EDITION_REFERENCES",
+      "expected_warning_contains": "Conflicting edition citations detected"
+    },
+    {
+      "id": "scenario_8_qco_tied_to_exact_edition",
+      "name": "Statutory QCO Mandating Exact Edition Year",
+      "standard_number": "IS 12615",
+      "edition_year": 2018,
+      "qco_mandate_year": 2018,
+      "tender_text": "Motors conforming to IS 12615:2018 under statutory Quality Control Order.",
+      "expected_qco_match": true,
+      "expected_qco_mandate": 2018
+    },
+    {
+      "id": "scenario_9_currentness_unavailable",
+      "name": "Principled Abstention When Currentness Records Are Missing",
+      "standard_number": "IS 9999",
+      "tender_text": "Apparatus conforming to unindexed standard IS 9999.",
+      "expected_status": "CURRENTNESS_UNCERTAIN",
+      "expected_warning_contains": "Currentness uncertain"
+    },
+    {
+      "id": "scenario_10_amendment_affecting_indexed_clause",
+      "name": "Amendment Modifying Indexed Clause with Diff",
+      "standard_number": "IS 12615",
+      "clause_number": "7.1",
+      "amendment_number": 1,
+      "expected_has_indexed_diff": true,
+      "expected_status_note": "Verified clause text diff indexed."
+    },
+    {
+      "id": "scenario_11_amendment_unindexed_clause",
+      "name": "Amendment with Unindexed Clause Text",
+      "standard_number": "IS 12615",
+      "clause_number": "8.3",
+      "amendment_number": 2,
+      "expected_has_indexed_diff": false,
+      "expected_status_note": "Amendment identified; clause impact not indexed."
+    },
+    {
+      "id": "scenario_12_dependency_version_propagation",
+      "name": "Edition-Specific Dependency Subgraph",
+      "source_standard": "IS 12615",
+      "source_edition_year": 2018,
+      "target_standard": "IS 15999",
+      "target_edition_year": 2014,
+      "expected_relationship": "TEST_METHOD"
+    }
+  ]
+}

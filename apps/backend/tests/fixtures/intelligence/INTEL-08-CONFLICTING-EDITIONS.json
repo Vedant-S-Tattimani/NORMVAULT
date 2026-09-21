@@ -1,0 +1,11 @@
+{
+  "scenario_id": "INTEL-08-CONFLICTING-EDITIONS",
+  "title": "Specification with Conflicting Standard Editions Across Clauses",
+  "raw_content": "Clause 1.2: Efficiency testing shall conform to IS 12615:2011. Clause 5.4: Nameplate and performance ratings shall comply with IS 12615:2018.",
+  "category": "Three-phase induction motor",
+  "expected_readiness_state": "ACTION_REQUIRED_BEFORE_TENDER",
+  "expected_primary_standard": "IS 12615",
+  "expected_critical_gaps": 0,
+  "expected_high_gaps": 1,
+  "has_qco": false
+}

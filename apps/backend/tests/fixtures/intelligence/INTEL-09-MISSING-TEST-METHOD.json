@@ -1,0 +1,11 @@
+{
+  "scenario_id": "INTEL-09-MISSING-TEST-METHOD",
+  "title": "Specification Omitting Factory Acceptance Test Standard",
+  "raw_content": "Supply of 22 kW, 415 V, 50 Hz IE3 Induction Motor conforming to IS 12615:2018. The supplier shall submit factory test certificates but no test method standard is specified.",
+  "category": "Three-phase induction motor",
+  "expected_readiness_state": "CONDITIONAL_READINESS",
+  "expected_primary_standard": "IS 12615",
+  "expected_critical_gaps": 0,
+  "expected_high_gaps": 1,
+  "has_qco": false
+}

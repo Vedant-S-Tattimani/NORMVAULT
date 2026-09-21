@@ -1,0 +1,11 @@
+{
+  "scenario_id": "INTEL-04-AMBIGUOUS-LANGUAGE",
+  "title": "Specification with Highly Ambiguous Language",
+  "raw_content": "Supply of heavy duty industrial motor with high efficiency and robust design suitable for harsh environments. Components must be of reputed make and superior quality.",
+  "category": "Three-phase induction motor",
+  "expected_readiness_state": "CRITICAL_AMBIGUITIES_DETECTED",
+  "expected_primary_standard": "IS 12615",
+  "expected_critical_gaps": 0,
+  "expected_high_gaps": 0,
+  "has_qco": false
+}

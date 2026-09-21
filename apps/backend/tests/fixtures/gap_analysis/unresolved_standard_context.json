@@ -1,0 +1,11 @@
+{
+  "id": "scenario_11_unresolved_standard_context",
+  "name": "Principled Abstention when Standard Cannot Be Resolved",
+  "standard_number": null,
+  "edition_year": null,
+  "title": "Unresolved Standard Context",
+  "clauses": [],
+  "parameters": [],
+  "expected_readiness": "UNRESOLVED_STANDARD_CONTEXT",
+  "expected_completeness": "UNRESOLVED"
+}

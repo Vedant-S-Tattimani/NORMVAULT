@@ -1,0 +1,11 @@
+{
+  "scenario_id": "INTEL-12-INSUFFICIENT-EVIDENCE",
+  "title": "Specification with Insufficient Evidence to Resolve Standard",
+  "raw_content": "General equipment supply for facility maintenance. Items shall be delivered in good condition.",
+  "category": "General Equipment",
+  "expected_readiness_state": "UNRESOLVED_STANDARD_CONTEXT",
+  "expected_primary_standard": null,
+  "expected_critical_gaps": 0,
+  "expected_high_gaps": 0,
+  "has_qco": false
+}

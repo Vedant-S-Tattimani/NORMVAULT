@@ -1,0 +1,11 @@
+{
+  "scenario_id": "INTEL-05-APPLICABLE-QCO",
+  "title": "Specification with Explicit QCO and ISI Mark",
+  "raw_content": "Supply of 30 kW, 415 V, 50 Hz IE3 Induction Motor conforming to IS 12615:2018. Manufacturer must possess valid BIS Certification License (Scheme I - ISI Mark) as mandated by the Electrical Motors (Quality Control) Order issued by the Ministry of Heavy Industries.",
+  "category": "Three-phase induction motor",
+  "expected_readiness_state": "READY_FOR_PROCUREMENT",
+  "expected_primary_standard": "IS 12615",
+  "expected_critical_gaps": 0,
+  "expected_high_gaps": 0,
+  "has_qco": true
+}

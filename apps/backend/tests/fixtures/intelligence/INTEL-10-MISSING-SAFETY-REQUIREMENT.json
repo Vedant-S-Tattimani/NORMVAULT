@@ -1,0 +1,11 @@
+{
+  "scenario_id": "INTEL-10-MISSING-SAFETY-REQUIREMENT",
+  "title": "Specification Omitting Mandatory Safety and Earthing Standard",
+  "raw_content": "Supply of 18.5 kW, 415 V, 50 Hz IE3 Motor conforming to IS 12615:2018. IP55 protection. Earthing details and safety code references are completely omitted.",
+  "category": "Three-phase induction motor",
+  "expected_readiness_state": "CONDITIONAL_READINESS",
+  "expected_primary_standard": "IS 12615",
+  "expected_critical_gaps": 0,
+  "expected_high_gaps": 1,
+  "has_qco": false
+}

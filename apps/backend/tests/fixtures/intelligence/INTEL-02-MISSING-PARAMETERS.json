@@ -1,0 +1,11 @@
+{
+  "scenario_id": "INTEL-02-MISSING-PARAMETERS",
+  "title": "Specification with Missing Primary Parameters",
+  "raw_content": "Procurement of three-phase induction motor for water pump application. Supplier shall ensure high reliability and supply standard accessories. Insulation shall be Class F.",
+  "category": "Three-phase induction motor",
+  "expected_readiness_state": "ACTION_REQUIRED_BEFORE_TENDER",
+  "expected_primary_standard": "IS 12615",
+  "expected_critical_gaps": 1,
+  "expected_high_gaps": 2,
+  "has_qco": false
+}

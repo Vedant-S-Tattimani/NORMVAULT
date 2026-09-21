@@ -1,0 +1,57 @@
+{
+  "source_url": "https://www.services.bis.gov.in/acceptance-test-gazette.pdf",
+  "source_hash": "a1b2c3d4",
+  "standard_number": "IS 9999:2026",
+  "title": "Acceptance Test Standard for NORMVAULT Phase 1",
+  "division_code": "ITD",
+  "status": "ACTIVE",
+  "is_mandatory_qco": true,
+  "editions": [
+    {
+      "edition_number": 1,
+      "year": 2026,
+      "is_current": true,
+      "clauses": [
+        {
+          "clause_number": "4",
+          "content": "General Requirements",
+          "children": [
+            {
+              "clause_number": "4.1",
+              "content": "Hardware Requirements",
+              "children": [
+                {
+                  "clause_number": "4.1.1",
+                  "content": "CPU must be 64-bit.",
+                  "children": []
+                },
+                {
+                  "clause_number": "4.1.2",
+                  "content": "RAM must be ECC.",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "amendments": [
+        {
+          "amendment_number": 1,
+          "summary": "First amendment fixing typos in 4.1.1",
+          "is_effective": true
+        }
+      ]
+    }
+  ],
+  "normative_references": [
+    {
+      "target_standard_number": "IS 1000",
+      "relationship_type": "NORMATIVE_REFERENCE"
+    },
+    {
+      "target_standard_number": "ISO 9001",
+      "relationship_type": "ALLIED_PRODUCT"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "scenario_id": "INTEL-11-MULTIPLE-APPLICABLE-STANDARDS",
+  "title": "Specification Invoking Multiple Complementary Standards",
+  "raw_content": "Supply of 15 kW, 415 V, 50 Hz Flameproof Motor for hazardous chemical plant. Conforming to IS 12615:2018 for efficiency and IS/IEC 60079-1 for flameproof enclosure Ex d.",
+  "category": "Three-phase induction motor",
+  "expected_readiness_state": "READY_FOR_PROCUREMENT",
+  "expected_primary_standard": "IS 12615",
+  "expected_critical_gaps": 0,
+  "expected_high_gaps": 0,
+  "has_qco": true
+}

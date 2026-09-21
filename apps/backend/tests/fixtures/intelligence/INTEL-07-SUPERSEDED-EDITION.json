@@ -1,0 +1,11 @@
+{
+  "scenario_id": "INTEL-07-SUPERSEDED-EDITION",
+  "title": "Specification Citing Superseded Standard Edition",
+  "raw_content": "Supply of 15 kW, 415 V, 50 Hz Three Phase Induction Motor manufactured in strict accordance with IS 325:1996.",
+  "category": "Three-phase induction motor",
+  "expected_readiness_state": "ACTION_REQUIRED_BEFORE_TENDER",
+  "expected_primary_standard": "IS 12615",
+  "expected_critical_gaps": 0,
+  "expected_high_gaps": 1,
+  "has_qco": false
+}

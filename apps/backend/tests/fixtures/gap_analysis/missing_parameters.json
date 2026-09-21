@@ -1,0 +1,28 @@
+{
+  "id": "scenario_2_missing_parameters",
+  "name": "Specification Missing Primary Operational Parameters",
+  "standard_number": "IS 12615",
+  "edition_year": 2018,
+  "title": "Incomplete Motor Specification",
+  "clauses": [
+    "Procurement of squirrel cage induction motor for driving industrial water pump conforming to IS 12615.",
+    "The motor shall operate on continuous duty with IP55 protection."
+  ],
+  "parameters": [
+    {
+      "name": "enclosure_ip",
+      "value": "IP55",
+      "unit": null
+    },
+    {
+      "name": "duty",
+      "value": "S1",
+      "unit": null
+    }
+  ],
+  "expected_readiness": "CRITICAL_INFORMATION_MISSING",
+  "expected_missing_parameters": [
+    "Rated Output (kW / HP)",
+    "Rated Voltage (V)"
+  ]
+}

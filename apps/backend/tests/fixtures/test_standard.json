@@ -1,0 +1,53 @@
+{
+  "source_url": "https://bis.gov.in/test_standard",
+  "source_hash": "a1b2c3d4",
+  "standard_number": "IS 1000",
+  "title": "Method of Test for Stuff",
+  "scope": "This standard covers stuff.",
+  "division_code": "CED",
+  "status": "ACTIVE",
+  "is_mandatory_qco": true,
+  "qco_reference": "QCO-123",
+  "editions": [
+    {
+      "edition_number": 1,
+      "year": 2024,
+      "is_current": true,
+      "clauses": [
+        {
+          "clause_number": "1",
+          "content": "Scope",
+          "children": [
+            {
+              "clause_number": "1.1",
+              "content": "Detailed scope"
+            }
+          ]
+        },
+        {
+          "clause_number": "2",
+          "content": "References"
+        }
+      ],
+      "amendments": [
+        {
+          "amendment_number": 1,
+          "summary": "Updated scope",
+          "is_effective": true
+        }
+      ]
+    }
+  ],
+  "normative_references": [
+    {
+      "target_standard_number": "IS 2000",
+      "relationship_type": "NORMATIVE_REFERENCE",
+      "referencing_clause": "2"
+    },
+    {
+      "target_standard_number": "IS 3000",
+      "relationship_type": "TEST_METHOD",
+      "referencing_clause": "1.1"
+    }
+  ]
+}

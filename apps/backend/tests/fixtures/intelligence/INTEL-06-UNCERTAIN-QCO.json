@@ -1,0 +1,11 @@
+{
+  "scenario_id": "INTEL-06-UNCERTAIN-QCO",
+  "title": "Specification with Unverified QCO Reference",
+  "raw_content": "Supply of 11 kW motor. Tenderer claims compliance with draft prospective QCO not yet published in the official gazette.",
+  "category": "Three-phase induction motor",
+  "expected_readiness_state": "CONDITIONAL_READINESS",
+  "expected_primary_standard": "IS 12615",
+  "expected_critical_gaps": 0,
+  "expected_high_gaps": 1,
+  "has_qco": false
+}

@@ -1,0 +1,25 @@
+{
+  "id": "scenario_10_amendment_impact",
+  "name": "Standard with Amendments Unacknowledged in Tender",
+  "standard_number": "IS 12615",
+  "edition_year": 2018,
+  "title": "Unindexed Amendments",
+  "clauses": [
+    "Motor conforming to IS 12615:2018 with 415 V supply and 15 kW output."
+  ],
+  "parameters": [
+    {
+      "name": "voltage",
+      "value": "415",
+      "unit": "V"
+    },
+    {
+      "name": "rated_power",
+      "value": "15",
+      "unit": "kW"
+    }
+  ],
+  "expected_gap_types": [
+    "AMENDMENT_IMPACT_GAP"
+  ]
+}

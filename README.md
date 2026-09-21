@@ -131,3 +131,159 @@ APPLICABLE
 POSSIBLY_APPLICABLE
 NOT_APPLICABLE
 INSUFFICIENT_EVIDENCE
+```
+
+---
+
+## Strict Engineering Principles
+
+1. **No Fake Data Policy**: Zero synthetic Indian Standards or mock AI recommendations are presented. The database reflects strictly verified gazette publications and standards metadata.
+2. **Deep Domain Modeling**: Explicitly separates canonical **Standards** from **Standard Editions**, **Amendments**, and **Normative References**, preventing obsolete editions from passing compliance unnoticed.
+3. **Enterprise Procurement UI**: Restrained, accessible, high-density interface built with React, TypeScript, and Tailwind CSS. Avoids flashy AI gimmicks, glowing decorations, and fake statistics.
+4. **Resilient Data Architecture**: Built for PostgreSQL 16 + `pgvector` with zero-friction SQLite fallback for local development and CI testing.
+
+---
+
+## Monorepo Architecture
+
+```
+normvault/
+│
+├── apps/
+│   ├── frontend/                # Vite + React 18 + TypeScript + Tailwind CSS
+│   │   ├── src/components/      # Accessible enterprise components (Badge, Card, AppShell, Header)
+│   │   ├── src/pages/           # Dashboard, Specification Intake, Standards Registry, Compliance
+│   │   ├── src/services/        # Typed API clients (healthService, standardsService)
+│   │   └── src/types/           # TypeScript domain definitions matching Pydantic schemas
+│   │
+│   └── backend/                 # FastAPI + SQLAlchemy 2.0 + Pydantic v2 + Alembic
+│       ├── app/api/routes/      # Health, Documents, Analysis, Standards, Recommendations, Compliance
+│       ├── app/core/            # Pydantic Settings, structured logging, security limits
+│       ├── app/db/              # SQLAlchemy session, engine pooling, pgvector support
+│       ├── app/models/          # Domain models (Standard, Edition, Amendment, Clause, Reference, etc.)
+│       ├── app/schemas/         # Typed request/response validation schemas
+│       └── app/services/        # Abstract protocols for parsing, extraction, retrieval, and graph
+│
+├── data/                        # raw/, processed/, standards/, evaluation/
+├── knowledge/                   # standards/, relationships/, certifications/, amendments/
+├── scripts/                     # Ingestion, indexing, evaluation, and maintenance utilities
+├── docs/                        # Architecture overview, domain model, API conventions, ADRs
+│   ├── architecture/            # system-overview.md
+│   ├── data-model/              # domain-model.md
+│   ├── api/                     # api-conventions.md
+│   └── decisions/               # Architecture Decision Records (0001, 0002)
+├── tests/                       # E2E and multi-layer test suites
+├── .env.example                 # Root configuration template
+├── docker-compose.yml           # PostgreSQL 16 + pgvector container configuration
+├── CONTEXT.md                   # Ubiquitous language glossary (DDD)
+└── README.md
+```
+
+---
+
+## Getting Started
+
+### Prerequisites
+- **Node.js**: v18+ (tested on Node v26.7.0, npm 12.0.2)
+- **Python**: 3.11+ (tested on Python 3.12.10, uv 0.12.5)
+- **Docker** (Optional, for PostgreSQL + pgvector container)
+
+---
+
+### Backend Setup
+
+1. Navigate to the backend directory:
+   ```bash
+   cd apps/backend
+   ```
+
+2. Create a virtual environment and install dependencies:
+   ```bash
+   # Using uv (recommended)
+   uv venv --python 3.12 .venv
+   uv pip install -e ".[dev]"
+
+   # Or using standard pip
+   python -m venv .venv
+   .venv\Scripts\activate      # Windows
+   # source .venv/bin/activate # Linux/macOS
+   pip install -e ".[dev]"
+   ```
+
+3. Run backend unit and model tests:
+   ```bash
+   pytest
+   ```
+
+4. Start the FastAPI development server:
+   ```bash
+   uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+   ```
+   - API Root: `http://127.0.0.1:8000/`
+   - Health Diagnostics: `http://127.0.0.1:8000/api/v1/health`
+   - Interactive OpenAPI Docs: `http://127.0.0.1:8000/api/v1/docs`
+
+---
+
+### Frontend Setup
+
+1. Navigate to the frontend directory:
+   ```bash
+   cd apps/frontend
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Run TypeScript type checks and production build:
+   ```bash
+   npm run typecheck
+   npm run build
+   ```
+
+4. Launch Vite development server:
+   ```bash
+   npm run dev -- --host 127.0.0.1 --port 5173
+   ```
+   - Application URL: `http://127.0.0.1:5173/`
+
+---
+
+### Containerized Database (PostgreSQL + pgvector)
+
+To run the production database with pgvector support:
+```bash
+docker-compose up -d postgres
+```
+
+Update your `.env` to point to PostgreSQL:
+```env
+DATABASE_URL="postgresql+psycopg://normvault:normvault@localhost:5432/normvault"
+```
+
+---
+
+## Verification & Test Results (Phase 0)
+
+- **Backend Pytest Suite**: 6/6 tests passing (`test_health.py`, `test_models.py`, `test_schemas.py`).
+- **Frontend Typecheck & Build**: Zero TypeScript errors; production bundle built cleanly in Vite.
+- **End-to-End Connectivity**: Frontend application successfully connects to the backend `/api/v1/health` endpoint, rendering live engine health and database status badges.
+
+---
+
+## Roadmap
+
+| Phase | Focus | Status |
+| :--- | :--- | :--- |
+| **Phase 0** | **Engineering Foundation, Domain Models, Monorepo, Backend API, Frontend Shell, Tests** | **COMPLETE** |
+| **Phase 1** | BIS Standards Ingestion, Gazette Crawlers, Tender Document Parsing (PDF/DOCX) | Up Next |
+| **Phase 2** | Multilingual NLP Requirement & Parameter Extraction Engine | Planned |
+| **Phase 3** | Hybrid pgvector Dense + BM25 Lexical Retrieval & Standards Knowledge Graph | Planned |
+| **Phase 4** | Mandatory QCO Validation, Specification Gap Detection & GeM Export | Planned |
+
+---
+
+## License
+Confidential · Developed for Smart India Hackathon 2024.

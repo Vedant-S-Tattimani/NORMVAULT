@@ -1,0 +1,38 @@
+{
+  "metadata": {
+    "dataset_name": "SYNTHETIC RETRIEVAL EVALUATION",
+    "purpose": "Algorithm verification and engineering regression testing only. NOT real-world procurement ground truth.",
+    "version": "1.0",
+    "total_cases": 4
+  },
+  "cases": [
+    {
+      "case_id": "eval_motor_01",
+      "domain": "ELECTROTECHNICAL",
+      "requirement_text": "Supply of 15 kW, 4-pole, three-phase squirrel cage induction motor with high energy efficiency class IE3 suitable for continuous industrial duty 415V 50Hz.",
+      "target_product": "Three Phase Induction Motor",
+      "expected_standards": ["IS 12615", "IS/IEC 60034-1"]
+    },
+    {
+      "case_id": "eval_pipe_02",
+      "domain": "CIVIL_WATER_SUPPLY",
+      "requirement_text": "High Density Polyethylene (HDPE) pipes for municipal potable water supply, PN 10 rating, PE 100 material grade with nominal outer diameter 110 mm.",
+      "target_product": "HDPE Pipe for Water Supply",
+      "expected_standards": ["IS 4984"]
+    },
+    {
+      "case_id": "eval_steel_03",
+      "domain": "METALLURGICAL",
+      "requirement_text": "Hot rolled structural steel plates and beams Grade E250 quality A for bridge superstructure fabrication, yield stress minimum 250 MPa.",
+      "target_product": "Structural Steel Plates",
+      "expected_standards": ["IS 2062"]
+    },
+    {
+      "case_id": "eval_cement_04",
+      "domain": "BUILDING_MATERIALS",
+      "requirement_text": "Ordinary Portland Cement 53 Grade conforming to BIS specifications for high strength reinforced concrete structures.",
+      "target_product": "Ordinary Portland Cement 53 Grade",
+      "expected_standards": ["IS 12269", "IS 269"]
+    }
+  ]
+}

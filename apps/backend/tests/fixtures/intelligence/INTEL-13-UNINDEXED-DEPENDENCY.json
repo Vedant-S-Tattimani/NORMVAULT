@@ -1,0 +1,11 @@
+{
+  "scenario_id": "INTEL-13-UNINDEXED-DEPENDENCY",
+  "title": "Specification Referencing Unindexed Companion Standard",
+  "raw_content": "Supply of 15 kW, 415 V, 50 Hz IE3 Motor conforming to IS 12615:2018 and referencing specialized international guide ISO 10816 for vibration measurement.",
+  "category": "Three-phase induction motor",
+  "expected_readiness_state": "CONDITIONAL_READINESS",
+  "expected_primary_standard": "IS 12615",
+  "expected_critical_gaps": 0,
+  "expected_high_gaps": 0,
+  "has_qco": false
+}

@@ -1,0 +1,11 @@
+{
+  "scenario_id": "INTEL-03-CONFLICTS",
+  "title": "Specification with Direct Parameter Contradictions",
+  "raw_content": "Clause 2.1: The motor shall operate on 415 V, 3-Phase, 50 Hz AC supply. Clause 4.3: Motor operating voltage shall be 230 V single phase. Efficiency shall be IE3.",
+  "category": "Three-phase induction motor",
+  "expected_readiness_state": "ACTION_REQUIRED_BEFORE_TENDER",
+  "expected_primary_standard": "IS 12615",
+  "expected_critical_gaps": 1,
+  "expected_high_gaps": 0,
+  "has_qco": false
+}

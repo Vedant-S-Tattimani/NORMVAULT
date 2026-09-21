@@ -1,0 +1,171 @@
+{
+  "metadata": {
+    "notice": "SYNTHETIC APPLICABILITY EVALUATION FIXTURE. Used ONLY for automated testing and SIH validation. Never seed into production.",
+    "version": "1.0"
+  },
+  "standards_pool": [
+    {
+      "standard_number": "IS 12615",
+      "title": "Line Operated Three-Phase A.C. Motors (IE Code) — Specification",
+      "scope": "This standard covers energy efficient three-phase squirrel cage induction motors with rated voltage up to 1000 V and rated output from 0.12 kW to 1000 kW for continuous industrial duty S1, defining efficiency classes IE1, IE2, IE3, and IE4. Excludes traction motors and hazardous explosive atmospheres.",
+      "division_code": "ETD",
+      "status": "ACTIVE",
+      "is_mandatory_qco": true,
+      "qco_reference": "Electrical Equipment Quality Control Order 2020",
+      "year": 2018,
+      "clauses": [
+        {"clause_number": "5.1", "content": "Rated output shall be specified in kilowatts (kW) for continuous duty S1."},
+        {"clause_number": "6.2", "content": "The efficiency levels for IE3 motors shall be measured according to IS 15999."},
+        {"clause_number": "7.4", "content": "Terminal box protection shall be at least IP 55."}
+      ]
+    },
+    {
+      "standard_number": "IS 325",
+      "title": "Three-Phase Induction Motors — General Purpose Specification",
+      "scope": "Covers general purpose three-phase induction motors with rated output from 0.37 kW to 100 kW for general industrial applications.",
+      "division_code": "ETD",
+      "status": "ACTIVE",
+      "is_mandatory_qco": false,
+      "year": 1996,
+      "clauses": [
+        {"clause_number": "4.1", "content": "Rated output shall be for continuous duty."},
+        {"clause_number": "7.1", "content": "General terminal enclosure requirements."}
+      ]
+    },
+    {
+      "standard_number": "IS 996",
+      "title": "Single-Phase Small A.C. Motors for Domestic and Similar Applications",
+      "scope": "Covers small single-phase A.C. electric motors intended exclusively for domestic appliances and consumer household products. Excludes continuous industrial duty.",
+      "division_code": "ETD",
+      "status": "ACTIVE",
+      "is_mandatory_qco": false,
+      "year": 2009,
+      "clauses": [
+        {"clause_number": "3.1", "content": "Intended solely for intermittent household appliance use."}
+      ]
+    },
+    {
+      "standard_number": "IS 4984",
+      "title": "Polyethylene Pipes for Water Supply — Specification",
+      "scope": "Covers high density polyethylene (HDPE) pipes manufactured from PE 63, PE 80, and PE 100 for municipal and industrial potable water conveyance. Excludes high temperature steam and chemical conveyance above 60 deg C.",
+      "division_code": "CED",
+      "status": "ACTIVE",
+      "is_mandatory_qco": true,
+      "year": 2016,
+      "clauses": [
+        {"clause_number": "4.1", "content": "Pipes extruded from PE 100 raw material."},
+        {"clause_number": "5.3", "content": "Pressure rating PN 6, PN 10, or PN 16."}
+      ]
+    },
+    {
+      "standard_number": "IS 2062",
+      "title": "Hot Rolled Medium and High Tensile Structural Steel — Specification",
+      "scope": "Covers steel plates, sections, flats, and beams for structural fabrication in bridges and buildings.",
+      "division_code": "MTD",
+      "status": "ACTIVE",
+      "is_mandatory_qco": true,
+      "year": 2011,
+      "clauses": [
+        {"clause_number": "6.1", "content": "Grade E250 quality A steel minimum yield strength 250 MPa."}
+      ]
+    },
+    {
+      "standard_number": "IS 99999",
+      "title": "Historical Obsolete Specification for Steam Locomotives",
+      "scope": "Old retired specification for coal-fired steam boiler locomotives.",
+      "division_code": "MED",
+      "status": "WITHDRAWN",
+      "is_mandatory_qco": false,
+      "year": 1955,
+      "clauses": []
+    }
+  ],
+  "test_cases": [
+    {
+      "id": "CASE_1",
+      "name": "Clear Applicable Candidate",
+      "text": "Supply of 15 kW, 415 V, 50 Hz, 4-pole three-phase squirrel cage induction motor with high energy efficiency class IE3 for continuous industrial duty S1.",
+      "product_name": "Three-phase induction motor",
+      "expected_outcome": "APPLICABLE",
+      "expected_primary_standard": "IS 12615"
+    },
+    {
+      "id": "CASE_2",
+      "name": "Clear Scope Mismatch",
+      "text": "Hot rolled structural steel plates of grade E250 quality A for bridge construction.",
+      "product_name": "Structural steel plates",
+      "candidate_evaluated": "IS 12615",
+      "expected_outcome": "NOT_APPLICABLE",
+      "expected_conflict": "PRODUCT_CATEGORY_MISMATCH"
+    },
+    {
+      "id": "CASE_3",
+      "name": "Similar but Wrong Standard",
+      "text": "High temperature steam conveyance piping at 180 deg C under 25 bar pressure.",
+      "product_name": "Steam piping",
+      "candidate_evaluated": "IS 4984",
+      "expected_outcome": "NOT_APPLICABLE",
+      "expected_conflict": "SCOPE_EXCLUSION"
+    },
+    {
+      "id": "CASE_4",
+      "name": "Multiple Plausible Candidates",
+      "text": "General industrial electric motor, 5 kW, 3-phase induction motor for factory conveyor.",
+      "product_name": "Three-phase induction motor",
+      "expected_outcome": "POSSIBLY_APPLICABLE",
+      "expected_abstention_reason": "MULTIPLE_PLAUSIBLE_STANDARDS"
+    },
+    {
+      "id": "CASE_5",
+      "name": "Missing Information",
+      "text": "Industrial motor, 15 kW.",
+      "product_name": "Motor",
+      "candidate_evaluated": "IS 12615",
+      "expected_outcome": "INSUFFICIENT_EVIDENCE",
+      "expected_abstention_reason": "MISSING_REQUIREMENT_INFORMATION"
+    },
+    {
+      "id": "CASE_6",
+      "name": "Explicit Standard Reference",
+      "text": "Motor shall conform to IS 12615:2018 with IE3 efficiency rating, 15 kW 415 V 50 Hz.",
+      "product_name": "Three-phase induction motor",
+      "expected_outcome": "APPLICABLE",
+      "expected_primary_standard": "IS 12615",
+      "expected_explicit_reference": true
+    },
+    {
+      "id": "CASE_7",
+      "name": "Parameter Conflict",
+      "text": "Supply of 1500 kW three-phase squirrel cage induction motor 415V continuous duty.",
+      "product_name": "Three-phase induction motor",
+      "candidate_evaluated": "IS 12615",
+      "expected_outcome": "NOT_APPLICABLE",
+      "expected_conflict": "PARAMETER_OUT_OF_RANGE"
+    },
+    {
+      "id": "CASE_8",
+      "name": "Negative Scope Evidence",
+      "text": "Electric motor for hazardous explosive atmosphere zone 1 chemical plant, 15 kW 415V.",
+      "product_name": "Three-phase induction motor",
+      "candidate_evaluated": "IS 12615",
+      "expected_outcome": "NOT_APPLICABLE",
+      "expected_conflict": "SCOPE_EXCLUSION"
+    },
+    {
+      "id": "CASE_9",
+      "name": "No Candidate Found",
+      "text": "Cryogenic room-temperature quantum topological superconductor busbar.",
+      "product_name": "Quantum superconductor",
+      "expected_outcome": "INSUFFICIENT_EVIDENCE",
+      "expected_abstention_reason": "NO_APPLICABLE_CANDIDATE_FOUND"
+    },
+    {
+      "id": "CASE_10",
+      "name": "LLM Hallucination Attempt",
+      "simulated_llm_output": "The requirement is compliant with IS 88888 as per Clause 99.9 for superconducting materials.",
+      "verified_standards": ["IS 12615", "IS 4984"],
+      "verified_clauses": ["5.1", "6.2"],
+      "expected_hallucination_detected": true
+    }
+  ]
+}

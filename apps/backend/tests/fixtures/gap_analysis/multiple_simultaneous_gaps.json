@@ -1,0 +1,27 @@
+{
+  "id": "scenario_13_multiple_simultaneous_gaps",
+  "name": "Specification with Multiple Simultaneous Severe Gaps",
+  "standard_number": "IS 12615",
+  "edition_year": 2018,
+  "title": "Severe Multi-Gap Spec",
+  "clauses": [
+    "Supply of heavy duty motor for harsh environments.",
+    "Operating voltage shall be 415 V 3-phase.",
+    "Power supply shall also be 230 V single phase.",
+    "High efficiency operation required."
+  ],
+  "parameters": [
+    {
+      "name": "voltage",
+      "value": "415",
+      "unit": "V"
+    },
+    {
+      "name": "voltage",
+      "value": "230",
+      "unit": "V"
+    }
+  ],
+  "expected_readiness": "CRITICAL_INFORMATION_MISSING",
+  "expected_critical_count_min": 2
+}

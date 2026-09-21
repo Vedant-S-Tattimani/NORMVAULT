@@ -1,0 +1,195 @@
+{
+  "metadata": {
+    "notice": "SYNTHETIC STANDARDS TEST FIXTURE. Used ONLY for testing and validation. Never seed into production.",
+    "version": "1.0"
+  },
+  "standards": [
+    {
+      "standard_number": "IS 12615",
+      "title": "Line Operated Three-Phase A.C. Motors (IE Code) — Specification",
+      "scope": "This standard covers energy efficient three-phase squirrel cage induction motors with rated voltage up to 1000 V and rated output from 0.12 kW to 1000 kW, defining efficiency classes IE1, IE2, IE3, and IE4.",
+      "division_code": "ETD",
+      "status": "ACTIVE",
+      "is_mandatory_qco": true,
+      "qco_reference": "Electrical Equipment Quality Control Order 2020",
+      "year": 2018,
+      "clauses": [
+        {"clause_number": "5.1", "content": "Rated output shall be specified in kilowatts (kW) for continuous duty S1."},
+        {"clause_number": "6.2", "content": "The efficiency levels for IE3 motors shall be measured according to IS 15999 (Part 2/Sec 1)."},
+        {"clause_number": "7.4", "content": "Terminal box protection shall be at least IP 55."},
+        {"clause_number": "8.1", "content": "Installation practices shall comply with IS 900."},
+        {"clause_number": "9.2", "content": "If equipment is installed in hazardous industrial zones, IS 5571 applies."}
+      ],
+      "references": [
+        {
+          "target_standard_number": "IS 15999 (Part 2/Sec 1)",
+          "relationship_type": "TEST_METHOD",
+          "reference_semantics": "NORMATIVE",
+          "procurement_impact": "REQUIRED_TEST",
+          "referencing_clause": "6.2",
+          "test_name": "Efficiency Determination Test for Three-Phase Motors"
+        },
+        {
+          "target_standard_number": "IS/IEC 60034-5",
+          "relationship_type": "SAFETY_REQUIREMENT",
+          "reference_semantics": "NORMATIVE",
+          "procurement_impact": "REQUIRED_SAFETY_CONDITION",
+          "referencing_clause": "7.4"
+        },
+        {
+          "target_standard_number": "IS 1231",
+          "relationship_type": "ALLIED_PRODUCT",
+          "reference_semantics": "NORMATIVE",
+          "procurement_impact": "REQUIRED_SPECIFICATION",
+          "referencing_clause": "5.1"
+        },
+        {
+          "target_standard_number": "IS 900",
+          "relationship_type": "INSTALLATION_PRACTICE",
+          "reference_semantics": "NORMATIVE",
+          "procurement_impact": "REQUIRED_INSTALLATION_CONDITION",
+          "referencing_clause": "8.1"
+        },
+        {
+          "target_standard_number": "IS 5571",
+          "relationship_type": "SAFETY_REQUIREMENT",
+          "reference_semantics": "CONDITIONAL",
+          "procurement_impact": "CONDITIONAL",
+          "referencing_clause": "9.2",
+          "condition_text": "If equipment is installed in hazardous industrial zones",
+          "triggering_condition": "hazardous_zones"
+        }
+      ],
+      "certifications": [
+        {
+          "scheme": "ISI_MARK_SCHEME_I",
+          "is_mandatory_qco": true,
+          "qco_order_number": "S.O. 1234(E)",
+          "notifying_ministry": "Ministry of Heavy Industries",
+          "currentness_status": "VERIFIED_CURRENT",
+          "applicable_product_category": "Electric Motors"
+        }
+      ]
+    },
+    {
+      "standard_number": "IS 15999 (Part 2/Sec 1)",
+      "title": "Rotating Electrical Machines — Part 2: Methods for Determining Losses and Efficiency from Tests",
+      "scope": "Applies to rotating electrical machines and establishes methods of determining efficiencies from tests.",
+      "division_code": "ETD",
+      "status": "ACTIVE",
+      "is_mandatory_qco": false,
+      "year": 2014,
+      "clauses": [
+        {"clause_number": "5.2", "content": "Input-output method and summation of losses method shall be used."}
+      ],
+      "references": [
+        {
+          "target_standard_number": "IS 12065",
+          "relationship_type": "TEST_METHOD",
+          "reference_semantics": "INFORMATIVE",
+          "procurement_impact": "INFORMATIONAL",
+          "referencing_clause": "5.2",
+          "test_name": "Acoustic Noise Measurement"
+        },
+        {
+          "target_standard_number": "IS 12615",
+          "relationship_type": "NORMATIVE_REFERENCE",
+          "reference_semantics": "NORMATIVE",
+          "procurement_impact": "REQUIRED_SPECIFICATION",
+          "notes": "Circular back-reference to motor standard for test applicability"
+        }
+      ]
+    },
+    {
+      "standard_number": "IS 900",
+      "title": "Code of Practice for Installation and Maintenance of Induction Motors",
+      "scope": "Covers installation, foundation, aligning, and maintenance of induction motors in industrial locations.",
+      "division_code": "ETD",
+      "status": "ACTIVE",
+      "is_mandatory_qco": false,
+      "year": 1992,
+      "clauses": [
+        {"clause_number": "4.1", "content": "Motors should be installed in well-ventilated areas free from excessive dust."}
+      ],
+      "references": []
+    },
+    {
+      "standard_number": "IS 325",
+      "title": "Three-Phase Induction Motors — Specification",
+      "scope": "This standard covers the requirements and tests for three-phase induction motors for industrial purposes with voltages up to 1000 V and outputs from 0.12 kW to 1000 kW.",
+      "division_code": "ETD",
+      "status": "ACTIVE",
+      "is_mandatory_qco": true,
+      "qco_reference": "Electrical Equipment QCO",
+      "year": 1996,
+      "clauses": [
+        {"clause_number": "4.1", "content": "Standard rated output shall be in kilowatts for standard voltages 415 V."},
+        {"clause_number": "7.1", "content": "Duty cycles shall be designated as S1 to S8 according to IEC conventions."}
+      ]
+    },
+    {
+      "standard_number": "IS 996",
+      "title": "Single-Phase Small A.C. Motors for Household Appliances — Specification",
+      "scope": "This standard specifies requirements and methods of test for single-phase a.c. motors intended exclusively for domestic and household appliances.",
+      "division_code": "ETD",
+      "status": "ACTIVE",
+      "is_mandatory_qco": false,
+      "year": 1979,
+      "clauses": [
+        {"clause_number": "3.1", "content": "Covers fractional horsepower motors exclusively for domestic use up to 240 V."}
+      ]
+    },
+    {
+      "standard_number": "IS 4984",
+      "title": "Polyethylene Pipes for Water Supply — Specification",
+      "scope": "This standard specifies requirements for high density polyethylene (HDPE) pipes manufactured from PE 63, PE 80, and PE 100 grades for municipal and industrial potable water conveyance.",
+      "division_code": "CED",
+      "status": "ACTIVE",
+      "is_mandatory_qco": true,
+      "qco_reference": "Plastics Quality Control Order 2021",
+      "year": 2016,
+      "clauses": [
+        {"clause_number": "4.1", "content": "Pipes shall be extruded from virgin PE 100 or PE 80 material containing carbon black 2.0 to 2.5 percent."},
+        {"clause_number": "5.3", "content": "Pressure rating shall correspond to PN 6, PN 10, or PN 16 with standard dimension ratios (SDR)."}
+      ]
+    },
+    {
+      "standard_number": "IS 2062",
+      "title": "Hot Rolled Medium and High Tensile Structural Steel — Specification",
+      "scope": "Covers the requirements of steel plates, sections, flats, bars, and beams for use in structural fabrication and engineering construction including bridges and buildings.",
+      "division_code": "MTD",
+      "status": "ACTIVE",
+      "is_mandatory_qco": true,
+      "qco_reference": "Steel and Steel Products QCO",
+      "year": 2011,
+      "clauses": [
+        {"clause_number": "6.1", "content": "Grade E250 quality A steel shall have a minimum yield strength of 250 MPa for thickness up to 20 mm."},
+        {"clause_number": "7.2", "content": "Charpy V-notch impact test shall be conducted at room temperature or 0 deg C as specified."}
+      ]
+    },
+    {
+      "standard_number": "IS 12269",
+      "title": "Ordinary Portland Cement, 53 Grade — Specification",
+      "scope": "Covers the manufacture and chemical and physical requirements of 53 grade ordinary Portland cement for high strength prestressed and reinforced concrete works.",
+      "division_code": "CED",
+      "status": "ACTIVE",
+      "is_mandatory_qco": true,
+      "qco_reference": "Cement Quality Control Order",
+      "year": 2015,
+      "clauses": [
+        {"clause_number": "5.1", "content": "Compressive strength after 28 days curing shall not be less than 53 MPa."},
+        {"clause_number": "6.3", "content": "Initial setting time shall not be less than 30 minutes, and final setting time not more than 600 minutes."}
+      ]
+    },
+    {
+      "standard_number": "IS 99999",
+      "title": "Historical Obsolete Specification for Steam Locomotives",
+      "scope": "Old retired specification for coal-fired steam boiler locomotives.",
+      "division_code": "MED",
+      "status": "WITHDRAWN",
+      "is_mandatory_qco": false,
+      "year": 1955,
+      "clauses": []
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "id": "scenario_1_complete_specification",
+  "name": "Complete Specification with Full Coverage",
+  "standard_number": "IS 12615",
+  "edition_year": 2018,
+  "title": "Supply of 15 kW Premium Efficiency Induction Motor",
+  "clauses": [
+    "Supply of 15 kW, 415 V +/- 10%, 50 Hz +/- 5%, 4 Pole (1500 RPM synchronous speed) three-phase induction motor.",
+    "The motor shall conform to IS 12615:2018 with IE3 efficiency class and continuous duty type S1.",
+    "Degree of protection shall be IP55 with Class F insulation and Class B temperature rise.",
+    "Mounting arrangement shall be Foot Mounted B3 in accordance with IS 1231.",
+    "Testing and loss determination shall be conducted strictly as per IS 15999 (Part 1) with tolerance allowances per IS/IEC 60034-1.",
+    "Motor frame and terminal box shall be provided with dual distinct earthing terminals in compliance with IS 3043.",
+    "Installation, foundation alignment, and commissioning shall be carried out in accordance with IS 900.",
+    "The manufacturer must possess a valid BIS License under Scheme-I and motors must bear the Standard Mark (ISI mark) as mandated by the Electrical Motors QCO."
+  ],
+  "parameters": [
+    {
+      "name": "rated_power",
+      "value": "15",
+      "unit": "kW"
+    },
+    {
+      "name": "voltage",
+      "value": "415",
+      "unit": "V"
+    },
+    {
+      "name": "frequency",
+      "value": "50",
+      "unit": "Hz"
+    },
+    {
+      "name": "speed",
+      "value": "1500",
+      "unit": "RPM"
+    },
+    {
+      "name": "efficiency_class",
+      "value": "IE3",
+      "unit": null
+    },
+    {
+      "name": "duty",
+      "value": "S1",
+      "unit": null
+    },
+    {
+      "name": "enclosure_ip",
+      "value": "IP55",
+      "unit": null
+    },
+    {
+      "name": "insulation",
+      "value": "Class F",
+      "unit": null
+    },
+    {
+      "name": "mounting",
+      "value": "B3",
+      "unit": null
+    }
+  ],
+  "expected_readiness": "READY_FOR_REVIEW",
+  "expected_completeness": "SUFFICIENT",
+  "expected_critical_count": 0,
+  "expected_high_count": 0
+}

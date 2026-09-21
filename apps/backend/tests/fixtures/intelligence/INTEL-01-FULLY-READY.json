@@ -1,0 +1,11 @@
+{
+  "scenario_id": "INTEL-01-FULLY-READY",
+  "title": "Fully Ready 15 kW IE3 Motor Specification",
+  "raw_content": "Supply and commissioning of 15 kW, 415 V +/- 10%, 50 Hz +/- 5%, 4-Pole (1500 RPM synchronous speed) Three-Phase Squirrel Cage Induction Motor for industrial centrifugal pump duty. The motor shall conform to IS 12615:2018 with IE3 Premium Efficiency class. Degree of protection shall be IP55 as per IS/IEC 60034-5. Class F insulation with Class B temperature rise. Provided with two independent earthing terminals conforming to IS 3043. Testing shall be conducted in accordance with IS 15999 (Part 2/Sec 1) for loss and efficiency determination. Dimensions shall conform to IS 1231. The product must bear the mandatory BIS Standard Mark (ISI Mark) under the Electrical Motors (Quality Control) Order, 2020.",
+  "category": "Three-phase induction motor",
+  "expected_readiness_state": "READY_FOR_PROCUREMENT",
+  "expected_primary_standard": "IS 12615",
+  "expected_critical_gaps": 0,
+  "expected_high_gaps": 0,
+  "has_qco": true
+}

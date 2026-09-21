@@ -1,0 +1,17 @@
+{
+  "id": "scenario_3_ambiguous_language",
+  "name": "Specification Relying on Subjective and Vague Expressions",
+  "standard_number": "IS 12615",
+  "edition_year": 2018,
+  "title": "Ambiguous Motor Specification",
+  "clauses": [
+    "The motor shall be suitable for harsh environments and severe operating conditions.",
+    "Supplier shall provide high quality, heavy duty motors with high efficiency and superior workmanship."
+  ],
+  "parameters": [],
+  "expected_readiness": "CRITICAL_INFORMATION_MISSING",
+  "expected_gap_types": [
+    "AMBIGUOUS_REQUIREMENT",
+    "NON_MEASURABLE_REQUIREMENT"
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "metadata": {
+    "notice": "SYNTHETIC DEPENDENCY & COMPLIANCE TEST FIXTURES. Used strictly for graph traversal and compliance evaluation.",
+    "version": "1.0"
+  },
+  "standards": [
+    {
+      "standard_number": "IS 101",
+      "title": "Synthetic Root Standard 101 for Motor Systems",
+      "status": "ACTIVE",
+      "is_mandatory_qco": true,
+      "qco_reference": "Electrical Equipment QCO 2020",
+      "year": 2022,
+      "clauses": [
+        {"clause_number": "6.1", "content": "Efficiency test shall be carried out in accordance with IS 102."},
+        {"clause_number": "7.2", "content": "Safety earthing shall comply with IS 103."},
+        {"clause_number": "8.1", "content": "Installation shall follow code of practice in IS 104."},
+        {"clause_number": "9.4", "content": "If the motor is installed in hazardous petrochemical zones, IS 105 applies."}
+      ],
+      "references": [
+        {
+          "target_standard_number": "IS 102",
+          "relationship_type": "TEST_METHOD",
+          "reference_semantics": "NORMATIVE",
+          "procurement_impact": "REQUIRED_TEST",
+          "referencing_clause": "6.1",
+          "test_name": "Efficiency Determination Test"
+        },
+        {
+          "target_standard_number": "IS 103",
+          "relationship_type": "SAFETY_REQUIREMENT",
+          "reference_semantics": "NORMATIVE",
+          "procurement_impact": "REQUIRED_SAFETY_CONDITION",
+          "referencing_clause": "7.2"
+        },
+        {
+          "target_standard_number": "IS 104",
+          "relationship_type": "INSTALLATION_PRACTICE",
+          "reference_semantics": "NORMATIVE",
+          "procurement_impact": "REQUIRED_INSTALLATION_CONDITION",
+          "referencing_clause": "8.1"
+        },
+        {
+          "target_standard_number": "IS 105",
+          "relationship_type": "SAFETY_REQUIREMENT",
+          "reference_semantics": "CONDITIONAL",
+          "procurement_impact": "CONDITIONAL",
+          "referencing_clause": "9.4",
+          "condition_text": "If the motor is installed in hazardous petrochemical zones",
+          "triggering_condition": "hazardous_zones"
+        },
+        {
+          "target_standard_number": "IS 999_UNINDEXED",
+          "relationship_type": "ALLIED_PRODUCT",
+          "reference_semantics": "INFORMATIVE",
+          "procurement_impact": "INFORMATIONAL",
+          "notes": "Unindexed external allied product standard"
+        }
+      ],
+      "certifications": [
+        {
+          "scheme": "ISI_MARK_SCHEME_I",
+          "is_mandatory_qco": true,
+          "qco_order_number": "S.O. 1234(E)",
+          "notifying_ministry": "Ministry of Heavy Industries",
+          "currentness_status": "VERIFIED_CURRENT",
+          "applicable_product_category": "Electric Motors"
+        }
+      ]
+    },
+    {
+      "standard_number": "IS 102",
+      "title": "Methods of Determination of Efficiency for Motors",
+      "status": "ACTIVE",
+      "is_mandatory_qco": false,
+      "year": 2018,
+      "clauses": [
+        {"clause_number": "4.2", "content": "Loss summation test shall refer to instrumentation in IS 106."}
+      ],
+      "references": [
+        {
+          "target_standard_number": "IS 106",
+          "relationship_type": "TEST_METHOD",
+          "reference_semantics": "NORMATIVE",
+          "procurement_impact": "REQUIRED_TEST",
+          "referencing_clause": "4.2",
+          "test_name": "Dynamometer Calibration Test"
+        }
+      ]
+    },
+    {
+      "standard_number": "IS 103",
+      "title": "Code of Safety Practice for Industrial Apparatus",
+      "status": "ACTIVE",
+      "is_mandatory_qco": false,
+      "year": 2015,
+      "clauses": [],
+      "references": []
+    },
+    {
+      "standard_number": "IS 104",
+      "title": "Code of Practice for Installation of Heavy Electrical Equipment",
+      "status": "ACTIVE",
+      "is_mandatory_qco": false,
+      "year": 2010,
+      "clauses": [],
+      "references": []
+    },
+    {
+      "standard_number": "IS 105",
+      "title": "Electrical Apparatus for Explosive Gas Atmospheres",
+      "status": "ACTIVE",
+      "is_mandatory_qco": true,
+      "year": 2019,
+      "clauses": [],
+      "references": []
+    },
+    {
+      "standard_number": "IS 106",
+      "title": "Measurement Equipment for Electrical Testing",
+      "status": "ACTIVE",
+      "is_mandatory_qco": false,
+      "year": 2012,
+      "clauses": [
+        {"clause_number": "5.1", "content": "Calibration cycle links back to motor performance under IS 101."}
+      ],
+      "references": [
+        {
+          "target_standard_number": "IS 101",
+          "relationship_type": "NORMATIVE_REFERENCE",
+          "reference_semantics": "NORMATIVE",
+          "procurement_impact": "REQUIRED_SPECIFICATION",
+          "referencing_clause": "5.1",
+          "notes": "Cycle test edge creating IS 101 -> IS 102 -> IS 106 -> IS 101"
+        }
+      ]
+    },
+    {
+      "standard_number": "IS 107_UNCERTAIN",
+      "title": "Old Specification with Expired or Uncertain QCO",
+      "status": "AMENDED",
+      "is_mandatory_qco": false,
+      "year": 1985,
+      "clauses": [],
+      "references": [],
+      "certifications": [
+        {
+          "scheme": "ISI_MARK_SCHEME_I",
+          "is_mandatory_qco": false,
+          "qco_order_number": "Old Gazetted Draft 1990",
+          "currentness_status": "CURRENTNESS_UNCERTAIN",
+          "applicable_product_category": "Historical Equipment"
+        }
+      ]
+    }
+  ]
+}

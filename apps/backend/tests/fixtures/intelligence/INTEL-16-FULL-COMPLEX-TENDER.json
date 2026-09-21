@@ -1,0 +1,11 @@
+{
+  "scenario_id": "INTEL-16-FULL-COMPLEX-TENDER",
+  "title": "Full Complex Industrial Tender Document",
+  "raw_content": "NIT No. PSU/ELEC/2026/044: Comprehensive specification for Three-Phase Squirrel Cage Induction Motors for Slurry Pumping Applications. Scope covers design, manufacture, testing, and supply of 75 kW, 415 V +/- 10%, 50 Hz +/- 3%, 4-Pole, foot-mounted induction motors conforming to IS 12615:2018 (IE3 class). Degree of protection: IP55 as per IS/IEC 60034-5. Cooling IC411. Class F insulation with Class B temperature rise limit (80 deg C by resistance). Two independent earthing terminals as per IS 3043. Dimensions conforming to IS 1231. Loss and efficiency determination by summation of losses method conforming to IS 15999 (Part 2/Sec 1). Permissible vibration limits as per IS 12075. Noise level within limits of IS 12065. Bidder must submit valid BIS License for ISI Mark under Scheme-I in accordance with the Electrical Motors (Quality Control) Order, 2020.",
+  "category": "Three-phase induction motor",
+  "expected_readiness_state": "READY_FOR_PROCUREMENT",
+  "expected_primary_standard": "IS 12615",
+  "expected_critical_gaps": 0,
+  "expected_high_gaps": 0,
+  "has_qco": true
+}

@@ -1,0 +1,32 @@
+[project]
+name = "normvault-backend"
+version = "0.1.0"
+description = "NORMVAULT: AI-Powered Recommendation Engine for Applicable Indian Standards (SIH PS 26108)"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.111.0",
+    "uvicorn[standard]>=0.30.0",
+    "pydantic>=2.7.0",
+    "pydantic-settings>=2.3.0",
+    "sqlalchemy>=2.0.30",
+    "psycopg[binary]>=3.1.19",
+    "pgvector>=0.3.0",
+    "python-multipart>=0.0.9",
+    "httpx>=0.27.0",
+    "pymupdf>=1.28.2",
+    "numpy>=1.26.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.2.0",
+    "pytest-asyncio>=0.23.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+asyncio_mode = "auto"
+pythonpath = [".", "../.."]
+

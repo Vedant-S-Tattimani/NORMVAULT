@@ -1,0 +1,15 @@
+{
+  "id": "scenario_9_edition_conflict",
+  "name": "Conflicting Edition Citations Across Clauses",
+  "standard_number": "IS 12615",
+  "edition_year": 2018,
+  "title": "Conflicting IS 12615 Editions",
+  "clauses": [
+    "General Requirements: Motor shall be energy efficient per IS 12615:2018.",
+    "Testing Section: Verification of losses shall be tested per IS 12615:2011 standard tables."
+  ],
+  "parameters": [],
+  "expected_gap_types": [
+    "EDITION_INCONSISTENCY"
+  ]
+}

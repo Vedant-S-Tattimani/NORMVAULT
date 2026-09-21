@@ -1,0 +1,25 @@
+{
+  "screenshot": {
+    "name": "projects/10495873035675457844/screens/d739224ea0c943355d98c95079189ab31e4a805bc996ed4b4f39ef5fa9fc06c7/fileEntries/screenshot",
+    "downloadUrl": "https://lh3.googleusercontent.com/aida/AEtjO1XG6SB7heGOG6C28uOVwm8sOyHHNxr0R0fqE6GAl44gb0R4FoVjkErSC86OKkReW3L6L9Syun3M5Ce9C5r2A8c58VfGMRtXt0quNYMEJCDc1Wng_aoe-t5AZ9qim-1sbeGQjAowZ21_pnwdmEofoqEKfgToWCmUFamwa-Q83pi4223w5-J246xxmGEIDFingJ8xRH1yYKf4OcFslPBTVfFIWcrC0kXeyTeTZHL_BaDHoCf9vXOb1PN0iNOL"
+  },
+  "htmlCode": {
+    "name": "projects/10495873035675457844/screens/0443a3debfc84ed7a925ff6440dfef58/fileEntries/html",
+    "downloadUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJyEgxzdGl0Y2hfZmlsZXMaYgosc3RpdGNoX2h0bWxfMDAwNjViZjhiMTQ2NGQ2NzA3Nzk5ZDM1MTIzMDJjZGUSCxIHEOnBo4HBDhgBkgEkCgpwcm9qZWN0X2lkEhZCFDEwNDk1ODczMDM1Njc1NDU3ODQ0&filename=&opi=89354086",
+    "mimeType": "image/svg+xml"
+  },
+  "id": "0443a3debfc84ed7a925ff6440dfef58",
+  "generatedBy": "interactive_ui_controller",
+  "width": "512",
+  "height": "512",
+  "title": "NORMVAULT Institutional Mark",
+  "prompt": "Brand logo. - Primary color: #1d4ed8\n- Font: inter\n- Mode: light\n- Roundness: rounded-sm\n",
+  "name": "projects/10495873035675457844/screens/0443a3debfc84ed7a925ff6440dfef58",
+  "theme": {},
+  "screenType": "IMAGE",
+  "screenMetadata": {
+    "agentType": "PRO_AGENT",
+    "status": "COMPLETE",
+    "displayMode": "SVG"
+  }
+}

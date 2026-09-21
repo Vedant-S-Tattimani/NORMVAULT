@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #F6F2EA;
+    color: #1E2320;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, .font-serif {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-feature-settings: "tnum" 1, "cv01" 1;
+  }
+}
+
+/* Fine Technical Drafting Borders */
+.drafting-border {
+  border-color: #D9D0C1;
+}
+
+.drafting-line {
+  background-color: #D9D0C1;
+}
+
+/* Subtle parchment card texture */
+.parchment-card {
+  background-color: #FCFAF6;
+  border: 1px solid #D9D0C1;
+  box-shadow: 0 4px 20px -2px rgba(100, 80, 50, 0.05), 0 2px 6px -1px rgba(100, 80, 50, 0.03);
+}
+
+/* Subtle pulse for engine status */
+@keyframes subtle-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(0.96); }
+}
+
+.animate-subtle-pulse {
+  animation: subtle-pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Smooth custom scrollbars for audit tables */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #EFE8DC;
+}
+::-webkit-scrollbar-thumb {
+  background: #C4BAA9;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #A89D8B;
+}
