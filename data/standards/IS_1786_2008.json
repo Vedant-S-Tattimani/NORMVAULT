@@ -1,0 +1,52 @@
+{
+  "standard_number": "IS 1786",
+  "title": "High Strength Deformed Steel Bars and Wires for Concrete Reinforcement — Specification",
+  "year": 2008,
+  "edition": "Fourth Revision (Reaffirmed 2023)",
+  "division_code": "CED",
+  "department": "Civil Engineering Department",
+  "status": "CURRENT",
+  "is_mandatory_qco": true,
+  "qco_reference": "Ministry of Steel — Steel and Steel Products (Quality Control) Order, 2024",
+  "enforcement_date": "2024-03-15",
+  "notifying_ministry": "Ministry of Steel",
+  "scope": "Covers requirements of deformed steel bars and wires for use as reinforcement in concrete in strength grades Fe 415, Fe 415D, Fe 500, Fe 500D, Fe 550, Fe 550D, and Fe 600.",
+  "supersedes": [
+    {
+      "standard_number": "IS 1786",
+      "year": 1985,
+      "reason": "Superseded by Fourth Revision to introduce mandatory 'D' ductile grades with minimum 16% elongation for earthquake resistance per IS 13920."
+    }
+  ],
+  "clauses": [
+    {
+      "clause_number": "4.2",
+      "title": "Chemical Composition Limits",
+      "text": "Carbon equivalent (CE) shall not exceed 0.42% for Fe 415D and Fe 500D. Maximum Sulphur shall be 0.040% and Phosphorus 0.040% to guarantee on-site weldability."
+    },
+    {
+      "clause_number": "8.1",
+      "title": "Mechanical Properties & Ductility",
+      "text": "Grade Fe 500D shall have minimum 0.2% proof stress / yield stress of 500.0 N/mm2, tensile strength not less than 565.0 N/mm2, and minimum elongation of 16.0%."
+    },
+    {
+      "clause_number": "9.3",
+      "title": "Rebend Testing",
+      "text": "Bars shall withstand bend test through 180 degrees and mandatory rebend test through 135 degrees after aging at 100 deg C without transverse fracture or cracks."
+    }
+  ],
+  "normative_references": [
+    {
+      "target_standard": "IS 1608",
+      "clause": "8.1",
+      "relationship": "MANDATORY_TEST_METHOD",
+      "description": "Metallic materials — Tensile testing at room temperature."
+    },
+    {
+      "target_standard": "IS 13920",
+      "clause": "1.2",
+      "relationship": "NORMATIVE_APPLICATION",
+      "description": "Ductile design and detailing of reinforced concrete structures subjected to seismic forces."
+    }
+  ]
+}

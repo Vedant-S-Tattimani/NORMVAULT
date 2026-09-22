@@ -101,7 +101,8 @@ def evaluate_specification_currentness(
     # Collect all citations across all clauses to detect conflicts
     all_citations: List[TenderCitationExtraction] = []
     for req in requirements:
-        raw_ext = citation_extractor.extract_citations(req.extracted_text or "", section_name=req.section_name)
+        sec_name = req.evidence.section_heading if req.evidence else req.clause_reference
+        raw_ext = citation_extractor.extract_citations(req.extracted_text or "", section_name=sec_name)
         all_citations.extend(raw_ext)
 
     # Detect conflicts across the specification

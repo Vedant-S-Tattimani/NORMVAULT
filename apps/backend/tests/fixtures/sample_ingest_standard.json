@@ -1,0 +1,27 @@
+{
+  "standard_number": "IS 3043",
+  "title": "Code of Practice for Earthing",
+  "division_code": "ETD",
+  "scope": "Applies to the earthing of electrical installations for generation, transmission, distribution and utilization of electrical energy.",
+  "is_mandatory_qco": true,
+  "qco_reference": "Central Electricity Authority (Measures relating to Safety and Electric Supply) Regulations / S.O. 1198(E)",
+  "edition": {
+    "edition_number": 2,
+    "year": 2018
+  },
+  "clauses": [
+    {
+      "clause_number": "Cl. 10.1",
+      "title": "Earthing of Frame and Metal Casings",
+      "text": "All metal casings, enclosures, and non-current carrying metal parts shall be effectively connected to earth with minimum two separate and distinct connections."
+    },
+    {
+      "clause_number": "Cl. 12.3",
+      "title": "Earth Resistance Measurement",
+      "text": "The earth resistance of the earthing system shall not exceed 1.0 Ohm for substations and 2.0 Ohms for industrial generating plants."
+    }
+  ],
+  "normative_references": [
+    "IS 12615"
+  ]
+}

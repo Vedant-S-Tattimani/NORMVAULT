@@ -15,6 +15,7 @@ from app.models.requirement import (
 )
 from app.services.document_parser import get_document_parser, hash_file, parse_raw_text
 from app.services.requirement_extractor import RequirementExtractorService
+from app.services.specification_service import persist_extracted_requirements
 
 router = APIRouter()
 
@@ -101,44 +102,7 @@ def execute_document_pipeline(doc_id: int, file_path: str, mime_type: str, db: O
         db.flush()
 
         # Step 4: Save Requirements, Parameters, and Evidence
-        for req_data in extraction_result.requirements:
-            req = Requirement(
-                specification_id=spec.id,
-                requirement_type=req_data.requirement_type,
-                extraction_status=req_data.extraction_status,
-                extracted_text=req_data.extracted_text,
-            )
-            db.add(req)
-            db.flush()
-
-            # Save Technical Parameters
-            for p_data in req_data.parameters:
-                param = TechnicalParameter(
-                    requirement_id=req.id,
-                    name=p_data.name,
-                    original_value=p_data.original_value or p_data.target_value or "",
-                    normalized_value=p_data.normalized_value or p_data.target_value or "",
-                    target_value=p_data.target_value or p_data.normalized_value or "",
-                    unit=p_data.unit,
-                    operator=p_data.operator,
-                    tolerance=p_data.tolerance,
-                    test_method_standard=p_data.test_method_standard,
-                )
-                db.add(param)
-
-            # Save Precision Evidence
-            if req_data.source_text:
-                evidence = RequirementEvidence(
-                    requirement_id=req.id,
-                    document_id=document.id,
-                    page_number=req_data.page_number,
-                    section_heading=req_data.section_heading,
-                    block_identifier=req_data.block_identifier,
-                    start_offset=req_data.start_offset,
-                    end_offset=req_data.end_offset,
-                    source_text=req_data.source_text,
-                )
-                db.add(evidence)
+        persist_extracted_requirements(db, spec.id, document.id, extraction_result.requirements)
 
         # Step 5: ANALYZING (Consistency and validation checks)
         document.status = DocumentProcessingState.ANALYZING

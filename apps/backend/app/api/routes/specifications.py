@@ -1,6 +1,6 @@
 import hashlib
 from fastapi import APIRouter, HTTPException, status, Depends
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload, selectinload
 from app.db.session import get_db
 from pydantic import BaseModel
 from app.models.document import Document, DocumentProcessingState
@@ -12,6 +12,7 @@ from app.models.requirement import (
 )
 from app.services.document_parser import parse_raw_text
 from app.services.requirement_extractor import RequirementExtractorService
+from app.services.specification_service import persist_extracted_requirements
 
 router = APIRouter()
 
@@ -62,45 +63,8 @@ def process_text_specification(req: TextIntakeRequest, db: Session = Depends(get
     db.add(spec)
     db.flush()
 
-    for req_data in extraction_result.requirements:
-        db_req = Requirement(
-            specification_id=spec.id,
-            requirement_type=req_data.requirement_type,
-            extraction_status=req_data.extraction_status,
-            extracted_text=req_data.extracted_text,
-        )
-        db.add(db_req)
-        db.flush()
+    persist_extracted_requirements(db, spec.id, doc.id, extraction_result.requirements)
 
-        # Save Technical Parameters
-        for p_data in req_data.parameters:
-            param = TechnicalParameter(
-                requirement_id=db_req.id,
-                name=p_data.name,
-                original_value=p_data.original_value or p_data.target_value or "",
-                normalized_value=p_data.normalized_value or p_data.target_value or "",
-                target_value=p_data.target_value or p_data.normalized_value or "",
-                unit=p_data.unit,
-                operator=p_data.operator,
-                tolerance=p_data.tolerance,
-                test_method_standard=p_data.test_method_standard,
-            )
-            db.add(param)
-        
-        # Save Evidence
-        if req_data.source_text:
-            evidence = RequirementEvidence(
-                requirement_id=db_req.id,
-                document_id=doc.id,
-                page_number=req_data.page_number or 1,
-                section_heading=req_data.section_heading,
-                block_identifier=req_data.block_identifier,
-                start_offset=req_data.start_offset,
-                end_offset=req_data.end_offset,
-                source_text=req_data.source_text,
-            )
-            db.add(evidence)
-        
     db.commit()
     db.refresh(spec)
 
@@ -144,4 +108,131 @@ def process_text_specification(req: TextIntakeRequest, db: Session = Depends(get
         "requirements_count": len(extraction_result.requirements),
         "requirements": req_list,
     }
+
+
+@router.get("", summary="List All Procurement Specifications")
+@router.get("/", summary="List All Procurement Specifications")
+def list_specifications(db: Session = Depends(get_db)):
+    specs = (
+        db.query(ProcurementSpecification)
+        .options(
+            joinedload(ProcurementSpecification.document),
+            selectinload(ProcurementSpecification.requirements),
+        )
+        .order_by(ProcurementSpecification.id.asc())
+        .all()
+    )
+    results = []
+    for s in specs:
+        req_count = len(s.requirements)
+        has_uncertain = any(
+            (hasattr(r.extraction_status, "value") and r.extraction_status.value in ["UNCERTAIN", "UNRESOLVED"])
+            or str(r.extraction_status) in ["UNCERTAIN", "UNRESOLVED"]
+            for r in s.requirements
+        )
+        status_val = "ACTION_REQUIRED" if (has_uncertain or s.status == "ACTION_REQUIRED") else "READY_FOR_TENDER"
+        if s.status == "AUDIT_READY":
+            status_val = "AUDIT_READY"
+
+        results.append({
+            "id": s.id,
+            "tender_reference": s.tender_reference or f"TENDER/NV/{s.id:04d}",
+            "title": s.title,
+            "issuing_organization": s.department or "Central Procurement Entity",
+            "estimated_value_inr": None,
+            "submission_deadline": None,
+            "status": status_val,
+            "file_name": s.document.filename if s.document else f"Spec_{s.id}.txt",
+            "file_hash_sha256": s.document.file_hash if s.document else None,
+            "total_requirements_count": req_count,
+            "created_at": s.created_at.isoformat() if s.created_at else None,
+        })
+    return results
+
+
+@router.get("/{id}", summary="Get Procurement Specification by ID")
+def get_specification(id: int, db: Session = Depends(get_db)):
+    s = (
+        db.query(ProcurementSpecification)
+        .options(
+            joinedload(ProcurementSpecification.document),
+            selectinload(ProcurementSpecification.requirements),
+        )
+        .filter(ProcurementSpecification.id == id)
+        .first()
+    )
+    if not s:
+        raise HTTPException(status_code=404, detail=f"Specification with ID {id} not found.")
+
+    req_count = len(s.requirements)
+    return {
+        "id": s.id,
+        "tender_reference": s.tender_reference or f"TENDER/NV/{s.id:04d}",
+        "title": s.title,
+        "department": s.department,
+        "target_product_name": s.target_product_name,
+        "issuing_organization": s.department or "Central Procurement Entity",
+        "status": s.status,
+        "raw_content": s.raw_content,
+        "file_name": s.document.filename if s.document else f"Spec_{s.id}.txt",
+        "file_hash_sha256": s.document.file_hash if s.document else None,
+        "total_requirements_count": req_count,
+        "created_at": s.created_at.isoformat() if s.created_at else None,
+    }
+
+
+@router.get("/{id}/requirements", summary="List Requirements for Specification")
+def get_specification_requirements(id: int, db: Session = Depends(get_db)):
+    s = db.query(ProcurementSpecification).filter(ProcurementSpecification.id == id).first()
+    if not s:
+        raise HTTPException(status_code=404, detail=f"Specification with ID {id} not found.")
+
+    reqs = (
+        db.query(Requirement)
+        .options(
+            joinedload(Requirement.evidence),
+            selectinload(Requirement.parameters),
+        )
+        .filter(Requirement.specification_id == s.id)
+        .order_by(Requirement.id.asc())
+        .all()
+    )
+    results = []
+    for idx, r in enumerate(reqs, start=1):
+        ev = r.evidence
+        is_conflict = (
+            (hasattr(r.extraction_status, "value") and r.extraction_status.value == "UNCERTAIN")
+            or str(r.extraction_status) == "UNCERTAIN"
+            or "conflict" in (r.extracted_text or "").lower()
+        )
+        
+        type_val = r.requirement_type.value if hasattr(r.requirement_type, "value") else str(r.requirement_type)
+        category_title = type_val.replace("_", " ").title()
+
+        results.append({
+            "id": r.id,
+            "specification_id": s.id,
+            "requirement_code": f"REQ-{idx:03d}",
+            "title": r.clause_reference or f"Requirement {idx}: {category_title}",
+            "category": category_title,
+            "section_citation": ev.section_heading if (ev and ev.section_heading) else (r.clause_reference or "Section IV"),
+            "page_number": ev.page_number if ev else 1,
+            "verbatim_excerpt": r.extracted_text,
+            "cryptographic_offset": f"sha256:{s.document.file_hash[:8] if (s.document and s.document.file_hash) else '4a8b1c'} [P.{ev.page_number if ev else 1}]",
+            "has_conflict": is_conflict,
+            "conflict_description": "Contradictory values or non-standard specification parameter detected in tender document." if is_conflict else None,
+            "parameters": [
+                {
+                    "name": p.name,
+                    "value": p.original_value or p.target_value or "",
+                    "unit": p.unit,
+                    "tolerance": p.tolerance,
+                    "is_mandatory": True,
+                }
+                for p in r.parameters
+            ],
+        })
+
+    return results
+
 

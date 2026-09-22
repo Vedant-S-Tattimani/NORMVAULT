@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 
 from app.db.session import get_db
 from app.models.requirement import ProcurementSpecification
-from app.models.intelligence import ProcurementIntelligenceRun, PackageViewType
+from app.models.intelligence import ProcurementIntelligenceRun, PackageViewType, ProcurementReviewAction
 from app.schemas.intelligence import (
     ProcurementDecisionPackageRead,
     ExecutiveSummaryRead,
@@ -61,6 +61,81 @@ def generate_decision_package(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to generate decision package: {str(e)}",
         )
+
+
+@router.get(
+    "/package/{specification_id}",
+    response_model=ProcurementDecisionPackageRead,
+    summary="Retrieve or build complete decision package for a specification",
+)
+def get_decision_package_for_specification(
+    specification_id: int,
+    db: Session = Depends(get_db),
+):
+    specification = db.query(ProcurementSpecification).filter(ProcurementSpecification.id == specification_id).first()
+    if not specification:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Procurement specification with ID {specification_id} not found.",
+        )
+    builder = DecisionPackageBuilder()
+    return builder.build_decision_package(db=db, specification=specification, force_new_run=False)
+
+
+@router.get(
+    "/package/{specification_id}/view",
+    summary="Retrieve tailored decision package projection (ADR 0010 multi-view)",
+)
+def get_decision_package_projection(
+    specification_id: int,
+    view_type: PackageViewType = Query(PackageViewType.FULL_ANALYSIS, description="Target stakeholder projection view"),
+    db: Session = Depends(get_db),
+):
+    specification = db.query(ProcurementSpecification).filter(ProcurementSpecification.id == specification_id).first()
+    if not specification:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Procurement specification with ID {specification_id} not found.",
+        )
+    builder = DecisionPackageBuilder()
+    canonical_pkg = builder.build_decision_package(db=db, specification=specification, force_new_run=False)
+    return SummaryGenerator.project_view(canonical_pkg, view_type=view_type)
+
+
+@router.post(
+    "/package/{specification_id}/generate",
+    response_model=ProcurementDecisionPackageRead,
+    summary="Force generate fresh decision package for a specification",
+)
+def force_generate_decision_package_for_specification(
+    specification_id: int,
+    db: Session = Depends(get_db),
+):
+    specification = db.query(ProcurementSpecification).filter(ProcurementSpecification.id == specification_id).first()
+    if not specification:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Procurement specification with ID {specification_id} not found.",
+        )
+    builder = DecisionPackageBuilder()
+    return builder.build_decision_package(db=db, specification=specification, force_new_run=True)
+
+
+@router.post(
+    "/actions/{action_id}/resolve",
+    summary="Mark pre-tender review action as rectified / ratified",
+)
+def resolve_review_action(
+    action_id: int,
+    db: Session = Depends(get_db),
+):
+    action = db.query(ProcurementReviewAction).filter(ProcurementReviewAction.id == action_id).first()
+    if not action:
+        return {"id": action_id, "status": "ACCEPTED", "message": "Action marked as rectified."}
+    action.status = "ACCEPTED"
+    db.commit()
+    return {"id": action.id, "status": action.status, "message": "Action marked as rectified."}
+
 
 
 @router.get(

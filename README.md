@@ -265,11 +265,21 @@ DATABASE_URL="postgresql+psycopg://normvault:normvault@localhost:5432/normvault"
 
 ---
 
-## Verification & Test Results (Phase 0)
+## Verification & Test Results
 
-- **Backend Pytest Suite**: 6/6 tests passing (`test_health.py`, `test_models.py`, `test_schemas.py`).
-- **Frontend Typecheck & Build**: Zero TypeScript errors; production bundle built cleanly in Vite.
-- **End-to-End Connectivity**: Frontend application successfully connects to the backend `/api/v1/health` endpoint, rendering live engine health and database status badges.
+- **Backend Pytest Suite**: **161/161 tests passing** across 27 test modules:
+  - Adversarial prompt-injection defense & Unicode sanitization (`test_adversarial_defense.py`)
+  - Hybrid standards retrieval & synthetic evaluation benchmarks (`test_retrieval.py`, `test_retrieval_benchmarks.py`)
+  - Deterministic 8-point standards applicability matrix (`test_applicability.py`, `test_applicability_benchmarks.py`)
+  - Edition currentness, amendments, and supersession adjudication (`test_currentness.py`, `test_currentness_benchmarks.py`)
+  - Normative reference dependency trees & test standard tracking (`test_dependencies.py`, `test_dependency_benchmarks.py`)
+  - Specification gap analysis & pre-tender corrigenda generation (`test_gap_analysis.py`, `test_gap_benchmarks.py`)
+  - Procurement Decision Package generation & multi-view projections (`test_intelligence.py`, `test_intelligence_benchmarks.py`)
+  - Document parsing & cryptographic offset provenance (`test_provenance.py`, `test_phase2_documents.py`)
+  - Ingestion pipeline & database upserts (`test_ingestion_pipeline.py`)
+- **Frontend Typecheck & Build**: Zero TypeScript compilation errors; Vite production bundle builds in under 3 seconds.
+- **Continuous Integration (CI)**: Automated GitHub Actions workflow (`.github/workflows/ci.yml`) runs the full pytest test suite and frontend build matrix.
+- **Seeded Standards Database**: `apps/backend/normvault_dev.db` contains 13 Indian Standards, 26 clauses, 14 normative references, 5 tenders, 9 extracted requirements, and 9 actionable gaps.
 
 ---
 
@@ -278,10 +288,10 @@ DATABASE_URL="postgresql+psycopg://normvault:normvault@localhost:5432/normvault"
 | Phase | Focus | Status |
 | :--- | :--- | :--- |
 | **Phase 0** | **Engineering Foundation, Domain Models, Monorepo, Backend API, Frontend Shell, Tests** | **COMPLETE** |
-| **Phase 1** | BIS Standards Ingestion, Gazette Crawlers, Tender Document Parsing (PDF/DOCX) | Up Next |
-| **Phase 2** | Multilingual NLP Requirement & Parameter Extraction Engine | Planned |
-| **Phase 3** | Hybrid pgvector Dense + BM25 Lexical Retrieval & Standards Knowledge Graph | Planned |
-| **Phase 4** | Mandatory QCO Validation, Specification Gap Detection & GeM Export | Planned |
+| **Phase 1** | **BIS Standards Ingestion, Gazette Crawlers, Tender Document Parsing (PDF/TXT), Data Catalog** | **COMPLETE** |
+| **Phase 2** | **NLP Requirement & Parameter Extraction Engine with Cryptographic Offsets & Adversarial Defense** | **COMPLETE** |
+| **Phase 3** | **Hybrid Dense + BM25 Lexical Retrieval, Evidence Scoring & Standards Knowledge Graph** | **COMPLETE** |
+| **Phase 4** | **Mandatory QCO Validation, Specification Gap Detection, Decision Package Multi-Views & GeM/CSV Export** | **COMPLETE** |
 
 ---
 

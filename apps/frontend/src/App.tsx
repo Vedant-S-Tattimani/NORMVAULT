@@ -6,6 +6,7 @@ import { StandardsPage } from './pages/StandardsPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { DecisionPackagePage } from './pages/DecisionPackagePage';
 import { HowItWorksPage } from './pages/HowItWorksPage';
+import { BenchmarksPage } from './pages/BenchmarksPage';
 import { ProcurementSpecification } from './types/requirement';
 
 export function App() {
@@ -46,7 +47,10 @@ export function App() {
         {currentView === 'analyze' && (
           <AnalyzePage
             selectedSpecification={selectedSpec}
-            onNavigateToDecisionPackage={() => setCurrentView('decision-package')}
+            onNavigateToDecisionPackage={(spec) => {
+              if (spec) setSelectedSpec(spec);
+              setCurrentView('decision-package');
+            }}
           />
         )}
         {currentView === 'standards' && (
@@ -58,7 +62,12 @@ export function App() {
         {currentView === 'dashboard' && (
           <DashboardPage onSelectSpecification={handleSelectSpecification} />
         )}
-        {currentView === 'decision-package' && <DecisionPackagePage />}
+        {currentView === 'decision-package' && (
+          <DecisionPackagePage selectedSpecification={selectedSpec} />
+        )}
+        {currentView === 'benchmarks' && (
+          <BenchmarksPage />
+        )}
       </main>
 
       {/* Editorial Footer */}

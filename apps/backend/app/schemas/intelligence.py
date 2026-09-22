@@ -267,7 +267,7 @@ class ProcurementIntelligenceRunRead(BaseModel):
     input_hash: Optional[str] = None
     run_metadata: Optional[Dict[str, Any]] = None
 
-    model_config = ConfigDict(from_attributes=True)
+    model_config = ConfigDict(from_attributes=True, protected_namespaces=())
 
 
 # ---------------------------------------------------------------------------

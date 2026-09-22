@@ -1,0 +1,47 @@
+{
+  "standard_number": "IS 732",
+  "title": "Code of Practice for Electrical Wiring Installations",
+  "year": 2019,
+  "edition": "Fourth Revision",
+  "division_code": "ETD",
+  "department": "Electrotechnical Department",
+  "status": "CURRENT",
+  "is_mandatory_qco": true,
+  "qco_reference": "Central Electricity Authority (Measures relating to Safety and Electric Supply) Regulations",
+  "enforcement_date": "2023-08-01",
+  "notifying_ministry": "Ministry of Power / Central Electricity Authority",
+  "scope": "Covers design, selection, erection, inspection, and testing of electrical installations operating at voltages up to 1000 V A.C. or 1500 V D.C., harmonized with IEC 60364.",
+  "supersedes": [
+    {
+      "standard_number": "IS 732",
+      "year": 1989,
+      "reason": "Superseded by Fourth Revision to align with IEC 60364 and mandate 30 mA RCDs for shock protection and Type 2 SPDs for transient surge protection."
+    }
+  ],
+  "clauses": [
+    {
+      "clause_number": "411.3.3",
+      "title": "Additional Protection via RCDs",
+      "text": "In A.C. systems, additional protection by means of a residual current device (RCD) with rated residual operating current not exceeding 30 mA shall be provided for socket-outlets with rated current not exceeding 32 A."
+    },
+    {
+      "clause_number": "443.4",
+      "title": "Protection Against Transient Overvoltages",
+      "text": "Protection against transient overvoltages (surges) shall be provided where the consequence caused by overvoltage affects human life or commercial/public activity."
+    }
+  ],
+  "normative_references": [
+    {
+      "target_standard": "IS 3043",
+      "clause": "542.1",
+      "relationship": "NORMATIVE_REF",
+      "description": "Code of Practice for Earthing — Earthing arrangements and protective conductors."
+    },
+    {
+      "target_standard": "IS/IEC 60947-2",
+      "clause": "531.1",
+      "relationship": "SAFETY_REQUIREMENT",
+      "description": "Low-voltage switchgear and controlgear: Circuit-breakers."
+    }
+  ]
+}

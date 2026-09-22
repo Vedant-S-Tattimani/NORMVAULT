@@ -50,6 +50,13 @@ apps/frontend/.vite/
 *.sqlite3
 pgdata/
 
+# Uploads
+uploads/
+apps/backend/uploads/
+*.pdf
+*.txt
+*.csv
+
 # OS / Editor
 .DS_Store
 Thumbs.db

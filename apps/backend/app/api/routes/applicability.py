@@ -17,9 +17,11 @@ from app.schemas.applicability import (
     SpecificationApplicabilityRead,
 )
 from app.services.applicability.engine import ApplicabilityEngine
+from app.services.dependencies.engine import StandardsComplianceEngine
 
 router = APIRouter()
 applicability_engine = ApplicabilityEngine()
+compliance_engine = StandardsComplianceEngine()
 
 
 @router.post(
@@ -119,9 +121,6 @@ def get_run_assessments(
     return serialized.assessments
 
 
-from app.services.dependencies.engine import StandardsComplianceEngine
-
-compliance_engine = StandardsComplianceEngine()
 
 
 @router.post(

@@ -1,0 +1,63 @@
+{
+  "standard_number": "IS 12615",
+  "title": "Line Operated Three-Phase A.C. Motors (IE Code) — Specification",
+  "year": 2018,
+  "edition": "Third Revision",
+  "division_code": "ETD",
+  "department": "Electrotechnical Department",
+  "status": "CURRENT",
+  "is_mandatory_qco": true,
+  "qco_reference": "DPIIT Electric Motors (Quality Control) Order, 2024 (S.O. 1284(E))",
+  "enforcement_date": "2024-10-01",
+  "notifying_ministry": "Ministry of Heavy Industries & Public Enterprises / DPIIT",
+  "scope": "Specifies requirements and efficiency limits for three-phase line-operated squirrel cage induction motors from 0.12 kW up to 1000 kW operating on voltages up to 1000 V at 50 Hz.",
+  "supersedes": [
+    {
+      "standard_number": "IS 325",
+      "year": 1996,
+      "reason": "Withdrawn and replaced by IS 12615 to mandate International Efficiency (IE) classes and harmonize with IEC 60034-30-1."
+    },
+    {
+      "standard_number": "IS 12615",
+      "year": 2011,
+      "reason": "Superseded by Third Revision introducing mandatory IE3 baseline and refined testing methods."
+    }
+  ],
+  "clauses": [
+    {
+      "clause_number": "4.1",
+      "title": "Operating Conditions and Supply Voltage",
+      "text": "Standard rated voltage shall be 415 V, 3-phase, 50 Hz. Motors shall be suitable for voltage variation of +/- 10% and frequency variation of +/- 5%."
+    },
+    {
+      "clause_number": "6.1",
+      "title": "Energy Efficiency Classes (IE Code)",
+      "text": "All standard industrial single-speed motors within the scope of this standard shall conform to minimum Premium Efficiency Class IE3 when tested per IS 15999 (Part 2/Sec 1)."
+    },
+    {
+      "clause_number": "7.2",
+      "title": "Insulation and Thermal Performance",
+      "text": "Stator windings shall utilize Class F or Class H insulation system with temperature rise limited strictly to Class B limits (80 K by resistance method) under rated operating conditions."
+    }
+  ],
+  "normative_references": [
+    {
+      "target_standard": "IS 15999 (Part 2/Sec 1)",
+      "clause": "6.1",
+      "relationship": "MANDATORY_TEST_METHOD",
+      "description": "Mandatory standard for determining losses and efficiency from summation of losses tests."
+    },
+    {
+      "target_standard": "IS 1231",
+      "clause": "5.1",
+      "relationship": "DIMENSIONAL_INTERCHANGEABILITY",
+      "description": "Foot-mounted motor dimensions and frame size assignments."
+    },
+    {
+      "target_standard": "IS/IEC 60079-1",
+      "clause": "8.1",
+      "relationship": "SAFETY_ENCLOSURE",
+      "description": "Flameproof enclosure requirements for motors operating in hazardous gas atmospheres."
+    }
+  ]
+}

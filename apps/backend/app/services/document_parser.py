@@ -7,6 +7,42 @@ import re
 from typing import List, Optional
 from pydantic import BaseModel
 
+# Adversarial Prompt-Injection & Jailbreak Patterns for Public Tender Documents
+ADVERSARIAL_PATTERNS = [
+    (re.compile(r"(?i)\bignore\s+(?:all\s+)?(?:previous|prior|above|system)\s+instructions\b"), "IGNORE_INSTRUCTIONS_OVERRIDE"),
+    (re.compile(r"(?i)\bsystem\s+override(?:\s*:)?\b.*?(?=\n|$)"), "SYSTEM_OVERRIDE_DIRECTIVE"),
+    (re.compile(r"(?:\[SYSTEM\]|<\|im_start\|>|<\|system\|>|<\|user\|>|Human:\s*|Assistant:\s*)"), "SYSTEM_PROMPT_DELIMITER_INJECTION"),
+    (re.compile(r"(?i)\bdisregard\s+(?:all\s+)?(?:bis\s+standards|qcos?|quality\s+control\s+orders?|compliance|regulations)\b"), "REGULATORY_DISREGARD_DIRECTIVE"),
+    (re.compile(r"(?i)\bmark\s+(?:this\s+)?(?:specification\s+)?(?:as\s+)?(?:ready_for_tender|fully\s+compliant|audit_ready)\s+without\s+(?:verification|check|audit)\b"), "UNGROUNDED_COMPLIANCE_FORCING"),
+    (re.compile(r"(?i)\b(?:you\s+are\s+now\s+in\s+developer\s+mode|jailbreak|DAN\s+mode)\b"), "DEVELOPER_MODE_JAILBREAK"),
+]
+
+# Invisible Unicode characters used to smuggle instructions
+ZERO_WIDTH_REGEX = re.compile(r"[\u200B-\u200D\uFEFF\u00AD\u202A-\u202E\u2060-\u206F]")
+
+def sanitize_tender_text(text: str) -> tuple[str, List[str]]:
+    """
+    Sanitizes untrusted procurement specification text:
+    1. Neutralizes zero-width and bidirectional invisible characters.
+    2. Redacts adversarial prompt-injection directives targeting LLMs / automated engines.
+    Returns: (sanitized_text, list_of_neutralized_threats)
+    """
+    threats_detected: List[str] = []
+    
+    # 1. Strip invisible unicode smuggling characters
+    if ZERO_WIDTH_REGEX.search(text):
+        text = ZERO_WIDTH_REGEX.sub("", text)
+        threats_detected.append("INVISIBLE_UNICODE_CHARACTERS_STRIPPED")
+        
+    # 2. Neutralize adversarial prompt-injection tokens
+    for pattern, threat_type in ADVERSARIAL_PATTERNS:
+        matches = pattern.findall(text)
+        if matches:
+            threats_detected.append(f"{threat_type} (count: {len(matches)})")
+            text = pattern.sub("[DEFENSE: ADVERSARIAL DIRECTIVE NEUTRALIZED]", text)
+            
+    return text, threats_detected
+
 class NormalizedBlock(BaseModel):
     page_number: Optional[int] = None
     section_heading: Optional[str] = None
@@ -14,11 +50,13 @@ class NormalizedBlock(BaseModel):
     start_offset: Optional[int] = None
     end_offset: Optional[int] = None
     text: str
+    sanitization_warnings: List[str] = []
 
 class NormalizedDocument(BaseModel):
     blocks: List[NormalizedBlock]
     full_text: str
     page_count: Optional[int] = 1
+    sanitization_warnings: List[str] = []
 
 class DocumentParserProtocol(abc.ABC):
     @abc.abstractmethod
@@ -65,11 +103,12 @@ class PdfParser(DocumentParserProtocol):
                 if not block_text:
                     continue
 
+                sanitized_block, block_warnings = sanitize_tender_text(block_text)
                 has_any_text = True
                 
                 # Heading heuristic: Short line ending without period or starting with section numbering
-                if len(block_text) < 80 and ("\n" not in block_text) and not block_text.endswith("."):
-                    current_heading = block_text
+                if len(sanitized_block) < 80 and ("\n" not in sanitized_block) and not sanitized_block.endswith("."):
+                    current_heading = sanitized_block
 
                 block_id = f"p{page_num}_b{b_idx + 1}"
                 
@@ -79,8 +118,8 @@ class PdfParser(DocumentParserProtocol):
                     current_offset += 2
 
                 start_offset = current_offset
-                full_text_buffer.append(block_text)
-                current_offset += len(block_text)
+                full_text_buffer.append(sanitized_block)
+                current_offset += len(sanitized_block)
                 end_offset = current_offset
 
                 blocks.append(
@@ -90,7 +129,8 @@ class PdfParser(DocumentParserProtocol):
                         block_id=block_id,
                         start_offset=start_offset,
                         end_offset=end_offset,
-                        text=block_text
+                        text=sanitized_block,
+                        sanitization_warnings=block_warnings
                     )
                 )
 
@@ -101,10 +141,13 @@ class PdfParser(DocumentParserProtocol):
         if num_pages > 0 and (not has_any_text or not full_text.strip()):
             raise ValueError("OCR_REQUIRED")
 
+        doc_warnings = [w for b in blocks for w in b.sanitization_warnings]
+
         return NormalizedDocument(
             blocks=blocks,
             full_text=full_text,
-            page_count=num_pages
+            page_count=num_pages,
+            sanitization_warnings=list(set(doc_warnings))
         )
 
 class PlainTextParser(DocumentParserProtocol):
@@ -120,7 +163,8 @@ class PlainTextParser(DocumentParserProtocol):
 
 def parse_raw_text(content: str) -> NormalizedDocument:
     """Parse raw text string into NormalizedDocument with precise blocks and offsets."""
-    paragraphs = re.split(r'\n\s*\n', content)
+    sanitized_content, doc_warnings = sanitize_tender_text(content)
+    paragraphs = re.split(r'\n\s*\n', sanitized_content)
     blocks: List[NormalizedBlock] = []
     
     current_offset = 0
@@ -136,7 +180,7 @@ def parse_raw_text(content: str) -> NormalizedDocument:
             current_heading = trimmed
 
         # Find actual position of trimmed text in original content
-        find_pos = content.find(trimmed, current_offset)
+        find_pos = sanitized_content.find(trimmed, current_offset)
         if find_pos != -1:
             start_offset = find_pos
             end_offset = find_pos + len(trimmed)
@@ -146,6 +190,9 @@ def parse_raw_text(content: str) -> NormalizedDocument:
             end_offset = current_offset + len(trimmed)
             current_offset = end_offset
 
+        # Check if this specific block had any warnings
+        _, block_warnings = sanitize_tender_text(para)
+
         blocks.append(
             NormalizedBlock(
                 page_number=1,
@@ -153,14 +200,16 @@ def parse_raw_text(content: str) -> NormalizedDocument:
                 block_id=f"para_{idx + 1}",
                 start_offset=start_offset,
                 end_offset=end_offset,
-                text=trimmed
+                text=trimmed,
+                sanitization_warnings=block_warnings
             )
         )
 
     return NormalizedDocument(
         blocks=blocks,
-        full_text=content,
-        page_count=1
+        full_text=sanitized_content,
+        page_count=1,
+        sanitization_warnings=doc_warnings
     )
 
 

@@ -125,3 +125,56 @@ export async function listRequirements(specificationId: number): Promise<Require
     ];
   }
 }
+
+export async function uploadDocument(file: File): Promise<{ id: number; status: string; message?: string }> {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  const response = await fetch('/api/v1/documents/upload', {
+    method: 'POST',
+    body: formData,
+  });
+
+  if (!response.ok) {
+    const errText = await response.text();
+    throw new Error(`Upload failed (${response.status}): ${errText}`);
+  }
+
+  return await response.json();
+}
+
+export async function pollDocumentStatus(documentId: number): Promise<{
+  id: number;
+  status: string;
+  error?: string | null;
+  page_count?: number | null;
+}> {
+  return await fetchApi<{
+    id: number;
+    status: string;
+    error?: string | null;
+    page_count?: number | null;
+  }>(`/documents/${documentId}/status`);
+}
+
+export interface TextSpecificationPayload {
+  title: string;
+  department?: string;
+  tender_reference?: string;
+  target_product_name?: string;
+  raw_content: string;
+}
+
+export async function submitTextSpecification(payload: TextSpecificationPayload): Promise<{
+  id: number;
+  document_id: number;
+  status: string;
+  requirements_count: number;
+  requirements: any[];
+}> {
+  return await fetchApi('/specifications/text', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  });
+}
+

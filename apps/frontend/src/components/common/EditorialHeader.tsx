@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowRight, Search, X } from 'lucide-react';
 
-export type ViewType = 'home' | 'analyze' | 'standards' | 'dashboard' | 'decision-package' | 'how-it-works';
+export type ViewType = 'home' | 'analyze' | 'standards' | 'dashboard' | 'decision-package' | 'how-it-works' | 'benchmarks';
 
 interface EditorialHeaderProps {
   currentView: ViewType;
@@ -99,6 +99,16 @@ export const EditorialHeader: React.FC<EditorialHeaderProps> = ({
               }`}
             >
               Decision Package
+            </button>
+            <button
+              onClick={() => onSelectView('benchmarks')}
+              className={`py-1 transition-all ${
+                currentView === 'benchmarks'
+                  ? 'text-ink-text font-bold border-b border-ink-text'
+                  : 'hover:text-ink-text'
+              }`}
+            >
+              Benchmarks
             </button>
           </nav>
         </div>

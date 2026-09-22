@@ -1,35 +1,22 @@
-import { ShieldAlert, Calendar, BookOpen } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ShieldAlert, Calendar, BookOpen, Loader2 } from 'lucide-react';
+import { getGazetteFeed, GazetteFeedItem } from '../../api/standards';
 
 export const GazetteWatchWidget: React.FC = () => {
-  const qcos = [
-    {
-      id: 1,
-      title: 'Electric Motors (Quality Control) Order, 2024',
-      standard: 'IS 12615:2018 (Motors 0.75 kW to 375 kW)',
-      so_number: 'S.O. 1284(E)',
-      enforced_date: '01 Oct 2024',
-      ministry: 'DPIIT, Ministry of Commerce and Industry',
-      status: 'MANDATORY IN FORCE',
-    },
-    {
-      id: 2,
-      title: 'Distribution Transformers (Quality Control) Order',
-      standard: 'IS 11171 / IS 2026 (BEE Star Rating & ISI Mark)',
-      so_number: 'S.O. 2351(E)',
-      enforced_date: '15 Jan 2025',
-      ministry: 'Ministry of Heavy Industries',
-      status: 'MANDATORY IN FORCE',
-    },
-    {
-      id: 3,
-      title: 'Structural Steel (Quality Control) Order, 2023',
-      standard: 'IS 2062:2011 / IS 1786:2008 (TMT Steel Bars)',
-      so_number: 'S.O. 3820(E)',
-      enforced_date: '01 Jan 2024',
-      ministry: 'Ministry of Steel',
-      status: 'MANDATORY IN FORCE',
-    },
-  ];
+  const [qcos, setQcos] = useState<GazetteFeedItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const feed = await getGazetteFeed();
+        setQcos(feed);
+      } finally {
+        setLoading(false);
+      }
+    }
+    load();
+  }, []);
 
   return (
     <div className="parchment-card rounded-xl p-5 mb-8">
@@ -49,8 +36,14 @@ export const GazetteWatchWidget: React.FC = () => {
         Live tracking of Ministry Quality Control Orders (QCO) issued under BIS Act 2016 Section 16. Procurement of non-certified items constitutes a statutory violation.
       </p>
 
-      <div className="space-y-3">
-        {qcos.map((qco) => (
+      {loading ? (
+        <div className="flex items-center justify-center gap-2 py-8 text-xs font-mono text-ink-muted">
+          <Loader2 size={15} className="animate-spin text-mineral-blue" />
+          <span>Synchronizing Gazette statutory feed...</span>
+        </div>
+      ) : (
+        <div className="space-y-3">
+          {qcos.map((qco) => (
           <div
             key={qco.id}
             className="p-3.5 rounded-lg bg-parchment-surface border border-parchment-border hover:border-mineral-blue/50 transition-colors"
@@ -65,7 +58,7 @@ export const GazetteWatchWidget: React.FC = () => {
             </div>
 
             <div className="text-[11px] text-ink-muted mb-2 font-mono">
-              Standard: <strong className="text-ink-text">{qco.standard}</strong>
+              Standard: <strong className="text-ink-text">{qco.standard_number}</strong>
             </div>
 
             <div className="flex items-center justify-between text-[10px] font-mono text-ink-muted pt-2 border-t border-parchment-border/60">
@@ -80,7 +73,8 @@ export const GazetteWatchWidget: React.FC = () => {
             </div>
           </div>
         ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

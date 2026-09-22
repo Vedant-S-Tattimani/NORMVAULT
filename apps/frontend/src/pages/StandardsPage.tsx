@@ -5,6 +5,7 @@ import { StandardHeaderCard } from '../components/standards/StandardHeaderCard';
 import { DependencyGraph } from '../components/standards/DependencyGraph';
 import { EditionTimeline } from '../components/standards/EditionTimeline';
 import { QcoMandateDrawer } from '../components/standards/QcoMandateDrawer';
+import { SupersessionDiffModal } from '../components/standards/SupersessionDiffModal';
 import { StatusBadge } from '../components/common/StatusBadge';
 import { Toast } from '../components/common/Toast';
 import { ViewType } from '../components/common/EditorialHeader';
@@ -41,6 +42,7 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
   const [sortBy, setSortBy] = useState<'number' | 'year' | 'qco'>('number');
   const [activeTab, setActiveTab] = useState<'dependencies' | 'timeline' | 'qco'>('dependencies');
   const [qcoDrawerStandard, setQcoDrawerStandard] = useState<IndianStandard | null>(null);
+  const [showSupersessionModal, setShowSupersessionModal] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -416,11 +418,12 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
               <StandardHeaderCard
                 standard={selectedStandard}
                 onOpenQcoDrawer={() => setQcoDrawerStandard(selectedStandard)}
+                onOpenSupersessionDiff={() => setShowSupersessionModal(true)}
                 onNavigateToAnalyze={handleNavigateToAnalyze}
               />
 
               {/* Sub-Tabs: Dependencies vs Timeline vs QCO */}
-              <div className="flex items-center gap-2 pb-2 border-b border-parchment-border">
+              <div className="flex items-center gap-2 pb-2 border-b border-parchment-border flex-wrap">
                 <button
                   onClick={() => setActiveTab('dependencies')}
                   className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-mono transition-all ${
@@ -445,10 +448,19 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
                   <span>Edition & Amendments Timeline</span>
                 </button>
 
+                <button
+                  onClick={() => setShowSupersessionModal(true)}
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-mono bg-parchment-surface hover:bg-parchment-subtle border border-parchment-border text-ink-text transition-colors cursor-pointer"
+                  title="Compare technical shifts with superseded standard revisions"
+                >
+                  <History size={13} className="text-mineral-blue" />
+                  <span>Supersession Diff Engine</span>
+                </button>
+
                 {selectedStandard.is_qco_mandatory && (
                   <button
                     onClick={() => setQcoDrawerStandard(selectedStandard)}
-                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-mono bg-status-indigoBg text-status-indigo border border-status-indigoBorder font-semibold hover:bg-status-indigo hover:text-white transition-colors ml-auto"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-mono bg-status-indigoBg text-status-indigo border border-status-indigoBorder font-semibold hover:bg-status-indigo hover:text-white transition-colors sm:ml-auto"
                   >
                     <Scale size={13} />
                     <span>View Statutory Gazette Order</span>
@@ -489,6 +501,13 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
         standard={qcoDrawerStandard}
         isOpen={!!qcoDrawerStandard}
         onClose={() => setQcoDrawerStandard(null)}
+      />
+
+      {/* Supersession Diff Modal */}
+      <SupersessionDiffModal
+        isOpen={showSupersessionModal}
+        onClose={() => setShowSupersessionModal(false)}
+        defaultStandardNumber={selectedStandard?.standard_number}
       />
 
       {/* Toast Notification */}

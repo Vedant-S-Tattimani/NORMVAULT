@@ -15,8 +15,15 @@ from app.models.clause import Clause
 from app.models.reference import NormativeReference, ReferenceType, ReferenceSemantics, ProcurementImpact
 from app.models.certification import CertificationRequirement, CertificationScheme, CertificationCurrentness
 from app.models.provenance import ProvenanceRecord, SourceType
-from app.models.document import Document
-from app.models.requirement import ProcurementSpecification, Requirement, RequirementEvidence, TechnicalParameter
+from app.models.document import Document, DocumentProcessingState
+from app.models.requirement import (
+    ProcurementSpecification,
+    Requirement,
+    RequirementEvidence,
+    TechnicalParameter,
+    RequirementType,
+    RequirementExtractionStatus,
+)
 from app.models.retrieval import StandardIndexEntry, RetrievalRun, RetrievalCandidate, RetrievalEvidence
 from app.services.retrieval.indexer import StandardsIndexer
 
@@ -30,7 +37,7 @@ def seed_db():
     try:
         # 1. Seed acceptance fixture
         if FIXTURE_PATH.exists():
-            with open(FIXTURE_PATH, "r") as f:
+            with open(FIXTURE_PATH, "r", encoding="utf-8") as f:
                 data = json.load(f)
             validated = IngestStandard(**data)
             std = resolve_standard(db, validated)
@@ -38,7 +45,7 @@ def seed_db():
 
         # 2. Seed synthetic pool standards (motors, HDPE pipes, steel, cement)
         if SYNTHETIC_POOL_PATH.exists():
-            with open(SYNTHETIC_POOL_PATH, "r") as f:
+            with open(SYNTHETIC_POOL_PATH, "r", encoding="utf-8") as f:
                 pool_data = json.load(f)
             
             prov = ProvenanceRecord(
@@ -219,6 +226,106 @@ def seed_db():
         indexer = StandardsIndexer()
         indexed, failures, duration_ms = indexer.rebuild_index(db, force=True)
         print(f"Search index built: {indexed} standards indexed in {duration_ms:.1f}ms with {failures} failures.")
+
+        # 4. Seed Benchmark Procurement Specifications and Requirements
+        doc1 = Document(
+            filename="NTPC_Tender_Doc_SecIV.pdf",
+            mime_type="application/pdf",
+            file_size=1048576,
+            file_hash="7f9a2b8e4c1d6f3a5e8b0c2d4f6a8b1c3e5d7f9a2b8e4c1d6f3a5e8b0c2d4f6a",
+            page_count=24,
+            status=DocumentProcessingState.COMPLETED
+        )
+        db.add(doc1)
+        db.flush()
+
+        spec1 = ProcurementSpecification(
+            document_id=doc1.id,
+            title="Supply of 3-Phase Induction Motors (15 kW)",
+            department="NTPC Limited",
+            tender_reference="NTPC/2025/ET-8819",
+            target_product_name="Three-Phase Induction Motor 15 kW",
+            raw_content="Motor shall be capable of delivering continuous rated output of 15 kW at 415V, 50Hz, 3-Phase with class F insulation and temperature rise limited to class B limits. Rated voltage 415V ± 10% (Section 4.2), while Appendix Table 2 notes 400V nominal for auxiliary drive systems. All motors shall conform to minimum Premium Efficiency Class IE3 in accordance with IS 12615. Efficiency testing shall be conducted per IS 15999 (Part 2/Sec 1).",
+            source_format="DOCUMENT",
+            status="COMPLETED"
+        )
+        db.add(spec1)
+        db.flush()
+
+        r1 = Requirement(
+            specification_id=spec1.id,
+            clause_reference="Section 4.2.1, Clause 3",
+            requirement_type=RequirementType.MECHANICAL,
+            extraction_status=RequirementExtractionStatus.EXPLICIT,
+            extracted_text="Motor shall be capable of delivering continuous rated output of 15 kW at 415V, 50Hz, 3-Phase with class F insulation and temperature rise limited to class B limits."
+        )
+        db.add(r1)
+        db.flush()
+        db.add(TechnicalParameter(requirement_id=r1.id, name="nominal output", original_value="15 kW", normalized_value="15", target_value="15", unit="kW"))
+        db.add(TechnicalParameter(requirement_id=r1.id, name="phase", original_value="3-Phase AC", normalized_value="3", target_value="3-Phase", unit=""))
+        db.add(TechnicalParameter(requirement_id=r1.id, name="frequency", original_value="50 Hz ± 3%", normalized_value="50", target_value="50", unit="Hz", tolerance="± 3%"))
+        db.add(TechnicalParameter(requirement_id=r1.id, name="duty cycle", original_value="S1 Continuous", normalized_value="S1", target_value="S1", unit=""))
+        db.add(RequirementEvidence(requirement_id=r1.id, document_id=doc1.id, page_number=14, section_heading="Electrical Rating & Duty", block_identifier="SEC-4-CL-3", source_text="Motor shall be capable of delivering continuous rated output of 15 kW at 415V, 50Hz, 3-Phase with class F insulation."))
+
+        r2 = Requirement(
+            specification_id=spec1.id,
+            clause_reference="Section 4.2 vs Appendix Table 2",
+            requirement_type=RequirementType.TESTING,
+            extraction_status=RequirementExtractionStatus.UNCERTAIN,
+            extracted_text="Rated voltage 415V ± 10% (Section 4.2), while Appendix Table 2 notes 400V nominal for auxiliary drive systems."
+        )
+        db.add(r2)
+        db.flush()
+        db.add(TechnicalParameter(requirement_id=r2.id, name="rated voltage", original_value="415 V", normalized_value="415", target_value="415", unit="V", tolerance="± 10%"))
+        db.add(TechnicalParameter(requirement_id=r2.id, name="appendix voltage", original_value="400 V", normalized_value="400", target_value="400", unit="V"))
+        db.add(RequirementEvidence(requirement_id=r2.id, document_id=doc1.id, page_number=14, section_heading="Voltage Rating", block_identifier="SEC-4-CL-2", source_text="Rated voltage 415V ± 10% (Section 4.2), while Appendix Table 2 notes 400V nominal."))
+
+        r3 = Requirement(
+            specification_id=spec1.id,
+            clause_reference="Section 4.3, Clause 1",
+            requirement_type=RequirementType.TESTING,
+            extraction_status=RequirementExtractionStatus.EXPLICIT,
+            extracted_text="All motors shall conform to minimum Premium Efficiency Class IE3 in accordance with IS 12615. Efficiency testing shall be conducted per IS 15999 (Part 2/Sec 1)."
+        )
+        db.add(r3)
+        db.flush()
+        db.add(TechnicalParameter(requirement_id=r3.id, name="efficiency class", original_value="IE3 Premium", normalized_value="IE3", target_value="IE3", unit=""))
+        db.add(TechnicalParameter(requirement_id=r3.id, name="test method", original_value="IS 15999 Part 2/Sec 1", normalized_value="IS 15999", target_value="IS 15999", unit=""))
+        db.add(TechnicalParameter(requirement_id=r3.id, name="full load efficiency", original_value="≥ 92.1%", normalized_value="92.1", target_value="92.1", unit="%", operator=">="))
+        db.add(RequirementEvidence(requirement_id=r3.id, document_id=doc1.id, page_number=15, section_heading="Efficiency & Testing", block_identifier="SEC-4-CL-1", source_text="All motors shall conform to minimum Premium Efficiency Class IE3 in accordance with IS 12615."))
+
+        # Spec 2: Switchgear
+        doc2 = Document(filename="NHPC_Switchgear_Spec_Rev2.pdf", mime_type="application/pdf", file_size=2097152, file_hash="a1b2c3d4e5f67890123456789abcdef0123456789abcdef0123456789abcdef0", page_count=38, status=DocumentProcessingState.COMPLETED)
+        db.add(doc2)
+        db.flush()
+        spec2 = ProcurementSpecification(document_id=doc2.id, title="High-Voltage Switchgear & Vacuum Circuit Breakers 33kV", department="NHPC Limited", tender_reference="NHPC/HYDRO/P-402", target_product_name="Vacuum Circuit Breakers 33kV", raw_content="33kV outdoor vacuum circuit breakers with 25kA breaking capacity for 3 seconds.", source_format="DOCUMENT", status="COMPLETED")
+        db.add(spec2)
+        db.flush()
+        r_sg = Requirement(specification_id=spec2.id, clause_reference="Section 3.1", requirement_type=RequirementType.SAFETY, extraction_status=RequirementExtractionStatus.EXPLICIT, extracted_text="33kV outdoor vacuum circuit breakers with 25kA breaking capacity for 3 seconds.")
+        db.add(r_sg)
+
+        # Spec 3: Distribution Transformers
+        doc3 = Document(filename="BHEL_EDN_TRANS_2025.pdf", mime_type="application/pdf", file_size=1572864, file_hash="fedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210", page_count=18, status=DocumentProcessingState.COMPLETED)
+        db.add(doc3)
+        db.flush()
+        spec3 = ProcurementSpecification(document_id=doc3.id, title="11kV Distribution Transformers Dry Type 500 kVA", department="BHEL", tender_reference="BHEL-EDN/SPEC/TRANS-09", target_product_name="11kV Distribution Transformers 500 kVA", raw_content="11kV/433V distribution transformers conforming to IS 1180 (Part 1) Level 2 energy efficiency.", source_format="DOCUMENT", status="COMPLETED")
+        db.add(spec3)
+        db.flush()
+        r_tr = Requirement(specification_id=spec3.id, clause_reference="Section 2.4", requirement_type=RequirementType.CERTIFICATION, extraction_status=RequirementExtractionStatus.EXPLICIT, extracted_text="11kV/433V distribution transformers conforming to IS 1180 (Part 1) Level 2 energy efficiency with mandatory BIS ISI mark.")
+        db.add(r_tr)
+
+        # Spec 4: Substation
+        doc4 = Document(filename="PGCIL_GIS_400KV_SR2.pdf", mime_type="application/pdf", file_size=4194304, file_hash="123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0", page_count=64, status=DocumentProcessingState.COMPLETED)
+        db.add(doc4)
+        db.flush()
+        spec4 = ProcurementSpecification(document_id=doc4.id, title="400kV Gas Insulated Substation Equipment", department="POWERGRID", tender_reference="POWERGRID/SR-II/SUB-22", target_product_name="Gas Insulated Substation 400kV", raw_content="400kV SF6 gas insulated substation switchgear equipment.", source_format="DOCUMENT", status="COMPLETED")
+        db.add(spec4)
+        db.flush()
+        r_gis = Requirement(specification_id=spec4.id, clause_reference="Section 1.2", requirement_type=RequirementType.SAFETY, extraction_status=RequirementExtractionStatus.EXPLICIT, extracted_text="400kV SF6 gas insulated switchgear equipment tested per IEC/IS standards.")
+        db.add(r_gis)
+
+        db.commit()
+        print(f"Successfully seeded 4 benchmark procurement specifications and requirements.")
 
     finally:
         db.close()

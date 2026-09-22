@@ -6,6 +6,10 @@ interface ClauseDiffInspectorProps {
   tenderClauseText?: string;
   standardClauseText?: string;
   corrigendumClauseText?: string;
+  affectedSection?: string;
+  targetStandard?: string;
+  conflictSummary?: string[];
+  standardKeyPoints?: string[];
   onCopyCorrigendum?: (text: string) => void;
 }
 
@@ -13,6 +17,16 @@ export const ClauseDiffInspector: React.FC<ClauseDiffInspectorProps> = ({
   tenderClauseText = "Motor shall be rated for 415V ± 10%, 50Hz, 3-Phase (Section 4.2), but auxiliary drive motors may operate on 400V nominal (Appendix Table 2). Motors shall conform to IS 325.",
   standardClauseText = "IS 12615:2018 Clause 6.1: Standard rated voltage shall be 415 V at 50 Hz. Single-speed squirrel cage induction motors shall comply with IE3 efficiency limits tested per IS 15999.",
   corrigendumClauseText = '"Amendment 1: Clause 4.2.1 and Appendix Table 2 are reconciled to specify rated operating voltage strictly as 415 V, 50 Hz, 3-Phase in accordance with IS 12615:2018 Clause 6.1."',
+  affectedSection = "PAGE 14 / TAB 2",
+  targetStandard = "IS 12615:2018",
+  conflictSummary = [
+    "400V nominal in Appendix Table 2 conflicts with Section 4.2",
+    "Cites superseded / withdrawn standard"
+  ],
+  standardKeyPoints = [
+    "415 V standard rated voltage per BIS Clause 6.1",
+    "Mandated under Ministry QCO statutory order"
+  ],
   onCopyCorrigendum,
 }) => {
   const [viewMode, setViewMode] = useState<'side-by-side' | 'unified'>('side-by-side');
@@ -74,15 +88,15 @@ export const ClauseDiffInspector: React.FC<ClauseDiffInspectorProps> = ({
           <div className="rounded-lg bg-status-crimsonBg/30 border border-status-crimsonBorder/70 p-3.5">
             <div className="flex items-center justify-between text-[10px] text-status-crimson font-bold uppercase mb-2">
               <span>TENDER SPECIFICATION (CONFLICTING)</span>
-              <span>PAGE 14 / TAB 2</span>
+              <span>{affectedSection}</span>
             </div>
             <p className="text-ink-text font-serif text-xs leading-relaxed">
               {tenderClauseText}
             </p>
-            <div className="mt-3 text-[11px] text-status-crimson font-mono">
-              - 400V nominal in Appendix Table 2 conflicts with Section 4.2
-              <br />
-              - IS 325 is withdrawn by BIS
+            <div className="mt-3 text-[11px] text-status-crimson font-mono space-y-0.5">
+              {conflictSummary.map((point, idx) => (
+                <div key={idx}>- {point}</div>
+              ))}
             </div>
           </div>
 
@@ -90,25 +104,25 @@ export const ClauseDiffInspector: React.FC<ClauseDiffInspectorProps> = ({
           <div className="rounded-lg bg-status-sageBg/30 border border-status-sageBorder/70 p-3.5">
             <div className="flex items-center justify-between text-[10px] text-status-sage font-bold uppercase mb-2">
               <span>AUTHORITATIVE BIS STANDARD (MANDATED)</span>
-              <span>IS 12615:2018</span>
+              <span>{targetStandard}</span>
             </div>
             <p className="text-ink-text font-serif text-xs leading-relaxed">
               {standardClauseText}
             </p>
-            <div className="mt-3 text-[11px] text-status-sage font-mono">
-              + 415 V standard rated voltage
-              <br />
-              + DPIIT Electric Motors QCO 2024 mandatory
+            <div className="mt-3 text-[11px] text-status-sage font-mono space-y-0.5">
+              {standardKeyPoints.map((point, idx) => (
+                <div key={idx}>+ {point}</div>
+              ))}
             </div>
           </div>
         </div>
       ) : (
         <div className="rounded-lg bg-parchment-subtle border border-parchment-border p-4 font-mono text-xs mb-4 space-y-1">
           <div className="text-status-crimson bg-status-crimsonBg/50 p-1.5 rounded">
-            - [TENDER SEC 4.2 / TAB 2]: {tenderClauseText}
+            - [{affectedSection}]: {tenderClauseText}
           </div>
           <div className="text-status-sage bg-status-sageBg/50 p-1.5 rounded">
-            + [IS 12615:2018 CL 6.1]: {standardClauseText}
+            + [{targetStandard}]: {standardClauseText}
           </div>
         </div>
       )}

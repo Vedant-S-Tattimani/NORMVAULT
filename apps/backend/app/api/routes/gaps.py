@@ -178,6 +178,22 @@ def get_specification_gaps(
     ]
 
 
+@router.get("/specifications/{specification_id}/readiness", response_model=SpecificationReadinessRead)
+def get_specification_readiness(
+    specification_id: int,
+    db: Session = DatabaseSession,
+) -> SpecificationReadinessRead:
+    """
+    Retrieves the comprehensive procurement readiness assessment for a specification under gaps.
+    """
+    spec = db.query(ProcurementSpecification).filter(ProcurementSpecification.id == specification_id).first()
+    if not spec:
+        raise HTTPException(status_code=404, detail=f"Specification with ID {specification_id} not found")
+
+    std, ed = _resolve_applicable_standard(db, spec)
+    return readiness_service.evaluate_specification(spec, std, ed, db=db)
+
+
 @router.get("/specifications/{specification_id}/matrix", response_model=List[CoverageMatrixItem])
 def get_specification_coverage_matrix(
     specification_id: int,

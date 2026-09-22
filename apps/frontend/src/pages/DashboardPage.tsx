@@ -22,6 +22,20 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
     load();
   }, []);
 
+  const readyCount = specifications.filter(
+    (s) => s.status === 'READY_FOR_TENDER' || s.status === 'AUDIT_READY'
+  ).length;
+
+  const actionCount = specifications.filter(
+    (s) => s.status === 'ACTION_REQUIRED'
+  ).length;
+
+  const uniqueOrgsCount = new Set(specifications.map((s) => s.issuing_organization)).size;
+  const totalRequirements = specifications.reduce(
+    (acc, s) => acc + (s.total_requirements_count || 0),
+    0
+  );
+
   return (
     <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Executive Header */}
@@ -45,6 +59,9 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             <span className="p-2 rounded bg-parchment-subtle border border-parchment-border">
               Tenders Monitored: <strong className="text-ink-text">{specifications.length}</strong>
             </span>
+            <span className="p-2 rounded bg-parchment-subtle border border-parchment-border">
+              Extracted Clauses: <strong className="text-ink-text">{totalRequirements}</strong>
+            </span>
             <span className="p-2 rounded bg-status-sageBg text-status-sage border border-status-sageBorder font-bold">
               QCO Enforcement: 100%
             </span>
@@ -63,20 +80,20 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             {specifications.length}
           </div>
           <p className="text-[11px] text-ink-muted mt-1 font-mono">
-            Across 4 Central PSUs
+            Across {uniqueOrgsCount || 4} Issuing Entities
           </p>
         </div>
 
         <div className="parchment-card rounded-xl p-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[10px] font-mono uppercase text-ink-muted">READINESS STATE</span>
+            <span className="text-[10px] font-mono uppercase text-ink-muted">AUDIT READY</span>
             <ShieldCheck size={16} className="text-status-sage" />
           </div>
           <div className="text-2xl sm:text-3xl font-bold font-serif text-status-sage">
-            1
+            {readyCount}
           </div>
           <p className="text-[11px] text-ink-muted mt-1 font-mono">
-            Ready for Immediate Tender
+            Ready for Immediate Publication
           </p>
         </div>
 
@@ -86,23 +103,23 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             <AlertTriangle size={16} className="text-status-amber" />
           </div>
           <div className="text-2xl sm:text-3xl font-bold font-serif text-status-amber">
-            2
+            {actionCount}
           </div>
           <p className="text-[11px] text-ink-muted mt-1 font-mono">
-            Pre-Tender Corrigendum Needed
+            Pre-Tender Corrigenda Required
           </p>
         </div>
 
         <div className="parchment-card rounded-xl p-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[10px] font-mono uppercase text-ink-muted">STATUTORY MANDATES</span>
+            <span className="text-[10px] font-mono uppercase text-ink-muted">EXTRACTED CLAUSES</span>
             <FileCheck size={16} className="text-status-indigo" />
           </div>
           <div className="text-2xl sm:text-3xl font-bold font-serif text-status-indigo">
-            3 QCOs
+            {totalRequirements}
           </div>
           <p className="text-[11px] text-ink-muted mt-1 font-mono">
-            In Full Statutory Enforcement
+            Under Active BIS Monitoring
           </p>
         </div>
       </div>

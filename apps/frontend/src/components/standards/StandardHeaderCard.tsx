@@ -8,18 +8,21 @@ import {
   Check,
   ArrowRight,
   BookOpen,
-  AlertTriangle
+  AlertTriangle,
+  History
 } from 'lucide-react';
 
 interface StandardHeaderCardProps {
   standard: IndianStandard;
   onOpenQcoDrawer?: () => void;
+  onOpenSupersessionDiff?: () => void;
   onNavigateToAnalyze?: (standardNumber: string) => void;
 }
 
 export const StandardHeaderCard: React.FC<StandardHeaderCardProps> = ({
   standard,
   onOpenQcoDrawer,
+  onOpenSupersessionDiff,
   onNavigateToAnalyze,
 }) => {
   const [copied, setCopied] = useState(false);
@@ -87,11 +90,23 @@ export const StandardHeaderCard: React.FC<StandardHeaderCardProps> = ({
             )}
           </button>
 
+          {/* Compare Superseded Standard Button */}
+          {onOpenSupersessionDiff && (
+            <button
+              onClick={onOpenSupersessionDiff}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono bg-parchment-surface hover:bg-parchment-subtle border border-parchment-border text-ink-text transition-all active:scale-95 cursor-pointer"
+              title="Compare with superseded standard revisions & technical shifts"
+            >
+              <History size={13} className="text-mineral-blue" />
+              <span>Compare Superseded</span>
+            </button>
+          )}
+
           {/* Jump to Analyze Workspace Button */}
           {onNavigateToAnalyze && (
             <button
               onClick={() => onNavigateToAnalyze(standard.standard_number)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded text-xs font-mono bg-mineral-blue hover:bg-mineral-dark text-white font-semibold shadow-xs transition-all active:scale-95"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded text-xs font-mono bg-mineral-blue hover:bg-mineral-dark text-white font-semibold shadow-xs transition-all active:scale-95 cursor-pointer"
             >
               <span>Analyze in Workspace</span>
               <ArrowRight size={13} />
@@ -165,6 +180,14 @@ export const StandardHeaderCard: React.FC<StandardHeaderCardProps> = ({
               <span className="text-[11px] text-ink-muted font-sans block mt-0.5">
                 This standard has been superseded by newer revisions. Tenders or purchase specifications citing this standard violate GFR 2017 Rule 144(i) and CVC guidelines.
               </span>
+              {onOpenSupersessionDiff && (
+                <button
+                  onClick={onOpenSupersessionDiff}
+                  className="mt-2 inline-flex items-center gap-1 text-xs font-mono text-status-crimson hover:underline font-semibold cursor-pointer"
+                >
+                  <span>Inspect Supersession Shift & Mandatory Corrigendum →</span>
+                </button>
+              )}
             </div>
           </div>
         )}

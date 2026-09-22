@@ -182,6 +182,88 @@
       ]
     },
     {
+      "standard_number": "IS 1180 (Part 1)",
+      "title": "Outdoor/Indoor Type Oil Immersed Distribution Transformers up to and Including 2500 kVA, 33 kV — Specification",
+      "scope": "Covers thermal, electrical and mechanical design requirements for 3-phase mineral oil immersed distribution transformers up to 2500 kVA.",
+      "division_code": "ETD",
+      "status": "ACTIVE",
+      "is_mandatory_qco": true,
+      "qco_reference": "Distribution Transformers (Quality Control) Order, 2024",
+      "year": 2014,
+      "clauses": [
+        {"clause_number": "6.8", "content": "Maximum total losses at 50% and 100% loading shall conform strictly to Standard Energy Efficiency Levels (Level 1, 2, or 3)."},
+        {"clause_number": "7.1", "content": "Winding temperature rise above ambient 50 deg C shall not exceed 50 deg C when tested in accordance with IS 2026."}
+      ],
+      "references": [
+        {
+          "target_standard_number": "IS 2026",
+          "relationship_type": "TEST_METHOD",
+          "reference_semantics": "NORMATIVE",
+          "procurement_impact": "REQUIRED_TEST",
+          "referencing_clause": "7.1",
+          "test_name": "Power Transformers Temperature-Rise Test"
+        },
+        {
+          "target_standard_number": "IS 335",
+          "relationship_type": "ALLIED_PRODUCT",
+          "reference_semantics": "NORMATIVE",
+          "procurement_impact": "REQUIRED_SPECIFICATION",
+          "referencing_clause": "6.2",
+          "notes": "Uninhibited and Inhibited Mineral Insulating Oils"
+        }
+      ],
+      "certifications": [
+        {
+          "scheme": "ISI_MARK_SCHEME_I",
+          "is_mandatory_qco": true,
+          "qco_order_number": "S.O. 1824(E)",
+          "notifying_ministry": "Ministry of Power / DPIIT",
+          "currentness_status": "VERIFIED_CURRENT",
+          "applicable_product_category": "Distribution Transformers"
+        }
+      ]
+    },
+    {
+      "standard_number": "IS 694",
+      "title": "Polyvinyl Chloride (PVC) Insulated Cables for Working Voltages up to and Including 1100 V — Specification",
+      "scope": "Specifies requirements for single and multicore cables with copper or aluminium conductors insulated with PVC for rated voltage up to 1100 V AC.",
+      "division_code": "ETD",
+      "status": "ACTIVE",
+      "is_mandatory_qco": true,
+      "qco_reference": "Electrical Wires and Cables (Quality Control) Order, 2023",
+      "year": 2010,
+      "clauses": [
+        {"clause_number": "4.1", "content": "Conductors shall be plain annealed high-conductivity copper or grade H2 aluminium conforming to IS 8130."},
+        {"clause_number": "5.2", "content": "Insulation thickness and spark test voltage shall withstand testing per IS 10810."}
+      ],
+      "references": [
+        {
+          "target_standard_number": "IS 8130",
+          "relationship_type": "ALLIED_PRODUCT",
+          "reference_semantics": "NORMATIVE",
+          "procurement_impact": "REQUIRED_SPECIFICATION",
+          "referencing_clause": "4.1"
+        },
+        {
+          "target_standard_number": "IS 10810",
+          "relationship_type": "TEST_METHOD",
+          "reference_semantics": "NORMATIVE",
+          "procurement_impact": "REQUIRED_TEST",
+          "referencing_clause": "5.2"
+        }
+      ],
+      "certifications": [
+        {
+          "scheme": "ISI_MARK_SCHEME_I",
+          "is_mandatory_qco": true,
+          "qco_order_number": "S.O. 4192(E)",
+          "notifying_ministry": "Ministry of Commerce & Industry, DPIIT",
+          "currentness_status": "VERIFIED_CURRENT",
+          "applicable_product_category": "Electric Cables"
+        }
+      ]
+    },
+    {
       "standard_number": "IS 99999",
       "title": "Historical Obsolete Specification for Steam Locomotives",
       "scope": "Old retired specification for coal-fired steam boiler locomotives.",

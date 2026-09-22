@@ -303,7 +303,9 @@ class ProcurementReadinessService:
             existing_assessment.execution_duration_ms = round(duration, 2)
 
             # Persist gaps (delete prior detected gaps for this spec to prevent duplicates)
-            db.query(SpecificationGap).filter(SpecificationGap.specification_id == specification.id).delete()
+            for old_gap in db.query(SpecificationGap).filter(SpecificationGap.specification_id == specification.id).all():
+                db.delete(old_gap)
+            db.flush()
             for g in all_gaps:
                 db.add(g)
             db.commit()

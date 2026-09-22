@@ -9,6 +9,7 @@ from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app.core.config import settings
 from app.core.logging import setup_logging
@@ -18,9 +19,7 @@ from app.api.routes import (
     health_router,
     standards_router,
     editions_router,
-    analysis_router,
-    compliance_router,
-    recommendations_router,
+    specifications_router,
     documents_router,
     retrieval_router,
     applicability_router,
@@ -29,7 +28,6 @@ from app.api.routes import (
     readiness_router,
     intelligence_router,
 )
-from app.api.routes.specifications import router as specifications_router
 
 setup_logging(level="DEBUG" if settings.DEBUG else "INFO")
 logger = logging.getLogger("normvault.app")
@@ -97,9 +95,6 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
     )
 
 
-from starlette.exceptions import HTTPException as StarletteHTTPException
-
-
 @app.exception_handler(StarletteHTTPException)
 async def http_exception_handler(request: Request, exc: StarletteHTTPException):
     return JSONResponse(
@@ -111,12 +106,6 @@ async def http_exception_handler(request: Request, exc: StarletteHTTPException):
 
 @app.exception_handler(Exception)
 async def generic_exception_handler(request: Request, exc: Exception):
-    if isinstance(exc, StarletteHTTPException):
-        return JSONResponse(
-            status_code=exc.status_code,
-            content={"detail": exc.detail},
-            headers=getattr(exc, "headers", None),
-        )
     logger.exception(f"Unhandled server exception on {request.url.path}: {exc}")
     return JSONResponse(
         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -147,11 +136,8 @@ def root():
 app.include_router(health_router, prefix=settings.API_V1_STR, tags=["Health"])
 app.include_router(documents_router, prefix=f"{settings.API_V1_STR}/documents", tags=["Documents"])
 app.include_router(specifications_router, prefix=f"{settings.API_V1_STR}/specifications", tags=["Specifications"])
-app.include_router(analysis_router, prefix=f"{settings.API_V1_STR}/analysis", tags=["Analysis"])
 app.include_router(standards_router, prefix=f"{settings.API_V1_STR}/standards", tags=["Standards"])
 app.include_router(editions_router, prefix=f"{settings.API_V1_STR}/editions", tags=["Editions"])
-app.include_router(recommendations_router, prefix=f"{settings.API_V1_STR}/recommendations", tags=["Recommendations"])
-app.include_router(compliance_router, prefix=f"{settings.API_V1_STR}/compliance", tags=["Compliance"])
 app.include_router(retrieval_router, prefix=f"{settings.API_V1_STR}/retrieval", tags=["Retrieval"])
 app.include_router(applicability_router, prefix=f"{settings.API_V1_STR}/applicability", tags=["Applicability"])
 app.include_router(currentness_router, prefix=f"{settings.API_V1_STR}/currentness", tags=["Currentness"])
