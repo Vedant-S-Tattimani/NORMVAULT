@@ -64,25 +64,40 @@ export const AnalyzePage: React.FC<AnalyzePageProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    let isCancelled = false;
     async function loadData() {
-      const specs = await listSpecifications();
-      setSpecifications(specs);
-      const spec = selectedSpecification || specs[0];
-      setCurrentSpec(spec);
+      try {
+        const specs = await listSpecifications();
+        if (isCancelled) return;
+        const spec = selectedSpecification || specs[0];
 
-      if (spec) {
-        const reqs = await listRequirements(spec.id);
-        setRequirements(reqs);
-        const apps = await getApplicabilityAssessments(spec.id);
-        setAssessments(apps);
-        const gapList = await getSpecificationGaps(spec.id);
-        setGaps(gapList);
-        if (gapList.length > 0) {
-          setSelectedGapId(gapList[0].id);
+        if (spec) {
+          const [reqs, apps, gapList] = await Promise.all([
+            listRequirements(spec.id),
+            getApplicabilityAssessments(spec.id),
+            getSpecificationGaps(spec.id),
+          ]);
+          if (isCancelled) return;
+
+          setSpecifications(specs);
+          setCurrentSpec(spec);
+          setRequirements(reqs);
+          setAssessments(apps);
+          setGaps(gapList);
+          if (gapList.length > 0) {
+            setSelectedGapId(gapList[0].id);
+          }
+        } else {
+          setSpecifications(specs);
         }
+      } catch (err) {
+        console.error('Error loading specifications:', err);
       }
     }
     loadData();
+    return () => {
+      isCancelled = true;
+    };
   }, [selectedSpecification]);
 
   const activeDiffGap = gaps.find((g) => g.id === selectedGapId) || gaps[0];
@@ -102,15 +117,21 @@ export const AnalyzePage: React.FC<AnalyzePageProps> = ({
   const handleSpecificationChange = async (specId: number) => {
     const spec = specifications.find((s) => s.id === specId);
     if (spec) {
-      setCurrentSpec(spec);
-      const reqs = await listRequirements(spec.id);
-      setRequirements(reqs);
-      const apps = await getApplicabilityAssessments(spec.id);
-      setAssessments(apps);
-      const gapList = await getSpecificationGaps(spec.id);
-      setGaps(gapList);
-      if (gapList.length > 0) {
-        setSelectedGapId(gapList[0].id);
+      try {
+        const [reqs, apps, gapList] = await Promise.all([
+          listRequirements(spec.id),
+          getApplicabilityAssessments(spec.id),
+          getSpecificationGaps(spec.id),
+        ]);
+        setCurrentSpec(spec);
+        setRequirements(reqs);
+        setAssessments(apps);
+        setGaps(gapList);
+        if (gapList.length > 0) {
+          setSelectedGapId(gapList[0].id);
+        }
+      } catch (err) {
+        console.error('Error switching specification:', err);
       }
     }
   };
