@@ -71,26 +71,6 @@ export const ImpactMetricsSection: React.FC = () => {
             );
           })}
         </div>
-
-        {/* SIH Banner */}
-        <div className="mt-12 p-6 rounded-2xl bg-[#EAE4D8]/80 border border-[#8C8275]/30 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-[#1E231D] text-white flex items-center justify-center font-serif font-bold text-lg shrink-0">
-              SIH
-            </div>
-            <div>
-              <div className="font-serif font-bold text-sm text-[#1E2320]">
-                Smart India Hackathon Problem Statement 26108
-              </div>
-              <div className="text-xs text-[#525650] font-serif">
-                "AI-Powered Recommendation Engine for Identifying Applicable Indian Standards for Procurement Specifications."
-              </div>
-            </div>
-          </div>
-          <div className="text-xs font-mono text-[#787165] bg-[#FCFAF6] px-4 py-2 rounded-lg border border-[#8C8275]/20 shrink-0">
-            Authoritative BIS Architecture
-          </div>
-        </div>
       </div>
     </section>
   );

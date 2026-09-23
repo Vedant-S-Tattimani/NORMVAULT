@@ -35,7 +35,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
       {/* 6. Interactive Standards Catalog Quick Explorer */}
       <StandardsQuickExplorer onNavigate={onNavigate} />
 
-      {/* 7. Measurable Real-World Impact & SIH 26108 Banner */}
+      {/* 7. Measurable Real-World Impact */}
       <ImpactMetricsSection />
 
       {/* 8. Institutional Call To Action */}
