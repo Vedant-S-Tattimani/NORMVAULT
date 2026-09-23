@@ -1,2 +1,1 @@
-# NORMVAULT Backend
-FastAPI backend for NORMVAULT.
+# NORMVAULT Backend Engine

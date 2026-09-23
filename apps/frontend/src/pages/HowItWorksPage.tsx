@@ -176,7 +176,7 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({ onNavigate }) =>
             <div className="max-w-3xl">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E5F0F2] text-[#2C6E80] text-[10px] font-mono font-semibold uppercase tracking-wider mb-3 border border-[#2C6E80]/30">
                 <Sparkles size={12} />
-                <span>SIH 26108 • DETERMINISTIC STANDARDS ENGINE</span>
+                <span>AUTHORITATIVE DETERMINISTIC STANDARDS ENGINE</span>
               </div>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#1E2320] leading-tight mb-4">
                 How NORMVAULT Works

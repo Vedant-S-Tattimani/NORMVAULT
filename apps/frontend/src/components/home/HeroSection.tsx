@@ -276,8 +276,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate }) => {
             <div>
               <h3 className="text-2xl font-serif font-bold text-ink-text mb-2">About NORMVAULT</h3>
               <p className="text-xs font-mono text-ink-muted mb-4">
-                Developed for Smart India Hackathon (SIH) Problem Statement 26108:
-                "AI-Powered Recommendation Engine for Identifying Applicable Indian Standards for Procurement Specifications."
+                AI-Powered Recommendation Engine for Identifying Applicable Indian Standards for Procurement Specifications.
               </p>
               <div className="text-xs text-ink-muted space-y-3 leading-relaxed">
                 <p>

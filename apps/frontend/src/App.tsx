@@ -87,8 +87,6 @@ export function App() {
               <div className="flex items-center gap-2 font-mono text-[11px]">
                 <span>NORMVAULT v2.4.0</span>
                 <span className="text-slate-300">•</span>
-                <span>SIH Problem Statement 26108</span>
-                <span className="text-slate-300">•</span>
                 <span>Bureau of Indian Standards (BIS) Architecture</span>
               </div>
               <div className="text-[11px] font-mono text-ink-faint">
