@@ -1,0 +1,44 @@
+{
+  "standard_number": "IS 14543",
+  "title": "Packaged Drinking Water (Other than Packaged Natural Mineral Water) — Specification (Second Revision)",
+  "scope": "Prescribes the requirements and methods of sampling and test for packaged drinking water other than packaged natural mineral water.",
+  "division_code": "FAD",
+  "status": "ACTIVE",
+  "is_mandatory_qco": true,
+  "qco_reference": "Packaged Drinking Water (Quality Control) Order, 2020 (S.O. 2341(E))",
+  "year": 2016,
+  "edition": "2nd",
+  "clauses": [
+    {
+      "clause_number": "3.1",
+      "title": "Treatment and Processing",
+      "content": "Water shall be derived from surface water or civic water supply or other underground source, subjected to decantation, filtration, demineralisation, reverse osmosis and disinfection."
+    },
+    {
+      "clause_number": "4.1",
+      "title": "Total Dissolved Solids (TDS)",
+      "content": "Total dissolved solids (TDS) shall not exceed 500 mg/l."
+    },
+    {
+      "clause_number": "4.2",
+      "title": "Microbiological Requirements",
+      "content": "Total coliform bacteria, Faecal streptococci and E. coli shall be absent in 250 ml of sample."
+    }
+  ],
+  "references": [
+    {
+      "target_standard_number": "IS 3025 (Part 16)",
+      "relationship_type": "TEST_METHOD",
+      "reference_semantics": "NORMATIVE",
+      "procurement_impact": "REQUIRED_TEST",
+      "referencing_clause": "4.1"
+    },
+    {
+      "target_standard_number": "IS 15185",
+      "relationship_type": "TEST_METHOD",
+      "reference_semantics": "NORMATIVE",
+      "procurement_impact": "REQUIRED_TEST",
+      "referencing_clause": "4.2"
+    }
+  ]
+}

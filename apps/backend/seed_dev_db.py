@@ -25,10 +25,13 @@ from app.models.requirement import (
     RequirementExtractionStatus,
 )
 from app.models.retrieval import StandardIndexEntry, RetrievalRun, RetrievalCandidate, RetrievalEvidence
+from app.models.user import User, UserRole
+from app.core.security import get_password_hash
 from app.services.retrieval.indexer import StandardsIndexer
 
 FIXTURE_PATH = Path("tests/fixtures/acceptance_fixture.json").resolve()
 SYNTHETIC_POOL_PATH = Path("tests/fixtures/synthetic_standards_pool.json").resolve()
+
 
 def seed_db():
     Base.metadata.drop_all(bind=engine)
@@ -44,22 +47,21 @@ def seed_db():
             print(f"Successfully seeded acceptance standard: {std.standard_number} (ID: {std.id})")
 
         # 2. Seed synthetic pool standards (motors, HDPE pipes, steel, cement)
+        prov = ProvenanceRecord(
+            source_type=SourceType.BIS_PORTAL,
+            source_url="https://www.services.bis.gov.in/standards",
+            source_hash="dev_seed_pool",
+            confidence_score=1.0,
+            extraction_metadata={"source": "dev_seed"},
+        )
+        db.add(prov)
+        db.flush()
+
         if SYNTHETIC_POOL_PATH.exists():
             with open(SYNTHETIC_POOL_PATH, "r", encoding="utf-8") as f:
                 pool_data = json.load(f)
-            
-            prov = ProvenanceRecord(
-                source_type=SourceType.BIS_PORTAL,
-                source_url="https://www.services.bis.gov.in/standards",
-                source_hash="dev_seed_pool",
-                confidence_score=1.0,
-                extraction_metadata={"source": "dev_seed"},
-            )
-            db.add(prov)
-            db.flush()
 
             for item in pool_data.get("standards", []):
-                # Avoid duplicate
                 existing = db.query(IndianStandard).filter_by(standard_number=item["standard_number"]).first()
                 if existing:
                     continue
@@ -77,7 +79,6 @@ def seed_db():
                 db.add(std)
                 db.flush()
 
-                # Determine edition status and metadata
                 std_num = item["standard_number"]
                 year = item.get("year", 2020)
                 ed_status = EditionStatus.CURRENT
@@ -151,26 +152,23 @@ def seed_db():
                     cl = Clause(
                         edition_id=ed.id,
                         clause_number=c_data["clause_number"],
-                        content=c_data["content"],
+                        content=c_data.get("content") or c_data.get("text", ""),
                         provenance_id=prov.id,
                     )
                     db.add(cl)
-                print(f"Successfully seeded standard: {std.standard_number} (ID: {std.id}) - {std.title[:40]}")
 
             db.commit()
 
-            # Second pass: Seed Normative References & Certification Requirements
+            # Second pass: References & Certifications
             for item in pool_data.get("standards", []):
                 src_std = db.query(IndianStandard).filter_by(standard_number=item["standard_number"]).first()
                 if not src_std:
                     continue
 
-                # References
                 for ref_data in item.get("references", []):
                     target_std = db.query(IndianStandard).filter_by(standard_number=ref_data["target_standard_number"]).first()
                     target_id = target_std.id if target_std else None
 
-                    # Locate source clause if referencing_clause provided
                     source_clause_id = None
                     if ref_data.get("referencing_clause") and src_std.editions:
                         cl = db.query(Clause).filter(
@@ -184,15 +182,18 @@ def seed_db():
                     if ref_data.get("target_standard_number") == "IS 15999":
                         target_ed_year = 2014
 
+                    r_type_str = ref_data.get("relationship_type", "NORMATIVE_REFERENCE")
+                    rel_type = getattr(ReferenceType, r_type_str, ReferenceType.NORMATIVE_REFERENCE)
+
                     ref = NormativeReference(
                         source_standard_id=src_std.id,
                         source_edition_id=src_std.editions[0].id if src_std.editions else None,
                         target_standard_id=target_id,
                         target_standard_number=ref_data["target_standard_number"],
                         target_edition_year=target_ed_year,
-                        relationship_type=ReferenceType(ref_data.get("relationship_type", "NORMATIVE_REFERENCE")),
-                        reference_semantics=ReferenceSemantics(ref_data.get("reference_semantics", "UNKNOWN")),
-                        procurement_impact=ProcurementImpact(ref_data.get("procurement_impact", "UNKNOWN")),
+                        relationship_type=rel_type,
+                        reference_semantics=getattr(ReferenceSemantics, ref_data.get("reference_semantics", "UNKNOWN"), ReferenceSemantics.UNKNOWN),
+                        procurement_impact=getattr(ProcurementImpact, ref_data.get("procurement_impact", "UNKNOWN"), ProcurementImpact.UNKNOWN),
                         source_clause_id=source_clause_id,
                         referencing_clause=ref_data.get("referencing_clause"),
                         condition_text=ref_data.get("condition_text"),
@@ -203,7 +204,6 @@ def seed_db():
                     )
                     db.add(ref)
 
-                # Certifications
                 for cert_data in item.get("certifications", []):
                     cert = CertificationRequirement(
                         standard_id=src_std.id,
@@ -222,12 +222,86 @@ def seed_db():
 
             db.commit()
 
-        # 3. Build Search Index
-        indexer = StandardsIndexer()
-        indexed, failures, duration_ms = indexer.rebuild_index(db, force=True)
-        print(f"Search index built: {indexed} standards indexed in {duration_ms:.1f}ms with {failures} failures.")
+        # 3. Ingest Extra Standards from data/standards/ directory
+        standards_dir_candidates = [
+            Path("../../data/standards").resolve(),
+            Path("data/standards").resolve(),
+            Path("../data/standards").resolve(),
+        ]
+        standards_dir = next((d for d in standards_dir_candidates if d.exists()), None)
+        if standards_dir:
+            for json_file in standards_dir.glob("*.json"):
+                try:
+                    with open(json_file, "r", encoding="utf-8") as f:
+                        s_data = json.load(f)
+                    
+                    std_num = s_data.get("standard_number")
+                    if not std_num or db.query(IndianStandard).filter_by(standard_number=std_num).first():
+                        continue
 
-        # 4. Seed Benchmark Procurement Specifications and Requirements
+                    status_str = s_data.get("status", "ACTIVE")
+                    if status_str not in ("ACTIVE", "SUPERSEDED", "WITHDRAWN"):
+                        status_str = "ACTIVE"
+
+                    new_std = IndianStandard(
+                        standard_number=std_num,
+                        title=s_data.get("title", std_num),
+                        scope=s_data.get("scope"),
+                        division_code=s_data.get("division_code", "GEN"),
+                        status=StandardStatus(status_str),
+                        is_mandatory_qco=s_data.get("is_mandatory_qco", False),
+                        qco_reference=s_data.get("qco_reference"),
+                        provenance_id=prov.id,
+                    )
+                    db.add(new_std)
+                    db.flush()
+
+                    new_ed = StandardEdition(
+                        standard_id=new_std.id,
+                        edition_number=1,
+                        year=s_data.get("year", 2020),
+                        status=EditionStatus.CURRENT,
+                        is_current=True,
+                        provenance_id=prov.id,
+                    )
+                    db.add(new_ed)
+                    db.flush()
+
+                    for c in s_data.get("clauses", []):
+                        db.add(Clause(
+                            edition_id=new_ed.id,
+                            clause_number=c.get("clause_number", "1.0"),
+                            title=c.get("title"),
+                            content=c.get("content") or c.get("text") or "",
+                            provenance_id=prov.id,
+                        ))
+
+                    for r in s_data.get("references", []):
+                        r_type_str = r.get("relationship_type", "NORMATIVE_REFERENCE")
+                        rel_type = getattr(ReferenceType, r_type_str, ReferenceType.NORMATIVE_REFERENCE)
+                        ref_sem_str = r.get("reference_semantics", "NORMATIVE")
+                        ref_sem = getattr(ReferenceSemantics, ref_sem_str, ReferenceSemantics.NORMATIVE)
+                        proc_imp_str = r.get("procurement_impact", "REQUIRED_SPECIFICATION")
+                        proc_imp = getattr(ProcurementImpact, proc_imp_str, ProcurementImpact.REQUIRED_SPECIFICATION)
+
+                        db.add(NormativeReference(
+                            source_standard_id=new_std.id,
+                            source_edition_id=new_ed.id,
+                            target_standard_number=r["target_standard_number"],
+                            relationship_type=rel_type,
+                            reference_semantics=ref_sem,
+                            procurement_impact=proc_imp,
+                            referencing_clause=r.get("referencing_clause"),
+                            test_name=r.get("test_name"),
+                            provenance_id=prov.id,
+                        ))
+                    print(f"Ingested catalog standard: {std_num} ({s_data.get('title')[:40]}...)")
+                except Exception as ex:
+                    print(f"Skipping {json_file.name}: {ex}")
+
+            db.commit()
+
+        # 4. Seed Benchmark Procurement Specifications
         doc1 = Document(
             filename="NTPC_Tender_Doc_SecIV.pdf",
             mime_type="application/pdf",
@@ -324,11 +398,58 @@ def seed_db():
         r_gis = Requirement(specification_id=spec4.id, clause_reference="Section 1.2", requirement_type=RequirementType.SAFETY, extraction_status=RequirementExtractionStatus.EXPLICIT, extracted_text="400kV SF6 gas insulated switchgear equipment tested per IEC/IS standards.")
         db.add(r_gis)
 
+        # 5. Seed default RBAC users
+        demo_users = [
+            User(
+                username="procurement_officer",
+                email="rajesh.kumar@ntpc.co.in",
+                full_name="Er. Rajesh Kumar",
+                hashed_password=get_password_hash("normvault123"),
+                role=UserRole.PROCUREMENT_OFFICER,
+                department="Tender & Contracts Division, NTPC Ltd.",
+                designation="Executive Engineer (Procurement)",
+                is_active=True,
+            ),
+            User(
+                username="standards_auditor",
+                email="sk.roy@bis.gov.in",
+                full_name="Dr. S. K. Roy",
+                hashed_password=get_password_hash("normvault123"),
+                role=UserRole.STANDARDS_AUDITOR,
+                department="Electrotechnical Standards Department (ETD), BIS",
+                designation="Scientist E / Senior Standards Officer",
+                is_active=True,
+            ),
+            User(
+                username="vigilance_admin",
+                email="ak.verma@cvc.gov.in",
+                full_name="Shri A. K. Verma",
+                hashed_password=get_password_hash("normvault123"),
+                role=UserRole.ADMIN,
+                department="Central Vigilance Commission (CVC)",
+                designation="Chief Vigilance & Compliance Officer",
+                is_active=True,
+            ),
+        ]
+        for u in demo_users:
+            if not db.query(User).filter_by(username=u.username).first():
+                db.add(u)
+
         db.commit()
-        print(f"Successfully seeded 4 benchmark procurement specifications and requirements.")
+
+        # 6. Rebuild vector search index
+        try:
+            indexer = StandardsIndexer()
+            indexed, failures, duration_ms = indexer.rebuild_index(db, force=True)
+            print(f"Search index built: {indexed} standards indexed in {duration_ms:.1f}ms with {failures} failures.")
+        except Exception as idx_err:
+            print(f"Indexing notice: {idx_err}")
+
+        print("Successfully seeded benchmark procurement specifications, requirements, and RBAC users.")
 
     finally:
         db.close()
+
 
 if __name__ == "__main__":
     seed_db()

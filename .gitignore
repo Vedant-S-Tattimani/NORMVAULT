@@ -62,3 +62,5 @@ apps/backend/uploads/
 Thumbs.db
 .vscode/
 .idea/
+.kilo/
+

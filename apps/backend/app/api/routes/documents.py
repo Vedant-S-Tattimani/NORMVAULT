@@ -22,8 +22,12 @@ router = APIRouter()
 UPLOAD_DIR = Path("uploads")
 UPLOAD_DIR.mkdir(exist_ok=True)
 
-ALLOWED_EXTENSIONS = {".pdf", ".txt"}
-ALLOWED_MIMES = {"application/pdf", "text/plain"}
+ALLOWED_EXTENSIONS = {".pdf", ".txt", ".docx"}
+ALLOWED_MIMES = {
+    "application/pdf",
+    "text/plain",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+}
 MAX_FILE_SIZE = 25 * 1024 * 1024  # 25 MB
 
 

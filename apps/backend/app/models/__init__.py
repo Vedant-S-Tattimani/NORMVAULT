@@ -6,7 +6,6 @@ from app.models.standard import IndianStandard, StandardEdition, Amendment, Stan
 from app.models.provenance import ProvenanceRecord, SourceType
 from app.models.clause import Clause
 from app.models.reference import NormativeReference, ReferenceType, ReferenceSemantics, ProcurementImpact
-from app.models.product import ProductCategory, Product
 from app.models.requirement import (
     ProcurementSpecification,
     Requirement,
@@ -26,12 +25,6 @@ from app.models.gap import (
     CoverageStatus,
     ProcurementReadinessAssessment,
 )
-from app.models.recommendation import (
-    SpecificationAnalysis,
-    Recommendation,
-    RecommendationEvidence,
-    ConfidenceLevel,
-)
 from app.models.retrieval import (
     StandardIndexEntry,
     RetrievalRun,
@@ -49,6 +42,7 @@ from app.models.applicability import (
     ApplicabilityAssessment,
     AssessmentEvidence,
 )
+from app.models.user import User, UserRole
 from app.models.intelligence import (
     ProcurementIntelligenceRun,
     ProcurementReviewAction,
@@ -70,8 +64,6 @@ __all__ = [
     "ReferenceType",
     "ReferenceSemantics",
     "ProcurementImpact",
-    "ProductCategory",
-    "Product",
     "ProcurementSpecification",
     "Requirement",
     "TechnicalParameter",
@@ -83,9 +75,6 @@ __all__ = [
     "CertificationRequirement",
     "CertificationScheme",
     "CertificationCurrentness",
-    "SpecificationAnalysis",
-    "Recommendation",
-    "RecommendationEvidence",
     "SpecificationGap",
     "GapType",
     "GapSeverity",
@@ -93,7 +82,6 @@ __all__ = [
     "CompletenessCategory",
     "CoverageStatus",
     "ProcurementReadinessAssessment",
-    "ConfidenceLevel",
     "StandardIndexEntry",
     "RetrievalRun",
     "RetrievalCandidate",
@@ -112,4 +100,6 @@ __all__ = [
     "ActionPriority",
     "ActionType",
     "PackageViewType",
+    "User",
+    "UserRole",
 ]

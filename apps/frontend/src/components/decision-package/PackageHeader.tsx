@@ -131,6 +131,19 @@ export const PackageHeader: React.FC<PackageHeaderProps> = ({ pkg, onExportJson 
             <span>Export CSV</span>
           </button>
 
+          {/* Export GeM Technical BOQ Button */}
+          <button
+            onClick={() => {
+              const runId = pkg.run_id || 1;
+              window.open(`/api/v1/intelligence/runs/${runId}/export/gem?format=csv`, '_blank');
+            }}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded border border-mineral-blue bg-blue-50 hover:bg-blue-100 text-mineral-blue text-xs font-mono font-medium shadow-xs transition-colors cursor-pointer"
+            title="Export Government e-Marketplace (GeM) Technical BOQ & Compliance Schedule (CSV)"
+          >
+            <Download size={13} />
+            <span>Export GeM BOQ</span>
+          </button>
+
           {/* Verify Seal Button */}
           <button
             onClick={handleVerifySeal}

@@ -79,9 +79,6 @@ class SpecificationGap(Base, TimestampMixin):
     specification_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("procurement_specifications.id", ondelete="CASCADE"), nullable=True, index=True
     )
-    analysis_id: Mapped[Optional[int]] = mapped_column(
-        ForeignKey("specification_analyses.id", ondelete="CASCADE"), nullable=True, index=True
-    )
     requirement_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("spec_requirements.id", ondelete="CASCADE"), nullable=True, index=True
     )
@@ -118,7 +115,6 @@ class SpecificationGap(Base, TimestampMixin):
 
     # Relationships
     specification: Mapped[Optional["ProcurementSpecification"]] = relationship("ProcurementSpecification")
-    analysis: Mapped[Optional["SpecificationAnalysis"]] = relationship("SpecificationAnalysis", back_populates="gaps")
     requirement: Mapped[Optional["Requirement"]] = relationship("Requirement")
     standard: Mapped[Optional["IndianStandard"]] = relationship("IndianStandard")
     edition: Mapped[Optional["StandardEdition"]] = relationship("StandardEdition")

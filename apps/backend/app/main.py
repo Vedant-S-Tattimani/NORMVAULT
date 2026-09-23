@@ -27,6 +27,7 @@ from app.api.routes import (
     gaps_router,
     readiness_router,
     intelligence_router,
+    auth_router,
 )
 
 setup_logging(level="DEBUG" if settings.DEBUG else "INFO")
@@ -144,4 +145,5 @@ app.include_router(currentness_router, prefix=f"{settings.API_V1_STR}/currentnes
 app.include_router(gaps_router, prefix=f"{settings.API_V1_STR}/gaps", tags=["Gaps"])
 app.include_router(readiness_router, prefix=f"{settings.API_V1_STR}/readiness", tags=["Readiness"])
 app.include_router(intelligence_router, prefix=f"{settings.API_V1_STR}", tags=["Procurement Intelligence"])
+app.include_router(auth_router, prefix=f"{settings.API_V1_STR}", tags=["Authentication & RBAC"])
 

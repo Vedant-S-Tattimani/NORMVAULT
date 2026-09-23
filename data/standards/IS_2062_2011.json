@@ -1,0 +1,44 @@
+{
+  "standard_number": "IS 2062",
+  "title": "Hot Rolled Medium and High Tensile Structural Steel — Specification (Seventh Revision)",
+  "scope": "This standard specifies requirements for hot rolled medium and high tensile structural steel intended for use in structural work, bridges, towers and buildings.",
+  "division_code": "MTD",
+  "status": "ACTIVE",
+  "is_mandatory_qco": true,
+  "qco_reference": "Steel and Steel Products (Quality Control) Order, 2024 (S.O. 1827(E))",
+  "year": 2011,
+  "edition": "7th",
+  "clauses": [
+    {
+      "clause_number": "6.1",
+      "title": "Chemical Composition",
+      "content": "Carbon equivalent (CE) based on ladle analysis shall not exceed 0.42 for Grade E250 quality A, B and C structural steel."
+    },
+    {
+      "clause_number": "7.1",
+      "title": "Tensile Properties",
+      "content": "Tensile strength for Grade E250 shall be 410 MPa minimum, with yield strength not less than 250 MPa for thickness less than 20 mm."
+    },
+    {
+      "clause_number": "7.2",
+      "title": "Charpy V-Notch Impact Test",
+      "content": "Impact energy for Quality BR/B0 shall not be less than 27 Joules at specified test temperatures (0 deg C or -20 deg C)."
+    }
+  ],
+  "references": [
+    {
+      "target_standard_number": "IS 1608 (Part 1)",
+      "relationship_type": "TEST_METHOD",
+      "reference_semantics": "NORMATIVE",
+      "procurement_impact": "REQUIRED_TEST",
+      "referencing_clause": "7.1"
+    },
+    {
+      "target_standard_number": "IS 1757 (Part 1)",
+      "relationship_type": "TEST_METHOD",
+      "reference_semantics": "NORMATIVE",
+      "procurement_impact": "REQUIRED_TEST",
+      "referencing_clause": "7.2"
+    }
+  ]
+}

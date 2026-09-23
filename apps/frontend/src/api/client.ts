@@ -12,9 +12,13 @@ export class ApiError extends Error {
 
 export async function fetchApi<T>(endpoint: string, options?: RequestInit): Promise<T> {
   const url = endpoint.startsWith('/') ? `/api/v1${endpoint}` : `/api/v1/${endpoint}`;
+  const token = typeof window !== 'undefined' ? localStorage.getItem('normvault_token') : null;
+  const authHeaders: Record<string, string> = token ? { Authorization: `Bearer ${token}` } : {};
+
   const response = await fetch(url, {
     headers: {
       'Content-Type': 'application/json',
+      ...authHeaders,
       ...options?.headers,
     },
     ...options,

@@ -4,20 +4,59 @@ services:
     container_name: normvault-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_USER: normvault
-      POSTGRES_PASSWORD: normvault
-      POSTGRES_DB: normvault
+      POSTGRES_USER: ${POSTGRES_USER:-normvault}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-normvault}
+      POSTGRES_DB: ${POSTGRES_DB:-normvault}
     ports:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./scripts/maintenance/init-pgvector.sql:/docker-entrypoint-initdb.d/init-pgvector.sql:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U normvault -d normvault"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-normvault} -d ${POSTGRES_DB:-normvault}"]
       interval: 5s
       timeout: 5s
       retries: 5
 
+  backend:
+    build:
+      context: ./apps/backend
+      dockerfile: Dockerfile
+    container_name: normvault-backend
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-normvault}:${POSTGRES_PASSWORD:-normvault}@postgres:5432/${POSTGRES_DB:-normvault}
+      ENVIRONMENT: production
+      LOG_LEVEL: INFO
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./data/standards:/app/data/standards:ro
+      - backend-uploads:/app/uploads
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  frontend:
+    build:
+      context: ./apps/frontend
+      dockerfile: Dockerfile
+    container_name: normvault-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+
 volumes:
   pgdata:
+    driver: local
+  backend-uploads:
     driver: local

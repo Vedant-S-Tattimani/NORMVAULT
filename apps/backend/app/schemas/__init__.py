@@ -18,12 +18,6 @@ from app.schemas.analysis import (
     TechnicalParameterBase,
     TechnicalParameterRead,
 )
-from app.schemas.recommendation import (
-    SpecificationAnalysisRead,
-    RecommendationRead,
-    RecommendationEvidenceRead,
-    SpecificationGapRead,
-)
 from app.schemas.retrieval import (
     RetrievalQueryRequest,
     RetrievalEvidenceRead,
@@ -112,10 +106,6 @@ __all__ = [
     "RequirementRead",
     "TechnicalParameterBase",
     "TechnicalParameterRead",
-    "SpecificationAnalysisRead",
-    "RecommendationRead",
-    "RecommendationEvidenceRead",
-    "SpecificationGapRead",
     "RetrievalQueryRequest",
     "RetrievalEvidenceRead",
     "RetrievalCandidateRead",
@@ -178,5 +168,3 @@ __all__ = [
     "ProcurementDecisionPackageRead",
     "ExportJsonRead",
 ]
-
-

@@ -1,0 +1,51 @@
+{
+  "standard_number": "IS 694",
+  "title": "Polyvinyl Chloride Insulated Unsheathed and Sheathed Cables/Cords with Rigid and Flexible Conductors for Working Voltages up to and Including 450/750 V — Specification (Fourth Revision)",
+  "scope": "Covers requirements for single and multi-core PVC cables for electric power and lighting.",
+  "division_code": "ETD",
+  "status": "ACTIVE",
+  "is_mandatory_qco": true,
+  "qco_reference": "Wires and Cables (Quality Control) Order, 2023 (S.O. 4122(E))",
+  "year": 2010,
+  "edition": "4th",
+  "clauses": [
+    {
+      "clause_number": "5.1",
+      "title": "Conductor",
+      "content": "Conductors shall be of plain or tinned annealed high conductivity copper or aluminium wires complying with IS 8130."
+    },
+    {
+      "clause_number": "6.2",
+      "title": "Insulation Thickness",
+      "content": "Insulation shall be PVC Type A or Type C compound complying with IS 5831, applied continuously by extrusion."
+    },
+    {
+      "clause_number": "14.1",
+      "title": "High Voltage Test",
+      "content": "Cables shall withstand an AC voltage of 2.0 kV rms for 15 minutes between conductors without breakdown."
+    }
+  ],
+  "references": [
+    {
+      "target_standard_number": "IS 8130",
+      "relationship_type": "NORMATIVE_DEPENDENCY",
+      "reference_semantics": "NORMATIVE",
+      "procurement_impact": "REQUIRED_SPECIFICATION",
+      "referencing_clause": "5.1"
+    },
+    {
+      "target_standard_number": "IS 5831",
+      "relationship_type": "NORMATIVE_DEPENDENCY",
+      "reference_semantics": "NORMATIVE",
+      "procurement_impact": "REQUIRED_SPECIFICATION",
+      "referencing_clause": "6.2"
+    },
+    {
+      "target_standard_number": "IS 10810 (Part 45)",
+      "relationship_type": "TEST_METHOD",
+      "reference_semantics": "NORMATIVE",
+      "procurement_impact": "REQUIRED_TEST",
+      "referencing_clause": "14.1"
+    }
+  ]
+}

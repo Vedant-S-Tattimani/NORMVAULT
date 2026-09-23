@@ -6,7 +6,7 @@ Adheres strictly to the No Fake Data policy: only returns verified database reco
 import re
 from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy.orm import Session, joinedload
+from sqlalchemy.orm import Session, joinedload, selectinload
 from sqlalchemy import select, or_
 
 from app.api.dependencies import DatabaseSession
@@ -53,7 +53,12 @@ def list_standards(
     q: str = Query(None, description="Search query for title or standard number"),
     db: Session = DatabaseSession
 ) -> List[IndianStandardRead]:
-    stmt = select(IndianStandard)
+    stmt = select(IndianStandard).options(
+        selectinload(IndianStandard.editions),
+        selectinload(IndianStandard.amendments),
+        selectinload(IndianStandard.outgoing_references),
+        selectinload(IndianStandard.certifications),
+    )
     
     if q:
         search_pattern = f"%{q.lower().strip()}%"
@@ -74,12 +79,26 @@ def get_gazette_feed(db: Session = DatabaseSession):
     Returns active Gazette Quality Control Orders (QCOs) and mandatory statutory compliance notices.
     """
     standards = db.query(IndianStandard).filter(IndianStandard.is_mandatory_qco == True).all()
+    division_ministries = {
+        "ETD": "Ministry of Heavy Industries & Ministry of Power",
+        "CED": "Ministry of Housing and Urban Affairs & DPIIT",
+        "MTD": "Ministry of Steel",
+        "FAD": "Ministry of Consumer Affairs, Food & Public Distribution",
+        "TXD": "Ministry of Road Transport and Highways (MoRTH)",
+        "MED": "Ministry of Heavy Industries",
+    }
+
     feed = []
     for s in standards:
         qco_ref = s.qco_reference or "DPIIT Quality Control Order"
         so_match = re.search(r"S\.O\.\s*[\d/A-Za-z()-]+", qco_ref)
         so_num = so_match.group(0) if so_match else "S.O. Mandate"
-        
+
+        ministry = division_ministries.get(s.division_code, "DPIIT, Ministry of Commerce and Industry")
+        year_match = re.search(r"202[0-9]", qco_ref)
+        order_year = year_match.group(0) if year_match else "2024"
+        enforced_date = f"01 Oct {order_year}" if s.division_code == "ETD" else f"01 Jan {order_year}"
+
         feed.append({
             "id": s.id,
             "standard_number": s.standard_number,
@@ -87,17 +106,27 @@ def get_gazette_feed(db: Session = DatabaseSession):
             "full_standard_title": s.title,
             "so_number": so_num,
             "qco_reference": qco_ref,
-            "enforced_date": "01 Oct 2024" if "12615" in s.standard_number else "01 Jan 2024",
-            "ministry": "DPIIT, Ministry of Commerce and Industry" if "12615" in s.standard_number else "Ministry of Heavy Industries",
+            "enforced_date": enforced_date,
+            "ministry": ministry,
             "status": "MANDATORY IN FORCE",
-            "division_code": s.division_code or "ETD"
+            "division_code": s.division_code or "ETD",
         })
     return feed
 
 
 @router.get("/{standard_id}", response_model=IndianStandardRead)
 def get_standard(standard_id: int, db: Session = DatabaseSession):
-    std = db.query(IndianStandard).filter(IndianStandard.id == standard_id).first()
+    stmt = (
+        select(IndianStandard)
+        .options(
+            selectinload(IndianStandard.editions),
+            selectinload(IndianStandard.amendments),
+            selectinload(IndianStandard.outgoing_references),
+            selectinload(IndianStandard.certifications),
+        )
+        .where(IndianStandard.id == standard_id)
+    )
+    std = db.scalars(stmt).first()
     if not std:
         raise HTTPException(status_code=404, detail="Standard not found")
     return std

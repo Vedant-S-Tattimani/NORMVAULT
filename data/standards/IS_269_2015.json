@@ -1,0 +1,56 @@
+{
+  "standard_number": "IS 269",
+  "title": "Ordinary Portland Cement — Specification (Sixth Revision)",
+  "scope": "This standard covers the manufacture and chemical and physical requirements of 33 grade, 43 grade and 53 grade ordinary portland cement.",
+  "division_code": "CED",
+  "status": "ACTIVE",
+  "is_mandatory_qco": true,
+  "qco_reference": "Cement (Quality Control) Order, 2024 (S.O. 1245(E))",
+  "year": 2015,
+  "edition": "6th",
+  "clauses": [
+    {
+      "clause_number": "5.1",
+      "title": "Chemical Requirements",
+      "content": "Total loss on ignition shall not exceed 5.0 percent by mass. Insoluble residue shall not exceed 5.0 percent by mass."
+    },
+    {
+      "clause_number": "6.1",
+      "title": "Fineness",
+      "content": "The specific surface shall not be less than 225 m2/kg when tested by the air permeability method in accordance with IS 4031 (Part 2)."
+    },
+    {
+      "clause_number": "6.2",
+      "title": "Soundness",
+      "content": "Unaerated cement shall not have an expansion of more than 10 mm when tested by the Le Chatelier method according to IS 4031 (Part 3)."
+    },
+    {
+      "clause_number": "6.3",
+      "title": "Compressive Strength",
+      "content": "The average compressive strength of at least three mortar cubes (area of face 50 cm2) shall not be less than: 72 h: 27 MPa, 168 h: 37 MPa, 672 h: 53 MPa for 53 grade cement."
+    }
+  ],
+  "references": [
+    {
+      "target_standard_number": "IS 4031 (Part 2)",
+      "relationship_type": "TEST_METHOD",
+      "reference_semantics": "NORMATIVE",
+      "procurement_impact": "REQUIRED_TEST",
+      "referencing_clause": "6.1"
+    },
+    {
+      "target_standard_number": "IS 4031 (Part 3)",
+      "relationship_type": "TEST_METHOD",
+      "reference_semantics": "NORMATIVE",
+      "procurement_impact": "REQUIRED_TEST",
+      "referencing_clause": "6.2"
+    },
+    {
+      "target_standard_number": "IS 4031 (Part 6)",
+      "relationship_type": "TEST_METHOD",
+      "reference_semantics": "NORMATIVE",
+      "procurement_impact": "REQUIRED_TEST",
+      "referencing_clause": "6.3"
+    }
+  ]
+}

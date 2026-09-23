@@ -7,6 +7,9 @@ import { DashboardPage } from './pages/DashboardPage';
 import { DecisionPackagePage } from './pages/DecisionPackagePage';
 import { HowItWorksPage } from './pages/HowItWorksPage';
 import { BenchmarksPage } from './pages/BenchmarksPage';
+import { ComparativeEvaluationPage } from './pages/ComparativeEvaluationPage';
+import { AuthProvider } from './context/AuthContext';
+import { RoleSwitcherModal } from './components/common/RoleSwitcherModal';
 import { ProcurementSpecification } from './types/requirement';
 
 export function App() {
@@ -27,48 +30,54 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen bg-parchment-base text-ink-text flex flex-col font-sans selection:bg-mineral-light selection:text-mineral-dark">
-      {/* Top Header shown on non-home pages */}
-      {currentView !== 'home' && (
-        <EditorialHeader
-          currentView={currentView}
-          onSelectView={(view) => setCurrentView(view)}
-        />
-      )}
+    <AuthProvider>
+      <div className="min-h-screen bg-parchment-base text-ink-text flex flex-col font-sans selection:bg-mineral-light selection:text-mineral-dark">
+        <RoleSwitcherModal />
 
-      {/* Main Content Area */}
-      <main className="flex-1">
-        {currentView === 'home' && (
-          <HomePage onNavigate={handleNavigate} />
-        )}
-        {currentView === 'how-it-works' && (
-          <HowItWorksPage onNavigate={handleNavigate} />
-        )}
-        {currentView === 'analyze' && (
-          <AnalyzePage
-            selectedSpecification={selectedSpec}
-            onNavigateToDecisionPackage={(spec) => {
-              if (spec) setSelectedSpec(spec);
-              setCurrentView('decision-package');
-            }}
+        {/* Top Header shown on non-home pages */}
+        {currentView !== 'home' && (
+          <EditorialHeader
+            currentView={currentView}
+            onSelectView={(view) => setCurrentView(view)}
           />
         )}
-        {currentView === 'standards' && (
-          <StandardsPage
-            initialQuery={standardsInitialQuery}
-            onNavigate={handleNavigate}
-          />
-        )}
-        {currentView === 'dashboard' && (
-          <DashboardPage onSelectSpecification={handleSelectSpecification} />
-        )}
-        {currentView === 'decision-package' && (
-          <DecisionPackagePage selectedSpecification={selectedSpec} />
-        )}
-        {currentView === 'benchmarks' && (
-          <BenchmarksPage />
-        )}
-      </main>
+
+        {/* Main Content Area */}
+        <main className="flex-1">
+          {currentView === 'home' && (
+            <HomePage onNavigate={handleNavigate} />
+          )}
+          {currentView === 'how-it-works' && (
+            <HowItWorksPage onNavigate={handleNavigate} />
+          )}
+          {currentView === 'analyze' && (
+            <AnalyzePage
+              selectedSpecification={selectedSpec}
+              onNavigateToDecisionPackage={(spec) => {
+                if (spec) setSelectedSpec(spec);
+                setCurrentView('decision-package');
+              }}
+            />
+          )}
+          {currentView === 'standards' && (
+            <StandardsPage
+              initialQuery={standardsInitialQuery}
+              onNavigate={handleNavigate}
+            />
+          )}
+          {currentView === 'dashboard' && (
+            <DashboardPage onSelectSpecification={handleSelectSpecification} />
+          )}
+          {currentView === 'decision-package' && (
+            <DecisionPackagePage selectedSpecification={selectedSpec} />
+          )}
+          {currentView === 'benchmarks' && (
+            <BenchmarksPage />
+          )}
+          {currentView === 'comparative' && (
+            <ComparativeEvaluationPage />
+          )}
+        </main>
 
       {/* Editorial Footer */}
       {currentView !== 'home' && (
@@ -87,7 +96,8 @@ export function App() {
           </div>
         </footer>
       )}
-    </div>
+      </div>
+    </AuthProvider>
   );
 }
 

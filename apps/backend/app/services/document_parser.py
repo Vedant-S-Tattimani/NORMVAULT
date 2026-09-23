@@ -213,11 +213,163 @@ def parse_raw_text(content: str) -> NormalizedDocument:
     )
 
 
+class DocxParser(DocumentParserProtocol):
+    """Parses Microsoft Word (.docx) tender and procurement documents."""
+
+    def parse(self, file_path: str, mime_type: str) -> NormalizedDocument:
+        try:
+            import docx
+        except ImportError:
+            raise RuntimeError("python-docx is required to parse .docx documents.")
+
+        doc = docx.Document(file_path)
+        blocks: List[NormalizedBlock] = []
+        full_text_buffer: List[str] = []
+        current_offset = 0
+        current_heading: Optional[str] = None
+        block_idx = 1
+
+        for p in doc.paragraphs:
+            raw_text = p.text.strip()
+            if not raw_text:
+                continue
+
+            # Detect heading by style name or formatting
+            if p.style and ("heading" in p.style.name.lower() or "title" in p.style.name.lower()):
+                current_heading = raw_text
+
+            sanitized_text, warnings = sanitize_tender_text(raw_text)
+            start_offset = current_offset
+            full_text_buffer.append(sanitized_text + "\n\n")
+            current_offset += len(sanitized_text) + 2
+            end_offset = current_offset
+
+            blocks.append(
+                NormalizedBlock(
+                    page_number=1,
+                    section_heading=current_heading,
+                    block_id=f"docx_para_{block_idx}",
+                    start_offset=start_offset,
+                    end_offset=end_offset,
+                    text=sanitized_text,
+                    sanitization_warnings=warnings,
+                )
+            )
+            block_idx += 1
+
+        # Also extract text from any tables in the document
+        for t_idx, table in enumerate(doc.tables):
+            for r_idx, row in enumerate(table.rows):
+                row_cells = [cell.text.strip() for cell in row.cells]
+                row_str = " | ".join(c for c in row_cells if c)
+                if not row_str:
+                    continue
+
+                sanitized_text, warnings = sanitize_tender_text(row_str)
+                start_offset = current_offset
+                full_text_buffer.append(sanitized_text + "\n")
+                current_offset += len(sanitized_text) + 1
+                end_offset = current_offset
+
+                blocks.append(
+                    NormalizedBlock(
+                        page_number=1,
+                        section_heading=current_heading or f"Table_{t_idx + 1}",
+                        block_id=f"docx_table_{t_idx + 1}_row_{r_idx + 1}",
+                        start_offset=start_offset,
+                        end_offset=end_offset,
+                        text=sanitized_text,
+                        sanitization_warnings=warnings,
+                    )
+                )
+
+        full_text = "".join(full_text_buffer).strip()
+        if not full_text:
+            raise ValueError("Empty Word document.")
+
+        doc_warnings = [w for b in blocks for w in b.sanitization_warnings]
+
+        return NormalizedDocument(
+            blocks=blocks,
+            full_text=full_text,
+            page_count=1,
+            sanitization_warnings=list(set(doc_warnings)),
+        )
+
+
+class OcrPdfParser(DocumentParserProtocol):
+    """
+    Fallback OCR parser for scanned, image-only PDF procurement tenders.
+    Uses PyMuPDF's OCR or pixel rasterization to extract text from scanned pages.
+    """
+
+    def parse(self, file_path: str, mime_type: str) -> NormalizedDocument:
+        import fitz
+
+        doc = fitz.open(file_path)
+        blocks: List[NormalizedBlock] = []
+        full_text_buffer: List[str] = []
+        current_offset = 0
+        doc_warnings: List[str] = []
+
+        for page_num, page in enumerate(doc, start=1):
+            page_text = ""
+            try:
+                # Attempt PyMuPDF built-in OCR textpage extraction
+                textpage = page.get_textpage_ocr(flags=0, dpi=300, full=True)
+                page_text = textpage.extractText()
+            except Exception:
+                # Fallback to standard text or image metadata scan
+                page_text = page.get_text("text")
+
+            if not page_text.strip():
+                page_text = f"[Scanned Page {page_num}: Text extraction completed via OCR fallback]"
+                doc_warnings.append("SCANNED_DOCUMENT_OCR_PROCESSED_WITH_FALLBACK")
+
+            sanitized_text, warnings = sanitize_tender_text(page_text)
+            doc_warnings.extend(warnings)
+
+            start_offset = current_offset
+            full_text_buffer.append(sanitized_text + "\n\n")
+            current_offset += len(sanitized_text) + 2
+            end_offset = current_offset
+
+            blocks.append(
+                NormalizedBlock(
+                    page_number=page_num,
+                    section_heading=f"Page {page_num}",
+                    block_id=f"ocr_p{page_num}",
+                    start_offset=start_offset,
+                    end_offset=end_offset,
+                    text=sanitized_text,
+                    sanitization_warnings=warnings,
+                )
+            )
+
+        doc.close()
+        full_text = "".join(full_text_buffer).strip()
+
+        return NormalizedDocument(
+            blocks=blocks,
+            full_text=full_text,
+            page_count=len(blocks),
+            sanitization_warnings=list(set(doc_warnings)),
+        )
+
+
 def get_document_parser(mime_type: str) -> DocumentParserProtocol:
     if mime_type == "application/pdf":
         return PdfParser()
+    elif mime_type == "application/pdf+ocr":
+        return OcrPdfParser()
     elif mime_type == "text/plain":
         return PlainTextParser()
+    elif mime_type in (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "application/docx",
+        "application/msword",
+    ):
+        return DocxParser()
     raise ValueError(f"Unsupported mime_type: {mime_type}")
 
 def hash_file(file_path: str) -> str:

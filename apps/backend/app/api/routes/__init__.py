@@ -13,6 +13,7 @@ from app.api.routes.currentness import router as currentness_router
 from app.api.routes.gaps import router as gaps_router
 from app.api.routes.readiness import router as readiness_router
 from app.api.routes.intelligence import router as intelligence_router
+from app.api.routes.auth import router as auth_router
 
 __all__ = [
     "health_router",
@@ -26,6 +27,7 @@ __all__ = [
     "gaps_router",
     "readiness_router",
     "intelligence_router",
+    "auth_router",
 ]
 
 

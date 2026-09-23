@@ -1,0 +1,44 @@
+{
+  "standard_number": "IS 14286",
+  "title": "Crystalline Silicon Terrestrial Photovoltaic (PV) Modules — Design Qualification and Type Approval (Second Revision)",
+  "scope": "Specifies requirements for the design qualification and type approval of terrestrial crystalline silicon photovoltaic modules suitable for long-term operation in open-air climates.",
+  "division_code": "ETD",
+  "status": "ACTIVE",
+  "is_mandatory_qco": true,
+  "qco_reference": "Solar Photovoltaics, Systems, Devices and Components Goods (Requirements for Compulsory Registration) Order, 2021 (S.O. 3811(E))",
+  "year": 2019,
+  "edition": "2nd",
+  "clauses": [
+    {
+      "clause_number": "10.1",
+      "title": "Visual Inspection",
+      "content": "No cracked, broken, or misaligned cells, faulty interconnects, or bubbling in encapsulation."
+    },
+    {
+      "clause_number": "10.2",
+      "title": "Maximum Power Determination",
+      "content": "Power output shall be determined under Standard Test Conditions (STC: 1000 W/m2, 25 deg C cell temp, AM 1.5 spectrum)."
+    },
+    {
+      "clause_number": "10.3",
+      "title": "Insulation Test",
+      "content": "The module shall withstand a test voltage of 2000 V plus 4 times the maximum system voltage applied between the output terminals and the frame."
+    }
+  ],
+  "references": [
+    {
+      "target_standard_number": "IS/IEC 61730 (Part 1)",
+      "relationship_type": "SAFETY_REQUIREMENT",
+      "reference_semantics": "NORMATIVE",
+      "procurement_impact": "REQUIRED_SAFETY_CONDITION",
+      "referencing_clause": "10.3"
+    },
+    {
+      "target_standard_number": "IS/IEC 61730 (Part 2)",
+      "relationship_type": "TEST_METHOD",
+      "reference_semantics": "NORMATIVE",
+      "procurement_impact": "REQUIRED_TEST",
+      "referencing_clause": "10.3"
+    }
+  ]
+}

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { ArrowRight, Search, X } from 'lucide-react';
+import { ArrowRight, Search, X, Shield, ChevronDown } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 
-export type ViewType = 'home' | 'analyze' | 'standards' | 'dashboard' | 'decision-package' | 'how-it-works' | 'benchmarks';
+export type ViewType = 'home' | 'analyze' | 'standards' | 'dashboard' | 'decision-package' | 'how-it-works' | 'benchmarks' | 'comparative';
 
 interface EditorialHeaderProps {
   currentView: ViewType;
@@ -16,6 +17,7 @@ export const EditorialHeader: React.FC<EditorialHeaderProps> = ({
 }) => {
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const { user, setIsModalOpen } = useAuth();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -110,13 +112,39 @@ export const EditorialHeader: React.FC<EditorialHeaderProps> = ({
             >
               Benchmarks
             </button>
+            <button
+              onClick={() => onSelectView('comparative')}
+              className={`py-1 transition-all ${
+                currentView === 'comparative'
+                  ? 'text-ink-text font-bold border-b border-ink-text'
+                  : 'hover:text-ink-text'
+              }`}
+            >
+              Bidder Evaluation
+            </button>
           </nav>
         </div>
 
         {/* Right: Telemetry & Actions */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
+          {/* Officer Persona Badge / Role Switcher */}
+          <button
+            onClick={() => setIsModalOpen(true)}
+            title="Click to Switch Officer Role (RBAC)"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded border border-parchment-border bg-parchment-surface hover:border-mineral-blue text-xs text-ink-text transition-all group"
+          >
+            <Shield size={12} className="text-mineral-blue" />
+            <span className="font-medium truncate max-w-[130px] sm:max-w-none text-[11px]">
+              {user?.full_name || 'Officer'}
+            </span>
+            <span className="hidden xl:inline text-[10px] font-mono text-ink-faint">
+              ({user?.role === 'ADMIN' ? 'CVC' : user?.role === 'STANDARDS_AUDITOR' ? 'BIS' : 'Procurement'})
+            </span>
+            <ChevronDown size={11} className="text-ink-faint group-hover:text-ink-text ml-0.5" />
+          </button>
+
           {/* Subtle Telemetry */}
-          <div className="hidden lg:flex items-center gap-2 px-2.5 py-1 rounded border border-parchment-border bg-parchment-surface text-[10px] font-mono text-ink-muted">
+          <div className="hidden lg:flex items-center gap-2 px-2 py-1 rounded border border-parchment-border bg-parchment-surface text-[10px] font-mono text-ink-muted">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-subtle-pulse" />
             <span>BIS ENGINE</span>
             <span className="text-slate-300">|</span>

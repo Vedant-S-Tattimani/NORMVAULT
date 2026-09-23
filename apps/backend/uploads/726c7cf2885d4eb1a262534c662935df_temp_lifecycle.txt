@@ -1,1 +1,0 @@
-The motor shall have a rated power of 5 kW. The enclosure shall be IP55.

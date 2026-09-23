@@ -1,0 +1,36 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node
+node_modules/
+dist/
+.vite/
+
+# Database & local data
+*.db
+*.sqlite
+*.sqlite3
+pgdata/
+uploads/
+
+# Documentation & IDE
+.idea/
+.vscode/
+.gemini/
+*.log
+docs/

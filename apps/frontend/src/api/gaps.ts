@@ -12,7 +12,7 @@ export async function getSpecificationGaps(specificationId: number): Promise<Spe
 
 export async function getComplianceReadiness(specificationId: number): Promise<ComplianceReadinessSummary> {
   try {
-    return await fetchApi<ComplianceReadinessSummary>(`/gaps/specifications/${specificationId}/readiness`);
+    return await fetchApi<ComplianceReadinessSummary>(`/readiness/specifications/${specificationId}`);
   } catch (err) {
     console.warn(`Could not load readiness for specification ${specificationId}:`, err);
     return {

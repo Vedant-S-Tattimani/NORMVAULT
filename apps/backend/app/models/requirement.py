@@ -51,9 +51,6 @@ class ProcurementSpecification(Base, TimestampMixin):
     requirements: Mapped[List["Requirement"]] = relationship(
         "Requirement", back_populates="specification", cascade="all, delete-orphan"
     )
-    analyses: Mapped[List["SpecificationAnalysis"]] = relationship(
-        "SpecificationAnalysis", back_populates="specification", cascade="all, delete-orphan"
-    )
 
 
 class Requirement(Base, TimestampMixin):

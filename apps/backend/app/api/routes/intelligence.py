@@ -282,3 +282,63 @@ def export_decision_package_json(
         exported_at=datetime.now(timezone.utc).isoformat(),
         package=package,
     )
+
+
+@router.get(
+    "/runs/{run_id}/export/gem",
+    summary="Export Government e-Marketplace (GeM) BOQ and Technical Compliance Schedule",
+)
+def export_gem_boq(
+    run_id: int,
+    format: str = Query("json", enum=["json", "csv"]),
+    db: Session = Depends(get_db),
+):
+    """
+    Exports technical specification parameters, governing BIS standards, and mandatory QCO
+    statutory declarations in the official GeM Technical BOQ schedule format.
+    """
+    from app.services.intelligence.gem_exporter import build_gem_boq_schedule, generate_gem_boq_csv
+    from app.models.intelligence import ProcurementIntelligenceRun
+
+    run = db.query(ProcurementIntelligenceRun).filter_by(id=run_id).first()
+    if not run:
+        raise HTTPException(status_code=404, detail=f"Intelligence run {run_id} not found")
+
+    boq_data = build_gem_boq_schedule(db=db, run=run)
+
+    if format == "csv":
+        csv_content = generate_gem_boq_csv(boq_data)
+        from fastapi.responses import Response
+        return Response(
+            content=csv_content,
+            media_type="text/csv",
+            headers={"Content-Disposition": f'attachment; filename="GeM_BOQ_Compliance_Run_{run_id}.csv"'}
+        )
+
+    return boq_data
+
+
+@router.post(
+    "/comparative-evaluation",
+    summary="Evaluate and rank multiple bidder submissions against tender specifications and standards",
+)
+def evaluate_bidders_comparative(
+    request: dict,
+    db: Session = Depends(get_db),
+):
+    """
+    Ranks multiple bidder submissions side-by-side against tender parameters,
+    identifying non-compliance, deviations, and statutory disqualification triggers.
+    """
+    from app.schemas.comparative import ComparativeEvaluationRequest
+    from app.services.intelligence.comparative_evaluator import ComparativeEvaluator
+
+    eval_req = ComparativeEvaluationRequest(**request)
+    evaluator = ComparativeEvaluator()
+    try:
+        response = evaluator.evaluate(db=db, request=eval_req)
+        return response.model_dump()
+    except ValueError as ve:
+        raise HTTPException(status_code=404, detail=str(ve))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Comparative evaluation failed: {str(e)}")
