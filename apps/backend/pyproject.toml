@@ -33,3 +33,8 @@ python_files = "test_*.py"
 asyncio_mode = "auto"
 pythonpath = [".", "../.."]
 
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*"]
+
+

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, ArrowUp } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 import { ViewType } from '../common/EditorialHeader';
 
 interface FooterProps {
@@ -29,16 +29,6 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               An AI-powered recommendation and verification engine for identifying applicable Indian Standards 
               for public procurement specifications, ensuring complete compliance with the BIS Act 2016 and DPIIT QCOs.
             </p>
-
-            <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 text-xs font-mono text-[#A6AEA4] max-w-sm">
-              <div className="text-[10px] uppercase tracking-wider text-[#64B5F6] font-bold mb-1 flex items-center gap-1.5">
-                <ShieldCheck size={13} />
-                <span>Smart India Hackathon 2024</span>
-              </div>
-              <div className="text-[11px] text-[#E0DDD5]">
-                Problem Statement 26108: AI-Powered Recommendation Engine for Applicable Indian Standards.
-              </div>
-            </div>
           </div>
 
           {/* Col 1: Platform */}
