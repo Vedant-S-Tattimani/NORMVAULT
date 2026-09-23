@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { EditorialHeader, ViewType } from './components/common/EditorialHeader';
 import { HomePage } from './pages/HomePage';
 import { AnalyzePage } from './pages/AnalyzePage';
@@ -9,7 +9,6 @@ import { HowItWorksPage } from './pages/HowItWorksPage';
 import { BenchmarksPage } from './pages/BenchmarksPage';
 import { ComparativeEvaluationPage } from './pages/ComparativeEvaluationPage';
 import { AuthProvider } from './context/AuthContext';
-import { RoleSwitcherModal } from './components/common/RoleSwitcherModal';
 import { ProcurementSpecification } from './types/requirement';
 
 export function App() {
@@ -17,28 +16,30 @@ export function App() {
   const [selectedSpec, setSelectedSpec] = useState<ProcurementSpecification | undefined>(undefined);
   const [standardsInitialQuery, setStandardsInitialQuery] = useState<string | undefined>(undefined);
 
-  const handleSelectSpecification = (spec: ProcurementSpecification) => {
+  const handleSelectSpecification = useCallback((spec: ProcurementSpecification) => {
     setSelectedSpec(spec);
     setCurrentView('analyze');
-  };
+  }, []);
 
-  const handleNavigate = (view: ViewType, query?: string) => {
+  const handleNavigate = useCallback((view: ViewType, query?: string) => {
     if (view === 'standards' && query) {
       setStandardsInitialQuery(query);
     }
     setCurrentView(view);
-  };
+  }, []);
+
+  const handleSelectView = useCallback((view: ViewType) => {
+    setCurrentView(view);
+  }, []);
 
   return (
     <AuthProvider>
       <div className="min-h-screen bg-parchment-base text-ink-text flex flex-col font-sans selection:bg-mineral-light selection:text-mineral-dark">
-        <RoleSwitcherModal />
-
         {/* Top Header shown on non-home pages */}
         {currentView !== 'home' && (
           <EditorialHeader
             currentView={currentView}
-            onSelectView={(view) => setCurrentView(view)}
+            onSelectView={handleSelectView}
           />
         )}
 
@@ -79,23 +80,23 @@ export function App() {
           )}
         </main>
 
-      {/* Editorial Footer */}
-      {currentView !== 'home' && (
-        <footer className="bg-parchment-surface border-t border-parchment-border py-4 px-4 lg:px-8 text-xs text-ink-muted">
-          <div className="max-w-[1500px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
-            <div className="flex items-center gap-2 font-mono text-[11px]">
-              <span>NORMVAULT v2.4.0</span>
-              <span className="text-slate-300">•</span>
-              <span>SIH Problem Statement 26108</span>
-              <span className="text-slate-300">•</span>
-              <span>Bureau of Indian Standards (BIS) Architecture</span>
+        {/* Editorial Footer */}
+        {currentView !== 'home' && (
+          <footer className="bg-parchment-surface border-t border-parchment-border py-4 px-4 lg:px-8 text-xs text-ink-muted">
+            <div className="max-w-[1500px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+              <div className="flex items-center gap-2 font-mono text-[11px]">
+                <span>NORMVAULT v2.4.0</span>
+                <span className="text-slate-300">•</span>
+                <span>SIH Problem Statement 26108</span>
+                <span className="text-slate-300">•</span>
+                <span>Bureau of Indian Standards (BIS) Architecture</span>
+              </div>
+              <div className="text-[11px] font-mono text-ink-faint">
+                Phases 0–8 Authoritative Deterministic Engine
+              </div>
             </div>
-            <div className="text-[11px] font-mono text-ink-faint">
-              Phases 0–8 Authoritative Deterministic Engine
-            </div>
-          </div>
-        </footer>
-      )}
+          </footer>
+        )}
       </div>
     </AuthProvider>
   );
