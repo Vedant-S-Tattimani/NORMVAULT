@@ -47,10 +47,11 @@ compliance_engine = StandardsComplianceEngine()
     "/",
     response_model=List[IndianStandardRead],
     summary="List Registered Indian Standards",
-    description="Retrieves verified Indian Standards from the database. Allows deterministic searching by title or standard_number.",
+    description="Retrieves verified Indian Standards from the database. Allows deterministic searching by title, standard number, division code, or keyword.",
 )
 def list_standards(
-    q: str = Query(None, description="Search query for title or standard number"),
+    q: Optional[str] = Query(None, description="Search query for title, standard number, or keyword"),
+    division: Optional[str] = Query(None, description="Filter by BIS division code (e.g. ETD, CED, MED, MTD, ITD)"),
     db: Session = DatabaseSession
 ) -> List[IndianStandardRead]:
     stmt = select(IndianStandard).options(
@@ -60,16 +61,31 @@ def list_standards(
         selectinload(IndianStandard.certifications),
     )
     
+    if division and division.upper() != "ALL":
+        stmt = stmt.where(IndianStandard.division_code == division.upper().strip())
+
     if q:
-        search_pattern = f"%{q.lower().strip()}%"
-        stmt = stmt.where(
-            or_(
-                IndianStandard.standard_number.ilike(search_pattern),
-                IndianStandard.title.ilike(search_pattern)
+        clean_q = q.strip()
+        search_pattern = f"%{clean_q.lower()}%"
+        if clean_q.upper() in ["ETD", "CED", "MED", "MTD", "ITD", "FAD", "TXD"]:
+            stmt = stmt.where(
+                or_(
+                    IndianStandard.division_code == clean_q.upper(),
+                    IndianStandard.standard_number.ilike(search_pattern),
+                    IndianStandard.title.ilike(search_pattern)
+                )
             )
-        )
+        else:
+            stmt = stmt.where(
+                or_(
+                    IndianStandard.standard_number.ilike(search_pattern),
+                    IndianStandard.title.ilike(search_pattern),
+                    IndianStandard.division_code.ilike(search_pattern),
+                    IndianStandard.scope.ilike(search_pattern)
+                )
+            )
         
-    standards = db.scalars(stmt.limit(50)).all()
+    standards = db.scalars(stmt.limit(100)).all()
     return standards
 
 

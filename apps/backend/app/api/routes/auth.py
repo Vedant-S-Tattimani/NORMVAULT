@@ -1,7 +1,8 @@
 """
 Authentication and Role-Based Access Control API Endpoints.
 """
-from fastapi import APIRouter, Depends, HTTPException, status
+from typing import Optional
+from fastapi import APIRouter, Depends, HTTPException, status, Query, Request
 from sqlalchemy.orm import Session
 
 from app.api.dependencies import get_db, get_current_user
@@ -105,8 +106,32 @@ def get_me(current_user: User = Depends(get_current_user)):
 
 
 @router.post("/demo-switch", response_model=TokenResponse, summary="Switch active officer persona for live evaluation")
-def demo_switch(request: DemoRoleSwitchRequest, db: Session = Depends(get_db)):
-    profile = DEMO_PROFILES.get(request.role, DEMO_PROFILES[UserRole.PROCUREMENT_OFFICER])
+async def demo_switch(
+    request: Request,
+    role: Optional[str] = Query(None),
+    db: Session = Depends(get_db)
+):
+    role_val = role
+    try:
+        data = await request.json()
+        if isinstance(data, dict) and data.get("role"):
+            role_val = data["role"]
+    except Exception:
+        pass
+
+    selected_role: UserRole = UserRole.PROCUREMENT_OFFICER
+    if role_val:
+        try:
+            # Handle string like 'procurement_officer' or 'PROCUREMENT_OFFICER'
+            cleaned = str(role_val).strip()
+            for r in UserRole:
+                if r.value.lower() == cleaned.lower() or r.name.lower() == cleaned.lower():
+                    selected_role = r
+                    break
+        except Exception:
+            selected_role = UserRole.PROCUREMENT_OFFICER
+
+    profile = DEMO_PROFILES.get(selected_role, DEMO_PROFILES[UserRole.PROCUREMENT_OFFICER])
 
     # Find or upsert demo user
     user = db.query(User).filter(User.username == profile["username"]).first()
@@ -116,7 +141,7 @@ def demo_switch(request: DemoRoleSwitchRequest, db: Session = Depends(get_db)):
             email=profile["email"],
             full_name=profile["full_name"],
             hashed_password=get_password_hash("normvault123"),
-            role=request.role,
+            role=selected_role,
             department=profile["department"],
             designation=profile["designation"],
             is_active=True,

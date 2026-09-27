@@ -262,7 +262,7 @@ export const ComparativeEvaluationPage: React.FC = () => {
       ) : (
         <div className="space-y-8">
           {/* Summary Metric Strip */}
-          <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="p-4 rounded border border-parchment-border bg-parchment-surface">
               <div className="text-[11px] font-mono uppercase text-ink-muted">Tender Reference</div>
               <div className="text-sm font-bold text-ink-text mt-1">{evalData.tender_reference}</div>

@@ -18,25 +18,28 @@ import {
   Filter,
   ArrowUpDown,
   BookOpen,
-  Loader2
+  Loader2,
+  ArrowLeft
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface StandardsPageProps {
   initialQuery?: string;
   onNavigate?: (view: ViewType, query?: string) => void;
 }
 
-type DivisionFilter = 'ALL' | 'ETD' | 'CED' | 'MED' | 'ITD';
+type DivisionFilter = 'ALL' | 'ETD' | 'CED' | 'MED' | 'MTD' | 'ITD' | 'FAD' | 'TXD';
 
 export const StandardsPage: React.FC<StandardsPageProps> = ({
   initialQuery,
   onNavigate,
 }) => {
+  const { t } = useTranslation();
   const [standards, setStandards] = useState<IndianStandard[]>([]);
   const [selectedStandard, setSelectedStandard] = useState<IndianStandard | null>(null);
   const [graph, setGraph] = useState<StandardsDependencyGraph | null>(null);
   const [currentness, setCurrentness] = useState<CurrentnessEvaluation | null>(null);
-  const [searchQuery, setSearchQuery] = useState(initialQuery || '');
+  const [searchQuery, setSearchQuery] = useState('');
   const [divisionFilter, setDivisionFilter] = useState<DivisionFilter>('ALL');
   const [qcoOnly, setQcoOnly] = useState(false);
   const [sortBy, setSortBy] = useState<'number' | 'year' | 'qco'>('number');
@@ -45,22 +48,70 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
   const [showSupersessionModal, setShowSupersessionModal] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [mobileViewTab, setMobileViewTab] = useState<'catalog' | 'details'>('catalog');
 
   // Load standards list
   useEffect(() => {
     let isMounted = true;
     async function load() {
       setIsLoading(true);
-      const queryToUse = initialQuery || '';
+      let queryToUse = '';
+      let targetDivision: DivisionFilter = 'ALL';
+
       if (initialQuery) {
-        setSearchQuery(initialQuery);
+        const clean = initialQuery.trim();
+        const upper = clean.toUpperCase();
+
+        const categoryAliases: Record<string, DivisionFilter> = {
+          'ETD': 'ETD',
+          'ELECTROTECHNICAL': 'ETD',
+          'ELECTRICAL': 'ETD',
+          'CED': 'CED',
+          'CIVIL': 'CED',
+          'STRUCTURAL': 'CED',
+          'MED': 'MED',
+          'MECHANICAL': 'MED',
+          'MTD': 'MTD',
+          'METALLURGICAL': 'MTD',
+          'METALLURGY': 'MTD',
+          'ITD': 'ITD',
+          'INFORMATION TECH': 'ITD',
+          'IT': 'ITD',
+          'FAD': 'FAD',
+          'FOOD': 'FAD',
+          'AGRICULTURE': 'FAD',
+          'TXD': 'TXD',
+          'TEXTILE': 'TXD',
+          'TEXTILES': 'TXD',
+        };
+
+        if (categoryAliases[upper]) {
+          targetDivision = categoryAliases[upper];
+          setDivisionFilter(targetDivision);
+          setSearchQuery(''); // keep search input empty so user sees all standards in division
+          queryToUse = '';
+        } else {
+          setDivisionFilter('ALL');
+          setSearchQuery(clean);
+          queryToUse = clean;
+        }
+      } else {
+        setDivisionFilter('ALL');
+        setSearchQuery('');
       }
+
       const data = await searchStandards(queryToUse);
       if (!isMounted) return;
 
       setStandards(data);
-      if (data.length > 0) {
-        const first = data[0];
+
+      // Select first standard matching the active division filter
+      const matching = targetDivision !== 'ALL'
+        ? data.filter((s) => s.division_code?.toUpperCase() === targetDivision)
+        : data;
+
+      const first = matching[0] || data[0];
+      if (first) {
         setSelectedStandard(first);
         const [g, c] = await Promise.all([
           getStandardDependencies(first.id, first),
@@ -70,6 +121,10 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
           setGraph(g);
           setCurrentness(c);
         }
+      } else {
+        setSelectedStandard(null);
+        setGraph(null);
+        setCurrentness(null);
       }
       setIsLoading(false);
     }
@@ -79,11 +134,31 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
     };
   }, [initialQuery]);
 
+  // Handle Division Filter Click
+  const handleDivisionChange = async (div: DivisionFilter) => {
+    setDivisionFilter(div);
+    let currentList = standards;
+    const hasMatches = div === 'ALL' ? currentList.length > 0 : currentList.some((s) => s.division_code?.toUpperCase() === div);
+    if (!hasMatches && !searchQuery.trim()) {
+      setIsLoading(true);
+      const all = await searchStandards('');
+      setStandards(all);
+      currentList = all;
+      setIsLoading(false);
+    }
+    const matching = div === 'ALL'
+      ? currentList
+      : currentList.filter((s) => s.division_code?.toUpperCase() === div);
+    if (matching.length > 0) {
+      handleSelectStandard(matching[0]);
+    }
+  };
+
   // Handle Search Input Submission
   const handleSearchSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    const results = await searchStandards(searchQuery);
+    const results = await searchStandards(searchQuery, divisionFilter !== 'ALL' ? divisionFilter : undefined);
     setStandards(results);
     if (results.length > 0) {
       handleSelectStandard(results[0]);
@@ -98,6 +173,8 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
   // Live Search Clear
   const handleClearSearch = async () => {
     setSearchQuery('');
+    setDivisionFilter('ALL');
+    setQcoOnly(false);
     setIsLoading(true);
     const results = await searchStandards('');
     setStandards(results);
@@ -116,6 +193,10 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
     ]);
     setGraph(g);
     setCurrentness(c);
+    // On mobile screens, automatically show the details view
+    if (window.innerWidth < 1024) {
+      setMobileViewTab('details');
+    }
   };
 
   // Switch to a standard by standard number (e.g. from dependency graph)
@@ -196,10 +277,10 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
               </span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold font-serif text-ink-text tracking-tight">
-              Indian Standards Catalog & Dependency Intelligence
+              {t('standards_heading', 'Indian Standards Catalog & Dependency Intelligence')}
             </h1>
             <p className="text-xs sm:text-sm text-ink-muted mt-1 font-serif">
-              Comprehensive Bureau of Indian Standards (BIS) knowledge repository tracking editions, normative dependencies, and statutory Quality Control Orders (QCOs).
+              {t('standards_subheading', 'Comprehensive Bureau of Indian Standards (BIS) knowledge repository tracking editions, normative dependencies, and statutory Quality Control Orders (QCOs).')}
             </p>
           </div>
 
@@ -214,7 +295,7 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
               }`}
             >
               <Scale size={13} />
-              <span>{qcoOnly ? 'Showing Mandatory QCOs' : 'Filter QCO Mandates'}</span>
+              <span>{qcoOnly ? t('standards_showing_qco', 'Showing Mandatory QCOs') : t('standards_filter_qco', 'Filter QCO Mandates')}</span>
             </button>
           </div>
         </div>
@@ -223,70 +304,127 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
         <div className="flex items-center gap-2 mt-4 pt-4 border-t border-parchment-border overflow-x-auto pb-1 text-xs font-mono">
           <span className="text-[10px] uppercase text-ink-muted font-semibold flex items-center gap-1 shrink-0">
             <Filter size={11} />
-            <span>Divisions:</span>
+            <span>{t('standards_divisions_label', 'Divisions:')}</span>
           </span>
 
           <button
-            onClick={() => setDivisionFilter('ALL')}
-            className={`px-2.5 py-1 rounded-md transition-all shrink-0 ${
+            onClick={() => handleDivisionChange('ALL')}
+            className={`px-3 py-1.5 rounded-lg transition-all shrink-0 cursor-pointer ${
               divisionFilter === 'ALL'
-                ? 'bg-ink-text text-parchment-surface font-semibold'
+                ? 'bg-ink-text text-parchment-surface font-semibold shadow-2xs'
                 : 'bg-parchment-surface text-ink-muted hover:bg-parchment-subtle border border-parchment-border'
             }`}
           >
-            All Standards
+            {t('standards_all', 'All Standards')} ({standards.length})
           </button>
 
           <button
-            onClick={() => setDivisionFilter('ETD')}
-            className={`px-2.5 py-1 rounded-md transition-all shrink-0 ${
+            onClick={() => handleDivisionChange('ETD')}
+            className={`px-3 py-1.5 rounded-lg transition-all shrink-0 cursor-pointer ${
               divisionFilter === 'ETD'
-                ? 'bg-mineral-blue text-white font-semibold'
+                ? 'bg-mineral-blue text-white font-semibold shadow-2xs'
                 : 'bg-parchment-surface text-ink-muted hover:bg-parchment-subtle border border-parchment-border'
             }`}
           >
-            ⚡ Electrotechnical (ETD)
+            {t('cat_etd', '⚡ Electrotechnical (ETD)')} ({standards.filter((s) => s.division_code?.toUpperCase() === 'ETD').length})
           </button>
 
           <button
-            onClick={() => setDivisionFilter('CED')}
-            className={`px-2.5 py-1 rounded-md transition-all shrink-0 ${
+            onClick={() => handleDivisionChange('CED')}
+            className={`px-3 py-1.5 rounded-lg transition-all shrink-0 cursor-pointer ${
               divisionFilter === 'CED'
-                ? 'bg-mineral-blue text-white font-semibold'
+                ? 'bg-mineral-blue text-white font-semibold shadow-2xs'
                 : 'bg-parchment-surface text-ink-muted hover:bg-parchment-subtle border border-parchment-border'
             }`}
           >
-            🏛️ Civil & Structural (CED)
+            {t('cat_ced', '🏛️ Civil & Structural (CED)')} ({standards.filter((s) => s.division_code?.toUpperCase() === 'CED').length})
           </button>
 
           <button
-            onClick={() => setDivisionFilter('MED')}
-            className={`px-2.5 py-1 rounded-md transition-all shrink-0 ${
+            onClick={() => handleDivisionChange('MED')}
+            className={`px-3 py-1.5 rounded-lg transition-all shrink-0 cursor-pointer ${
               divisionFilter === 'MED'
-                ? 'bg-mineral-blue text-white font-semibold'
+                ? 'bg-mineral-blue text-white font-semibold shadow-2xs'
                 : 'bg-parchment-surface text-ink-muted hover:bg-parchment-subtle border border-parchment-border'
             }`}
           >
-            ⚙️ Mechanical (MED)
+            {t('cat_med', '⚙️ Mechanical (MED)')} ({standards.filter((s) => s.division_code?.toUpperCase() === 'MED').length})
           </button>
 
           <button
-            onClick={() => setDivisionFilter('ITD')}
-            className={`px-2.5 py-1 rounded-md transition-all shrink-0 ${
-              divisionFilter === 'ITD'
-                ? 'bg-mineral-blue text-white font-semibold'
+            onClick={() => handleDivisionChange('MTD')}
+            className={`px-3 py-1.5 rounded-lg transition-all shrink-0 cursor-pointer ${
+              divisionFilter === 'MTD'
+                ? 'bg-mineral-blue text-white font-semibold shadow-2xs'
                 : 'bg-parchment-surface text-ink-muted hover:bg-parchment-subtle border border-parchment-border'
             }`}
           >
-            💻 Information Tech (ITD)
+            {t('cat_mtd', '🔬 Metallurgical (MTD)')} ({standards.filter((s) => s.division_code?.toUpperCase() === 'MTD').length})
+          </button>
+
+          <button
+            onClick={() => handleDivisionChange('ITD')}
+            className={`px-3 py-1.5 rounded-lg transition-all shrink-0 cursor-pointer ${
+              divisionFilter === 'ITD'
+                ? 'bg-mineral-blue text-white font-semibold shadow-2xs'
+                : 'bg-parchment-surface text-ink-muted hover:bg-parchment-subtle border border-parchment-border'
+            }`}
+          >
+            {t('cat_itd', '💻 Information Tech (ITD)')} ({standards.filter((s) => s.division_code?.toUpperCase() === 'ITD').length})
+          </button>
+
+          <button
+            onClick={() => handleDivisionChange('FAD')}
+            className={`px-3 py-1.5 rounded-lg transition-all shrink-0 cursor-pointer ${
+              divisionFilter === 'FAD'
+                ? 'bg-mineral-blue text-white font-semibold shadow-2xs'
+                : 'bg-parchment-surface text-ink-muted hover:bg-parchment-subtle border border-parchment-border'
+            }`}
+          >
+            {t('cat_fad', '🌾 Food & Agriculture (FAD)')} ({standards.filter((s) => s.division_code?.toUpperCase() === 'FAD').length})
+          </button>
+
+          <button
+            onClick={() => handleDivisionChange('TXD')}
+            className={`px-3 py-1.5 rounded-lg transition-all shrink-0 cursor-pointer ${
+              divisionFilter === 'TXD'
+                ? 'bg-mineral-blue text-white font-semibold shadow-2xs'
+                : 'bg-parchment-surface text-ink-muted hover:bg-parchment-subtle border border-parchment-border'
+            }`}
+          >
+            {t('cat_txd', '🧵 Textiles & Fabrics (TXD)')} ({standards.filter((s) => s.division_code?.toUpperCase() === 'TXD').length})
           </button>
         </div>
+      </div>
+
+      {/* Mobile Catalog vs Details Segment Switcher (Hidden on Desktop) */}
+      <div className="lg:hidden flex items-center bg-[#EAE4D8] p-1 rounded-xl mb-4 border border-[#8C8275]/25 text-xs font-mono">
+        <button
+          onClick={() => setMobileViewTab('catalog')}
+          className={`flex-1 py-2 px-3 text-center rounded-lg font-medium transition-all cursor-pointer ${
+            mobileViewTab === 'catalog'
+              ? 'bg-[#1E2320] text-[#FCFAF6] shadow-xs font-semibold'
+              : 'text-[#525650] hover:text-[#1E2320]'
+          }`}
+        >
+          {t('standards_catalog_tab', '📋 Catalog')} ({filteredAndSortedStandards.length})
+        </button>
+        <button
+          onClick={() => setMobileViewTab('details')}
+          className={`flex-1 py-2 px-3 text-center rounded-lg font-medium transition-all cursor-pointer ${
+            mobileViewTab === 'details'
+              ? 'bg-[#1E2320] text-[#FCFAF6] shadow-xs font-semibold'
+              : 'text-[#525650] hover:text-[#1E2320]'
+          }`}
+        >
+          🔍 {selectedStandard ? selectedStandard.standard_number : 'Details & Graph'}
+        </button>
       </div>
 
       {/* Main Catalog Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Sidebar: Search & List */}
-        <div className="lg:col-span-4 space-y-4">
+        <div className={`lg:col-span-4 space-y-4 ${mobileViewTab === 'details' ? 'hidden lg:block' : 'block'}`}>
           <div className="parchment-card rounded-xl p-4 border border-parchment-border shadow-xs">
             {/* Search Box */}
             <form onSubmit={handleSearchSubmit} className="flex gap-2 mb-3">
@@ -296,7 +434,7 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search IS 12615, motor, rebar..."
+                  placeholder={t('standards_search_placeholder', 'Search IS 12615, motor, rebar...')}
                   className="w-full pl-8 pr-7 py-2 text-xs bg-parchment-surface border border-parchment-border rounded-lg text-ink-text font-mono focus:outline-none focus:border-mineral-blue"
                 />
                 {searchQuery && (
@@ -312,10 +450,10 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
               <button
                 type="submit"
                 disabled={isLoading}
-                className="px-3.5 py-2 rounded-lg bg-ink-text text-parchment-surface text-xs font-semibold hover:bg-ink-dark transition-colors shrink-0 disabled:opacity-50 flex items-center gap-1.5"
+                className="px-3.5 py-2 rounded-lg bg-ink-text text-parchment-surface text-xs font-semibold hover:bg-ink-dark transition-colors shrink-0 disabled:opacity-50 flex items-center gap-1.5 cursor-pointer"
               >
                 {isLoading && <Loader2 size={12} className="animate-spin text-parchment-surface" />}
-                <span>{isLoading ? 'Searching...' : 'Search'}</span>
+                <span>{isLoading ? '...' : t('hero_search_btn', 'Search')}</span>
               </button>
             </form>
 
@@ -332,9 +470,9 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
                   onChange={(e) => setSortBy(e.target.value as any)}
                   className="bg-transparent text-[10px] font-mono text-ink-muted focus:outline-none cursor-pointer"
                 >
-                  <option value="number">Code (A-Z)</option>
-                  <option value="year">Latest Year</option>
-                  <option value="qco">QCO Mandated First</option>
+                  <option value="number">{t('standards_sort_code', 'Code (A-Z)')}</option>
+                  <option value="year">{t('standards_sort_year', 'Latest Year')}</option>
+                  <option value="qco">{t('standards_sort_qco', 'QCO Mandated First')}</option>
                 </select>
               </div>
             </div>
@@ -382,7 +520,7 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
                       {std.is_qco_mandatory && (
                         <div className="mt-2 text-[10px] font-mono text-status-indigo flex items-center gap-1 font-semibold">
                           <Scale size={11} />
-                          <span>DPIIT Statutory QCO Mandate</span>
+                          <span>{t('standards_status_qco', 'DPIIT Statutory QCO Mandate')}</span>
                         </div>
                       )}
                     </div>
@@ -400,7 +538,7 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
                   </p>
                   <button
                     onClick={handleClearSearch}
-                    className="mt-3 px-3 py-1.5 rounded text-xs font-mono bg-parchment-subtle hover:bg-parchment-border border border-parchment-border text-ink-text transition-colors"
+                    className="mt-3 px-3 py-1.5 rounded text-xs font-mono bg-parchment-subtle hover:bg-parchment-border border border-parchment-border text-ink-text transition-colors cursor-pointer"
                   >
                     Reset Search & Filters
                   </button>
@@ -411,9 +549,17 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
         </div>
 
         {/* Right Detail Panel */}
-        <div className="lg:col-span-8 space-y-6">
+        <div className={`lg:col-span-8 space-y-6 ${mobileViewTab === 'catalog' ? 'hidden lg:block' : 'block'}`}>
           {selectedStandard ? (
             <>
+              {/* Mobile Back Button to Catalog */}
+              <button
+                onClick={() => setMobileViewTab('catalog')}
+                className="lg:hidden inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#EFEAE0] hover:bg-[#EAE4D8] border border-[#8C8275]/30 text-ink-text text-xs font-mono font-medium transition-colors cursor-pointer mb-1"
+              >
+                <ArrowLeft size={13} />
+                <span>{t('standards_back_to_list', '← Back to Standards List')} ({filteredAndSortedStandards.length})</span>
+              </button>
               {/* Selected Standard Overview Card */}
               <StandardHeaderCard
                 standard={selectedStandard}
@@ -433,7 +579,7 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
                   }`}
                 >
                   <GitFork size={13} />
-                  <span>Normative Dependencies & Graph</span>
+                  <span>{t('standards_tab_deps', 'Normative Dependencies & Graph')}</span>
                 </button>
 
                 <button
@@ -445,7 +591,7 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
                   }`}
                 >
                   <History size={13} />
-                  <span>Edition & Amendments Timeline</span>
+                  <span>{t('standards_tab_timeline', 'Edition & Amendments Timeline')}</span>
                 </button>
 
                 <button
@@ -454,7 +600,7 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
                   title="Compare technical shifts with superseded standard revisions"
                 >
                   <History size={13} className="text-mineral-blue" />
-                  <span>Supersession Diff Engine</span>
+                  <span>{t('standards_tab_diff', 'Supersession Diff Engine')}</span>
                 </button>
 
                 {selectedStandard.is_qco_mandatory && (
@@ -463,7 +609,7 @@ export const StandardsPage: React.FC<StandardsPageProps> = ({
                     className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-mono bg-status-indigoBg text-status-indigo border border-status-indigoBorder font-semibold hover:bg-status-indigo hover:text-white transition-colors sm:ml-auto"
                   >
                     <Scale size={13} />
-                    <span>View Statutory Gazette Order</span>
+                    <span>{t('standards_tab_gazette', 'View Statutory Gazette Order')}</span>
                   </button>
                 )}
               </div>

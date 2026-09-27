@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { EditorialHeader, ViewType } from './components/common/EditorialHeader';
+import { UserGuideModal } from './components/common/UserGuideModal';
 import { HomePage } from './pages/HomePage';
 import { AnalyzePage } from './pages/AnalyzePage';
 import { StandardsPage } from './pages/StandardsPage';
@@ -15,6 +16,7 @@ export function App() {
   const [currentView, setCurrentView] = useState<ViewType>('home');
   const [selectedSpec, setSelectedSpec] = useState<ProcurementSpecification | undefined>(undefined);
   const [standardsInitialQuery, setStandardsInitialQuery] = useState<string | undefined>(undefined);
+  const [isGuideOpen, setIsGuideOpen] = useState(false);
 
   const handleSelectSpecification = useCallback((spec: ProcurementSpecification) => {
     setSelectedSpec(spec);
@@ -22,13 +24,16 @@ export function App() {
   }, []);
 
   const handleNavigate = useCallback((view: ViewType, query?: string) => {
-    if (view === 'standards' && query) {
+    if (view === 'standards') {
       setStandardsInitialQuery(query);
     }
     setCurrentView(view);
   }, []);
 
   const handleSelectView = useCallback((view: ViewType) => {
+    if (view === 'standards') {
+      setStandardsInitialQuery(undefined);
+    }
     setCurrentView(view);
   }, []);
 
@@ -40,13 +45,24 @@ export function App() {
           <EditorialHeader
             currentView={currentView}
             onSelectView={handleSelectView}
+            onOpenGuide={() => setIsGuideOpen(true)}
           />
         )}
+
+        {/* User Guide Interactive Modal */}
+        <UserGuideModal
+          isOpen={isGuideOpen}
+          onClose={() => setIsGuideOpen(false)}
+          onNavigate={handleNavigate}
+        />
 
         {/* Main Content Area */}
         <main className="flex-1">
           {currentView === 'home' && (
-            <HomePage onNavigate={handleNavigate} />
+            <HomePage
+              onNavigate={handleNavigate}
+              onOpenGuide={() => setIsGuideOpen(true)}
+            />
           )}
           {currentView === 'how-it-works' && (
             <HowItWorksPage onNavigate={handleNavigate} />

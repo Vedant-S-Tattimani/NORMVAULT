@@ -12,13 +12,14 @@ import { Footer } from '../components/home/Footer';
 
 interface HomePageProps {
   onNavigate: (view: ViewType, query?: string) => void;
+  onOpenGuide?: () => void;
 }
 
-export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
+export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenGuide }) => {
   return (
     <div className="bg-[#F6F2EA] min-h-screen text-[#1E2320]">
       {/* 1. Full-Screen Editorial Hero with Smooth-Scroll Links */}
-      <HeroSection onNavigate={(view) => onNavigate(view)} />
+      <HeroSection onNavigate={onNavigate} onOpenGuide={onOpenGuide} />
 
       {/* 2. Institutional Ecosystem & Trust Bar with Live Catalog Health Strip */}
       <EcosystemBanner />

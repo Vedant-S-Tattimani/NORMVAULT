@@ -20,6 +20,8 @@ export interface TokenResponse {
 export async function switchDemoRole(role: string): Promise<TokenResponse> {
   return fetchApi<TokenResponse>(`/auth/demo-switch?role=${encodeURIComponent(role)}`, {
     method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ role }),
   });
 }
 

@@ -31,8 +31,10 @@ class LoginRequest(BaseModel):
     password: str
 
 
+from typing import Optional
+
 class DemoRoleSwitchRequest(BaseModel):
-    role: UserRole
+    role: Optional[UserRole] = None
 
 
 class TokenResponse(BaseModel):

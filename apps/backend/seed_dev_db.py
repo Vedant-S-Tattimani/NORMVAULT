@@ -29,8 +29,9 @@ from app.models.user import User, UserRole
 from app.core.security import get_password_hash
 from app.services.retrieval.indexer import StandardsIndexer
 
-FIXTURE_PATH = Path("tests/fixtures/acceptance_fixture.json").resolve()
-SYNTHETIC_POOL_PATH = Path("tests/fixtures/synthetic_standards_pool.json").resolve()
+BACKEND_DIR = Path(__file__).resolve().parent
+FIXTURE_PATH = (BACKEND_DIR / "tests/fixtures/acceptance_fixture.json").resolve()
+SYNTHETIC_POOL_PATH = (BACKEND_DIR / "tests/fixtures/synthetic_standards_pool.json").resolve()
 
 
 def seed_db():
@@ -300,6 +301,302 @@ def seed_db():
                     print(f"Skipping {json_file.name}: {ex}")
 
             db.commit()
+
+        # 3b. Seed authoritative baseline Indian Standards across all BIS divisions (MED, CED, MTD, ETD, ITD)
+        extra_standards_pool = [
+            {
+                "standard_number": "IS 2825",
+                "title": "Code for Unfired Pressure Vessels",
+                "scope": "Comprehensive design code, stress analysis, manufacturing tolerances, inspection, and hydrostatic pressure testing for unfired cylindrical and spherical pressure vessels.",
+                "division_code": "MED",
+                "year": 1969,
+                "status": "ACTIVE",
+                "is_mandatory_qco": False,
+                "department": "Mechanical Engineering Division (MED 06)",
+                "references": [
+                    {"target_standard_number": "IS 2062", "relationship_type": "ALLIED_PRODUCT", "referencing_clause": "Clause 2.1"},
+                    {"target_standard_number": "IS 1239 (Part 1)", "relationship_type": "NORMATIVE_REFERENCE", "referencing_clause": "Clause 3.4"},
+                ]
+            },
+            {
+                "standard_number": "IS 1239 (Part 1)",
+                "title": "Steel Tubes, Tubulars and Other Wrought Steel Fittings - Part 1: Steel Tubes",
+                "scope": "Specifies requirements for welded and seamless plain end or screwed and socketed steel tubes for water, non-hazardous gas and steam lines.",
+                "division_code": "MED",
+                "year": 2004,
+                "status": "ACTIVE",
+                "is_mandatory_qco": True,
+                "qco_reference": "Steel Pipes and Tubes Quality Control Order 2020 (S.O. 1225(E))",
+                "department": "Mechanical Engineering Division (MED 08)",
+                "references": [
+                    {"target_standard_number": "IS 1387", "relationship_type": "TEST_METHOD", "referencing_clause": "Clause 8.1", "test_name": "Flattening and Bend Test"},
+                    {"target_standard_number": "IS 2062", "relationship_type": "ALLIED_PRODUCT", "referencing_clause": "Clause 5.1"},
+                ]
+            },
+            {
+                "standard_number": "IS 1520",
+                "title": "Horizontal Centrifugal Pumps for Clear, Cold, Fresh Water - Specification",
+                "scope": "Specifies requirements for horizontal centrifugal pumps for handling clear, cold water for agricultural, civil irrigation, and industrial applications.",
+                "division_code": "MED",
+                "year": 1980,
+                "status": "ACTIVE",
+                "is_mandatory_qco": False,
+                "department": "Mechanical Engineering Division (MED 20)",
+                "references": [
+                    {"target_standard_number": "IS 9137", "relationship_type": "TEST_METHOD", "referencing_clause": "Clause 14.1", "test_name": "Hydraulic Performance Test"},
+                    {"target_standard_number": "IS 12615", "relationship_type": "ALLIED_PRODUCT", "referencing_clause": "Clause 4.3"},
+                ]
+            },
+            {
+                "standard_number": "IS 8472",
+                "title": "Regenerative Pumps for Clear, Cold Water - Specification",
+                "scope": "Specifies design, materials, and hydraulic testing for mono-set and motor-coupled regenerative peripheral pumps.",
+                "division_code": "MED",
+                "year": 2019,
+                "status": "ACTIVE",
+                "is_mandatory_qco": True,
+                "qco_reference": "Pumps for Clear Water (Quality Control) Order 2024",
+                "department": "Mechanical Engineering Division (MED 20)",
+                "references": [
+                    {"target_standard_number": "IS 9137", "relationship_type": "TEST_METHOD", "referencing_clause": "Clause 11.2"},
+                ]
+            },
+            {
+                "standard_number": "IS 13095",
+                "title": "Butterfly Valves for General Purposes - Specification",
+                "scope": "Covers design, manufacturing, materials, dimensions, and pressure testing for wafer and double flanged butterfly valves.",
+                "division_code": "MED",
+                "year": 1991,
+                "status": "ACTIVE",
+                "is_mandatory_qco": True,
+                "qco_reference": "Valves Quality Control Order 2023 (S.O. 4410(E))",
+                "department": "Mechanical Engineering Division (MED 17)",
+                "references": [
+                    {"target_standard_number": "IS 778", "relationship_type": "ALLIED_PRODUCT", "referencing_clause": "Clause 6.1"},
+                ]
+            },
+            {
+                "standard_number": "IS 456",
+                "title": "Plain and Reinforced Concrete - Code of Practice (Fourth Revision)",
+                "scope": "General structural use of plain and reinforced concrete in building construction, civil foundations, bridges, and infrastructure works.",
+                "division_code": "CED",
+                "year": 2000,
+                "status": "ACTIVE",
+                "is_mandatory_qco": False,
+                "department": "Civil Engineering Division (CED 02)",
+                "references": [
+                    {"target_standard_number": "IS 1786", "relationship_type": "NORMATIVE_REFERENCE", "referencing_clause": "Clause 5.6", "procurement_impact": "MANDATORY"},
+                    {"target_standard_number": "IS 269", "relationship_type": "NORMATIVE_REFERENCE", "referencing_clause": "Clause 5.1", "procurement_impact": "MANDATORY"},
+                    {"target_standard_number": "IS 383", "relationship_type": "NORMATIVE_REFERENCE", "referencing_clause": "Clause 5.3", "procurement_impact": "MANDATORY"},
+                    {"target_standard_number": "IS 516", "relationship_type": "TEST_METHOD", "referencing_clause": "Clause 15.1", "test_name": "Compressive Strength of Concrete"},
+                ]
+            },
+            {
+                "standard_number": "IS 800",
+                "title": "General Construction in Steel - Code of Practice (Third Revision)",
+                "scope": "Design and construction of structural steelwork using hot rolled steel sections, tubes, and fabricated members based on Limit State Design.",
+                "division_code": "CED",
+                "year": 2007,
+                "status": "ACTIVE",
+                "is_mandatory_qco": False,
+                "department": "Civil Engineering Division (CED 07)",
+                "references": [
+                    {"target_standard_number": "IS 2062", "relationship_type": "NORMATIVE_REFERENCE", "referencing_clause": "Clause 2.1", "procurement_impact": "MANDATORY"},
+                    {"target_standard_number": "IS 1893 (Part 1)", "relationship_type": "SAFETY_REQUIREMENT", "referencing_clause": "Clause 12.1"},
+                ]
+            },
+            {
+                "standard_number": "IS 1893 (Part 1)",
+                "title": "Criteria for Earthquake Resistant Design of Structures - General Provisions and Buildings",
+                "scope": "Earthquake resistant design criteria, seismic zones of India, response spectra, and lateral load calculation procedures.",
+                "division_code": "CED",
+                "year": 2016,
+                "status": "ACTIVE",
+                "is_mandatory_qco": False,
+                "department": "Civil Engineering Division (CED 39)",
+                "references": [
+                    {"target_standard_number": "IS 13920", "relationship_type": "SAFETY_REQUIREMENT", "referencing_clause": "Clause 7.1"},
+                    {"target_standard_number": "IS 456", "relationship_type": "NORMATIVE_REFERENCE", "referencing_clause": "Clause 6.4"},
+                ]
+            },
+            {
+                "standard_number": "IS 13920",
+                "title": "Ductile Design and Detailing of Reinforced Concrete Structures Subjected to Seismic Forces",
+                "scope": "Requirements for designing and detailing monolithic reinforced concrete structures to resist seismic actions with adequate ductility.",
+                "division_code": "CED",
+                "year": 2016,
+                "status": "ACTIVE",
+                "is_mandatory_qco": False,
+                "department": "Civil Engineering Division (CED 39)",
+                "references": [
+                    {"target_standard_number": "IS 1786", "relationship_type": "NORMATIVE_REFERENCE", "referencing_clause": "Clause 5.1"},
+                    {"target_standard_number": "IS 456", "relationship_type": "NORMATIVE_REFERENCE", "referencing_clause": "Clause 4.1"},
+                ]
+            },
+            {
+                "standard_number": "IS 383",
+                "title": "Coarse and Fine Aggregate for Concrete - Specification (Third Revision)",
+                "scope": "Specifies chemical and physical requirements, grading limits, flakiness index, and sampling of coarse and fine aggregates for concrete.",
+                "division_code": "CED",
+                "year": 2016,
+                "status": "ACTIVE",
+                "is_mandatory_qco": True,
+                "qco_reference": "Aggregates (Quality Control) Order 2024",
+                "department": "Civil Engineering Division (CED 02)",
+                "references": [
+                    {"target_standard_number": "IS 2386", "relationship_type": "TEST_METHOD", "referencing_clause": "Clause 6.1", "test_name": "Aggregate Impact & Crushing Test"},
+                ]
+            },
+            {
+                "standard_number": "IS 2830",
+                "title": "Carbon Steel Cast Billet Ingots, Billets, Blooms and Slabs for Re-rolling - Specification",
+                "scope": "Specifies requirements for carbon steel cast billet ingots, continuously cast billets, blooms, and slabs for re-rolling into steel for structural purposes.",
+                "division_code": "MTD",
+                "year": 2012,
+                "status": "ACTIVE",
+                "is_mandatory_qco": True,
+                "qco_reference": "Steel and Steel Products (Quality Control) Order 2020",
+                "department": "Metallurgical Engineering Division (MTD 04)",
+                "references": [
+                    {"target_standard_number": "IS 2062", "relationship_type": "ALLIED_PRODUCT", "referencing_clause": "Clause 3.1"},
+                    {"target_standard_number": "IS 1786", "relationship_type": "ALLIED_PRODUCT", "referencing_clause": "Clause 3.2"},
+                ]
+            },
+            {
+                "standard_number": "IS 277",
+                "title": "Galvanized Steel Sheets (Plain and Corrugated) - Specification",
+                "scope": "Specifies requirements for zinc-coated galvanized plain and corrugated steel sheets and coils for roofing and general engineering purposes.",
+                "division_code": "MTD",
+                "year": 2018,
+                "status": "ACTIVE",
+                "is_mandatory_qco": True,
+                "qco_reference": "Galvanized Steel Sheets Quality Control Order 2024",
+                "department": "Metallurgical Engineering Division (MTD 04)",
+                "references": [
+                    {"target_standard_number": "IS 6745", "relationship_type": "TEST_METHOD", "referencing_clause": "Clause 9.1", "test_name": "Mass of Zinc Coating Determination"},
+                ]
+            },
+            {
+                "standard_number": "IS 13252 (Part 1)",
+                "title": "Information Technology Equipment - Safety - Part 1: General Requirements",
+                "scope": "Applies to mains-powered or battery-powered information technology equipment, including servers, computers, telecom equipment, and network peripherals.",
+                "division_code": "ITD",
+                "year": 2010,
+                "status": "ACTIVE",
+                "is_mandatory_qco": True,
+                "qco_reference": "Electronics & IT Goods (Requirements for Compulsory Registration) Order 2021",
+                "department": "Electronics and Information Technology Division (LITD 08)",
+                "references": [
+                    {"target_standard_number": "IS 616", "relationship_type": "SAFETY_REQUIREMENT", "referencing_clause": "Clause 1.2"},
+                ]
+            },
+            {
+                "standard_number": "IS 16046 (Part 1)",
+                "title": "Secondary Cells and Batteries Containing Alkaline or Other Non-Acid Electrolytes (Lithium Systems)",
+                "scope": "Specifies requirements and tests for the safe operation of secondary lithium cells and batteries used in portable equipment and industrial energy storage.",
+                "division_code": "ITD",
+                "year": 2018,
+                "status": "ACTIVE",
+                "is_mandatory_qco": True,
+                "qco_reference": "MeitY Compulsory Registration Scheme (CRS) Statutory Order",
+                "department": "Electronics and Information Technology Division (LITD 10)",
+                "references": [
+                    {"target_standard_number": "IS/IEC 62133-1", "relationship_type": "TEST_METHOD", "referencing_clause": "Clause 7.2", "test_name": "Continuous Charging Safety Test"},
+                ]
+            },
+            {
+                "standard_number": "IS 15885 (Part 2/Sec 13)",
+                "title": "Lamp Controlgear - Part 2: Particular Requirements - Section 13: D.C. or A.C. Supplied Electronic Controlgear for LED Modules",
+                "scope": "Specifies safety and performance requirements for electronic controlgear used with light emitting diode (LED) lighting fixtures and street illumination.",
+                "division_code": "ITD",
+                "year": 2012,
+                "status": "ACTIVE",
+                "is_mandatory_qco": True,
+                "qco_reference": "LED Luminaires and Controlgear Quality Control Order",
+                "department": "Electronics and Information Technology Division (LITD 06)",
+                "references": [
+                    {"target_standard_number": "IS 16102 (Part 1)", "relationship_type": "SAFETY_REQUIREMENT", "referencing_clause": "Clause 4.1"},
+                ]
+            },
+            {
+                "standard_number": "IS 3043",
+                "title": "Code of Practice for Earthing",
+                "scope": "Design, installation, calculation of earth fault current, soil resistivity testing, and maintenance of earthing systems for electrical power installations.",
+                "division_code": "ETD",
+                "year": 2018,
+                "status": "ACTIVE",
+                "is_mandatory_qco": False,
+                "department": "Electrotechnical Division (ETD 20)",
+                "references": [
+                    {"target_standard_number": "IS 732", "relationship_type": "INSTALLATION_PRACTICE", "referencing_clause": "Clause 5.1"},
+                    {"target_standard_number": "IS/IEC 60079-1", "relationship_type": "SAFETY_REQUIREMENT", "referencing_clause": "Clause 14.2"},
+                ]
+            },
+            {
+                "standard_number": "IS 2026 (Part 1)",
+                "title": "Power Transformers - Part 1: General",
+                "scope": "General requirements for three-phase and single-phase power transformers, temperature rise, tapping ranges, and insulation levels.",
+                "division_code": "ETD",
+                "year": 2011,
+                "status": "ACTIVE",
+                "is_mandatory_qco": False,
+                "department": "Electrotechnical Division (ETD 16)",
+                "references": [
+                    {"target_standard_number": "IS 1180 (Part 1)", "relationship_type": "ALLIED_PRODUCT", "referencing_clause": "Clause 1.2"},
+                    {"target_standard_number": "IS 2026 (Part 2)", "relationship_type": "TEST_METHOD", "referencing_clause": "Clause 8.1", "test_name": "Temperature Rise Test"},
+                ]
+            }
+        ]
+
+        for s_item in extra_standards_pool:
+            std_num = s_item["standard_number"]
+            existing = db.query(IndianStandard).filter_by(standard_number=std_num).first()
+            if existing:
+                continue
+
+            status_str = s_item.get("status", "ACTIVE")
+            new_std = IndianStandard(
+                standard_number=std_num,
+                title=s_item["title"],
+                scope=s_item.get("scope"),
+                division_code=s_item.get("division_code", "ETD"),
+                status=StandardStatus(status_str),
+                is_mandatory_qco=s_item.get("is_mandatory_qco", False),
+                qco_reference=s_item.get("qco_reference"),
+                department=s_item.get("department"),
+                provenance_id=prov.id,
+            )
+            db.add(new_std)
+            db.flush()
+
+            new_ed = StandardEdition(
+                standard_id=new_std.id,
+                edition_number=1,
+                year=s_item.get("year", 2020),
+                status=EditionStatus.CURRENT,
+                is_current=True,
+                provenance_id=prov.id,
+            )
+            db.add(new_ed)
+            db.flush()
+
+            for r in s_item.get("references", []):
+                r_type_str = r.get("relationship_type", "NORMATIVE_REFERENCE")
+                rel_type = getattr(ReferenceType, r_type_str, ReferenceType.NORMATIVE_REFERENCE)
+                db.add(NormativeReference(
+                    source_standard_id=new_std.id,
+                    source_edition_id=new_ed.id,
+                    target_standard_number=r["target_standard_number"],
+                    relationship_type=rel_type,
+                    reference_semantics=ReferenceSemantics.NORMATIVE,
+                    procurement_impact=ProcurementImpact.REQUIRED_SPECIFICATION,
+                    referencing_clause=r.get("referencing_clause"),
+                    test_name=r.get("test_name"),
+                    provenance_id=prov.id,
+                ))
+            print(f"Ingested baseline standard: {std_num} ({s_item['title'][:40]}...)")
+
+        db.commit()
 
         # 4. Seed Benchmark Procurement Specifications
         doc1 = Document(

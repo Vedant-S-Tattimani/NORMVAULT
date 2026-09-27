@@ -63,4 +63,5 @@ Thumbs.db
 .vscode/
 .idea/
 .kilo/
+.playwright-mcp/
 

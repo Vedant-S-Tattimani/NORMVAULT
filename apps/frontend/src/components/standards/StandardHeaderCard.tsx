@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { IndianStandard } from '../../types/standard';
 import { StatusBadge } from '../common/StatusBadge';
 import { copyToClipboard } from '../../utils/clipboard';
@@ -25,18 +26,25 @@ export const StandardHeaderCard: React.FC<StandardHeaderCardProps> = ({
   onOpenSupersessionDiff,
   onNavigateToAnalyze,
 }) => {
+  const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
 
   const getDivisionName = (code?: string) => {
     switch (code?.toUpperCase()) {
       case 'ETD':
-        return 'Electrotechnical Division (ETD)';
+        return t('cat_etd', 'Electrotechnical Division (ETD)');
       case 'CED':
-        return 'Civil Engineering Division (CED)';
+        return t('cat_ced', 'Civil Engineering Division (CED)');
       case 'MED':
-        return 'Mechanical Engineering Division (MED)';
+        return t('cat_med', 'Mechanical Engineering Division (MED)');
+      case 'MTD':
+        return t('cat_mtd', 'Metallurgical & Materials (MTD)');
       case 'ITD':
-        return 'Information Technology Division (ITD)';
+        return t('cat_itd', 'Information Technology Division (ITD)');
+      case 'FAD':
+        return t('cat_fad', 'Food & Agriculture Division (FAD)');
+      case 'TXD':
+        return t('cat_txd', 'Textiles Division (TXD)');
       default:
         return code ? `${code} Division` : 'Standardization Division';
     }
@@ -54,7 +62,7 @@ export const StandardHeaderCard: React.FC<StandardHeaderCardProps> = ({
   const isCurrent = standard.status === 'CURRENT' || standard.status === 'ACTIVE';
 
   return (
-    <div className="parchment-card rounded-xl p-6 mb-6 shadow-xs border border-parchment-border">
+    <div className="parchment-card rounded-xl p-4 sm:p-6 mb-6 shadow-xs border border-parchment-border">
       {/* Top Meta Bar */}
       <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-parchment-border">
         <div className="flex items-center gap-2 flex-wrap">
@@ -65,12 +73,12 @@ export const StandardHeaderCard: React.FC<StandardHeaderCardProps> = ({
           {standard.is_qco_mandatory && (
             <span className="inline-flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded bg-status-indigoBg text-status-indigo border border-status-indigoBorder font-semibold">
               <Scale size={11} />
-              <span>STATUTORY QCO MANDATE</span>
+              <span>{t('standards_status_qco', 'STATUTORY QCO MANDATE')}</span>
             </span>
           )}
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           {/* Copy Citation Button */}
           <button
             onClick={handleCopyCitation}
@@ -80,12 +88,12 @@ export const StandardHeaderCard: React.FC<StandardHeaderCardProps> = ({
             {copied ? (
               <>
                 <Check size={13} className="text-status-sage" />
-                <span className="text-status-sage font-semibold">Citation Copied!</span>
+                <span className="text-status-sage font-semibold">{t('standards_btn_copied', 'Citation Copied!')}</span>
               </>
             ) : (
               <>
                 <Copy size={13} className="text-ink-muted" />
-                <span>Copy Citation</span>
+                <span>{t('standards_btn_copy', 'Copy Citation')}</span>
               </>
             )}
           </button>
@@ -98,7 +106,7 @@ export const StandardHeaderCard: React.FC<StandardHeaderCardProps> = ({
               title="Compare with superseded standard revisions & technical shifts"
             >
               <History size={13} className="text-mineral-blue" />
-              <span>Compare Superseded</span>
+              <span>{t('standards_btn_compare', 'Compare Superseded')}</span>
             </button>
           )}
 
@@ -108,7 +116,7 @@ export const StandardHeaderCard: React.FC<StandardHeaderCardProps> = ({
               onClick={() => onNavigateToAnalyze(standard.standard_number)}
               className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded text-xs font-mono bg-mineral-blue hover:bg-mineral-dark text-white font-semibold shadow-xs transition-all active:scale-95 cursor-pointer"
             >
-              <span>Analyze in Workspace</span>
+              <span>{t('standards_btn_analyze', 'Analyze in Workspace')}</span>
               <ArrowRight size={13} />
             </button>
           )}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Search, BookOpen, ShieldCheck, Tag, ArrowRight, Loader2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { ViewType } from '../common/EditorialHeader';
 import { searchStandards } from '../../api/standards';
 import { IndianStandard } from '../../types/standard';
@@ -9,6 +10,7 @@ interface StandardsQuickExplorerProps {
 }
 
 export const StandardsQuickExplorer: React.FC<StandardsQuickExplorerProps> = ({ onNavigate }) => {
+  const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const [suggestions, setSuggestions] = useState<IndianStandard[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -80,12 +82,13 @@ export const StandardsQuickExplorer: React.FC<StandardsQuickExplorerProps> = ({ 
   ];
 
   const categories = [
-    { name: 'Civil & Structural', query: 'IS 456' },
-    { name: 'Steel & Metallurgy', query: 'IS 1786' },
-    { name: 'Electrical & Power', query: 'IS 12615' },
-    { name: 'Pipes & Pressure Vessels', query: 'IS 1239' },
-    { name: 'Fire Safety & Alarms', query: 'IS 2189' },
-    { name: 'Cement & Aggregates', query: 'IS 269' },
+    { name: t('cat_etd', '⚡ Electrotechnical (ETD)'), query: 'ETD' },
+    { name: t('cat_ced', '🏛️ Civil & Structural (CED)'), query: 'CED' },
+    { name: t('cat_med', '⚙️ Mechanical (MED)'), query: 'MED' },
+    { name: t('cat_mtd', '🔬 Metallurgical (MTD)'), query: 'MTD' },
+    { name: t('cat_itd', '💻 Information Tech (ITD)'), query: 'ITD' },
+    { name: t('cat_fad', '🌾 Food & Agriculture (FAD)'), query: 'FAD' },
+    { name: t('cat_txd', '🧵 Textiles & Fabrics (TXD)'), query: 'TXD' },
   ];
 
   const handleSearchSubmit = (e: React.FormEvent) => {
@@ -98,14 +101,13 @@ export const StandardsQuickExplorer: React.FC<StandardsQuickExplorerProps> = ({ 
       <div className="max-w-[1440px] mx-auto">
         <div className="max-w-3xl mx-auto text-center mb-12">
           <div className="text-[10px] font-mono tracking-[0.25em] text-[#787165] uppercase mb-2">
-            STANDARDS CATALOG EXPLORER
+            {t('standards_heading', 'STANDARDS CATALOG EXPLORER')}
           </div>
           <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#1E2320] leading-tight mb-4">
-            Authoritative BIS Knowledge Foundation
+            {t('hero_title', 'Authoritative BIS Knowledge Foundation')}
           </h2>
           <p className="text-sm sm:text-base text-[#525650] font-serif leading-relaxed">
-            Search across 22,000+ Indian Standards with active edition currentness, normative references, 
-            and mandatory Quality Control Orders.
+            {t('standards_subheading', 'Search across 22,000+ Indian Standards with active edition currentness, normative references, and mandatory Quality Control Orders.')}
           </p>
 
           {/* Search Bar */}
@@ -116,7 +118,7 @@ export const StandardsQuickExplorer: React.FC<StandardsQuickExplorerProps> = ({ 
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onFocus={() => setShowDropdown(suggestions.length > 0)}
-                placeholder="Search by IS code (e.g. IS 12615, IS 1180) or keyword..."
+                placeholder={t('standards_search_placeholder', 'Search by IS code (e.g. IS 12615, IS 1180) or keyword...')}
                 className="w-full pl-11 pr-32 py-3.5 rounded-xl bg-[#FCFAF6] border border-[#8C8275]/40 text-sm text-[#1E2320] placeholder-[#787165] focus:outline-hidden focus:border-[#2C6E80] shadow-xs"
               />
               {isSearching ? (
@@ -128,7 +130,7 @@ export const StandardsQuickExplorer: React.FC<StandardsQuickExplorerProps> = ({ 
                 type="submit"
                 className="absolute right-2 px-4 py-2 rounded-lg bg-[#1E231D] hover:bg-[#0D100C] text-white text-xs font-medium transition-colors cursor-pointer"
               >
-                Search Catalog
+                {t('hero_search_btn', 'Search Catalog')}
               </button>
             </div>
 
