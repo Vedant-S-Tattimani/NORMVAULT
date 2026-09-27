@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { ArrowUp } from 'lucide-react';
 import { ViewType } from '../common/EditorialHeader';
 
@@ -7,6 +8,8 @@ interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
+  const { t } = useTranslation();
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -26,15 +29,17 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               </span>
             </div>
             <p className="text-xs text-[#A6AEA4] font-serif leading-relaxed max-w-sm mb-6">
-              An AI-powered recommendation and verification engine for identifying applicable Indian Standards 
-              for public procurement specifications, ensuring complete compliance with the BIS Act 2016 and DPIIT QCOs.
+              {t(
+                'footer_tagline',
+                'An AI-powered recommendation and verification engine for identifying applicable Indian Standards for public procurement specifications, ensuring complete compliance with the BIS Act 2016 and DPIIT QCOs.'
+              )}
             </p>
           </div>
 
           {/* Col 1: Platform */}
           <div>
             <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#FCFAF6] mb-4">
-              Platform
+              {t('footer_platform', 'Platform')}
             </h4>
             <ul className="space-y-2.5 text-xs text-[#A6AEA4]">
               <li>
@@ -42,7 +47,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   onClick={() => onNavigate('how-it-works')}
                   className="hover:text-white transition-colors cursor-pointer"
                 >
-                  How It Works (7 Stages)
+                  {t('footer_how_it_works', 'How It Works (7 Stages)')}
                 </button>
               </li>
               <li>
@@ -50,7 +55,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   onClick={() => onNavigate('analyze')}
                   className="hover:text-white transition-colors cursor-pointer"
                 >
-                  Specification Analysis
+                  {t('footer_spec_analysis', 'Specification Analysis')}
                 </button>
               </li>
               <li>
@@ -58,7 +63,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   onClick={() => onNavigate('standards')}
                   className="hover:text-white transition-colors cursor-pointer"
                 >
-                  Indian Standards Catalog
+                  {t('footer_standards_catalog', 'Indian Standards Catalog')}
                 </button>
               </li>
               <li>
@@ -66,7 +71,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   onClick={() => onNavigate('dashboard')}
                   className="hover:text-white transition-colors cursor-pointer"
                 >
-                  Procurement Dashboard
+                  {t('footer_dashboard', 'Procurement Dashboard')}
                 </button>
               </li>
               <li>
@@ -74,7 +79,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   onClick={() => onNavigate('decision-package')}
                   className="hover:text-white transition-colors cursor-pointer"
                 >
-                  Decision Package Engine
+                  {t('footer_decision_package', 'Decision Package Engine')}
                 </button>
               </li>
               <li>
@@ -82,7 +87,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   onClick={() => onNavigate('standards')}
                   className="hover:text-white transition-colors cursor-pointer"
                 >
-                  Normative Dependency Graph
+                  {t('footer_dependency_graph', 'Normative Dependency Graph')}
                 </button>
               </li>
             </ul>
@@ -91,23 +96,23 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           {/* Col 2: Statutory Framework */}
           <div>
             <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#FCFAF6] mb-4">
-              Statutory Framework
+              {t('footer_statutory', 'Statutory Framework')}
             </h4>
             <ul className="space-y-2.5 text-xs text-[#A6AEA4]">
               <li className="flex items-center gap-1">
-                <span>Bureau of Indian Standards Act 2016</span>
+                <span>{t('footer_bis_act', 'Bureau of Indian Standards Act 2016')}</span>
               </li>
               <li className="flex items-center gap-1">
-                <span>DPIIT Quality Control Orders</span>
+                <span>{t('footer_qco_orders', 'DPIIT Quality Control Orders')}</span>
               </li>
               <li className="flex items-center gap-1">
-                <span>General Financial Rules 2017 (Rule 144)</span>
+                <span>{t('footer_gfr_144', 'General Financial Rules 2017 (Rule 144)')}</span>
               </li>
               <li className="flex items-center gap-1">
-                <span>CVC Guidelines on Procurement</span>
+                <span>{t('footer_cvc_guidelines', 'CVC Guidelines on Procurement')}</span>
               </li>
               <li className="flex items-center gap-1">
-                <span>GeM Technical Bid Mandates</span>
+                <span>{t('footer_gem_mandates', 'GeM Technical Bid Mandates')}</span>
               </li>
             </ul>
           </div>
@@ -115,7 +120,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           {/* Col 3: Standards Divisions */}
           <div>
             <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#FCFAF6] mb-4">
-              Standards Divisions
+              {t('footer_divisions', 'Standards Divisions')}
             </h4>
             <ul className="space-y-2.5 text-xs text-[#A6AEA4]">
               <li>
@@ -123,7 +128,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   onClick={() => onNavigate('standards')}
                   className="hover:text-white transition-colors cursor-pointer"
                 >
-                  Civil Engineering (CED)
+                  {t('cat_ced', 'Civil & Structural (CED)')}
                 </button>
               </li>
               <li>
@@ -131,7 +136,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   onClick={() => onNavigate('standards')}
                   className="hover:text-white transition-colors cursor-pointer"
                 >
-                  Electrotechnical (ETD)
+                  {t('cat_etd', 'Electrotechnical (ETD)')}
                 </button>
               </li>
               <li>
@@ -139,7 +144,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   onClick={() => onNavigate('standards')}
                   className="hover:text-white transition-colors cursor-pointer"
                 >
-                  Mechanical Engineering (MED)
+                  {t('cat_med', 'Mechanical (MED)')}
                 </button>
               </li>
               <li>
@@ -147,7 +152,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   onClick={() => onNavigate('standards')}
                   className="hover:text-white transition-colors cursor-pointer"
                 >
-                  Metallurgical Engineering (MTD)
+                  {t('cat_mtd', 'Metallurgical (MTD)')}
                 </button>
               </li>
               <li>
@@ -155,7 +160,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   onClick={() => onNavigate('standards')}
                   className="hover:text-white transition-colors cursor-pointer"
                 >
-                  Chemical Engineering (CHD)
+                  {t('cat_itd', 'Information Tech (ITD)')}
                 </button>
               </li>
             </ul>
@@ -165,19 +170,19 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#7E887E]">
           <div className="flex flex-wrap items-center gap-4">
-            <div>© 2026 NORMVAULT. All Rights Reserved.</div>
+            <div>© 2026 NORMVAULT. {t('footer_rights', 'All Rights Reserved.')}</div>
             <span className="hidden sm:inline">•</span>
-            <div>Viksit Bharat 2047 Technical Infrastructure</div>
+            <div>{t('footer_viksit', 'Viksit Bharat 2047 Technical Infrastructure')}</div>
           </div>
 
           <div className="flex items-center gap-6">
             <span className="text-[11px] text-[#A6AEA4]">
-              Deterministic Hash Verification Active
+              {t('footer_hash_status', 'Deterministic Hash Verification Active')}
             </span>
             <button
               onClick={scrollToTop}
               className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition-colors cursor-pointer"
-              title="Scroll to Top"
+              title={t('footer_scroll_top', 'Scroll to Top')}
             >
               <ArrowUp size={15} />
             </button>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { ArrowRight, ShieldCheck, FileCheck, BookOpen } from 'lucide-react';
 import { ViewType } from '../common/EditorialHeader';
 
@@ -7,6 +8,8 @@ interface InstitutionalCTAProps {
 }
 
 export const InstitutionalCTA: React.FC<InstitutionalCTAProps> = ({ onNavigate }) => {
+  const { t } = useTranslation();
+
   return (
     <section className="py-24 px-6 lg:px-12 bg-[#1E231D] text-[#FCFAF6] relative overflow-hidden">
       {/* Subtle Background Ornamentation */}
@@ -17,16 +20,18 @@ export const InstitutionalCTA: React.FC<InstitutionalCTAProps> = ({ onNavigate }
         <div className="max-w-3xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-[#64B5F6] text-[10px] font-mono font-semibold uppercase tracking-wider mb-6 border border-white/10">
             <ShieldCheck size={12} />
-            <span>STATUTORY RIGOR • VERIFIABLE AUDIT TRAIL</span>
+            <span>{t('cta_kicker', 'STATUTORY RIGOR • VERIFIABLE AUDIT TRAIL')}</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold tracking-tight mb-6 leading-tight text-[#FCFAF6]">
-            Eliminate Specification Risks from Your Next Tender
+            {t('cta_title', 'Eliminate Specification Risks from Your Next Tender')}
           </h2>
 
           <p className="text-sm sm:text-base text-[#D0C9BD] font-serif leading-relaxed mb-10 max-w-2xl mx-auto">
-            Join public procurement officers, chief engineers, and tender committees across India in generating 
-            authoritative, DPIIT QCO-compliant, and audit-proof technical specifications.
+            {t(
+              'cta_desc',
+              'Join public procurement officers, chief engineers, and tender committees across India in generating authoritative, DPIIT QCO-compliant, and audit-proof technical specifications.'
+            )}
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4">
@@ -34,7 +39,7 @@ export const InstitutionalCTA: React.FC<InstitutionalCTAProps> = ({ onNavigate }
               onClick={() => onNavigate('analyze')}
               className="inline-flex items-center gap-2 px-7 py-3 rounded-xl bg-[#2C6E80] hover:bg-[#235866] text-white font-medium text-sm shadow-md transition-all group cursor-pointer"
             >
-              <span>Analyze Specification Document</span>
+              <span>{t('cta_btn_analyze', 'Analyze Specification Document')}</span>
               <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
             </button>
 
@@ -43,7 +48,7 @@ export const InstitutionalCTA: React.FC<InstitutionalCTAProps> = ({ onNavigate }
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/20 hover:bg-white/10 text-[#FCFAF6] font-medium text-sm transition-all cursor-pointer"
             >
               <BookOpen size={15} />
-              <span>Explore Standards Library</span>
+              <span>{t('cta_btn_standards', 'Explore Standards Library')}</span>
             </button>
 
             <button
@@ -51,16 +56,16 @@ export const InstitutionalCTA: React.FC<InstitutionalCTAProps> = ({ onNavigate }
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/20 hover:bg-white/10 text-[#FCFAF6] font-medium text-sm transition-all cursor-pointer"
             >
               <FileCheck size={15} />
-              <span>Sample Decision Package</span>
+              <span>{t('cta_btn_sample', 'Sample Decision Package')}</span>
             </button>
           </div>
 
           <div className="mt-12 pt-8 border-t border-white/10 flex flex-wrap items-center justify-center gap-6 text-xs text-[#A6AEA4] font-mono">
-            <div>✓ Zero Vendor Hallucination</div>
+            <div>{t('cta_f1', '✓ Zero Vendor Hallucination')}</div>
             <div>•</div>
-            <div>✓ 22,000+ BIS Standards Indexed</div>
+            <div>{t('cta_f2', '✓ 22,000+ BIS Standards Indexed')}</div>
             <div>•</div>
-            <div>✓ CVC & CAG Audit Compliant</div>
+            <div>{t('cta_f3', '✓ CVC & CAG Audit Compliant')}</div>
           </div>
         </div>
       </div>

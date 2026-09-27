@@ -101,13 +101,16 @@ export const StandardsQuickExplorer: React.FC<StandardsQuickExplorerProps> = ({ 
       <div className="max-w-[1440px] mx-auto">
         <div className="max-w-3xl mx-auto text-center mb-12">
           <div className="text-[10px] font-mono tracking-[0.25em] text-[#787165] uppercase mb-2">
-            {t('standards_heading', 'STANDARDS CATALOG EXPLORER')}
+            {t('exp_kicker', 'INDIAN STANDARDS REPOSITORY')}
           </div>
           <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#1E2320] leading-tight mb-4">
-            {t('hero_title', 'Authoritative BIS Knowledge Foundation')}
+            {t('exp_title', 'Authoritative Standards Catalog at Your Fingertips')}
           </h2>
           <p className="text-sm sm:text-base text-[#525650] font-serif leading-relaxed">
-            {t('standards_subheading', 'Search across 22,000+ Indian Standards with active edition currentness, normative references, and mandatory Quality Control Orders.')}
+            {t(
+              'exp_desc',
+              'Search over 22,000 active Indian Standards (IS), explore normative relationships, and verify DPIIT Quality Control Order mandates.'
+            )}
           </p>
 
           {/* Search Bar */}
@@ -118,7 +121,7 @@ export const StandardsQuickExplorer: React.FC<StandardsQuickExplorerProps> = ({ 
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onFocus={() => setShowDropdown(suggestions.length > 0)}
-                placeholder={t('standards_search_placeholder', 'Search by IS code (e.g. IS 12615, IS 1180) or keyword...')}
+                placeholder={t('exp_search_placeholder', 'Search by IS code (e.g. IS 12615, IS 1180) or keyword...')}
                 className="w-full pl-11 pr-32 py-3.5 rounded-xl bg-[#FCFAF6] border border-[#8C8275]/40 text-sm text-[#1E2320] placeholder-[#787165] focus:outline-hidden focus:border-[#2C6E80] shadow-xs"
               />
               {isSearching ? (
@@ -130,7 +133,7 @@ export const StandardsQuickExplorer: React.FC<StandardsQuickExplorerProps> = ({ 
                 type="submit"
                 className="absolute right-2 px-4 py-2 rounded-lg bg-[#1E231D] hover:bg-[#0D100C] text-white text-xs font-medium transition-colors cursor-pointer"
               >
-                {t('hero_search_btn', 'Search Catalog')}
+                {t('exp_search_btn', 'Search Catalog')}
               </button>
             </div>
 
@@ -138,8 +141,8 @@ export const StandardsQuickExplorer: React.FC<StandardsQuickExplorerProps> = ({ 
             {showDropdown && suggestions.length > 0 && (
               <div className="absolute left-0 right-0 top-full mt-2 bg-[#FCFAF6] border border-[#8C8275]/40 rounded-xl shadow-xl z-50 overflow-hidden text-left divide-y divide-[#8C8275]/15 animate-in fade-in slide-in-from-top-1 duration-150">
                 <div className="px-3.5 py-2 bg-[#EDE8DC]/50 flex items-center justify-between text-[10px] font-mono text-[#787165] uppercase">
-                  <span>Matching Standards ({suggestions.length})</span>
-                  <span>Click to view registry</span>
+                  <span>{t('exp_matching', 'Matching Standards')} ({suggestions.length})</span>
+                  <span>{t('exp_click_view', 'Click to view registry')}</span>
                 </div>
                 {suggestions.map((std) => (
                   <button
@@ -178,7 +181,7 @@ export const StandardsQuickExplorer: React.FC<StandardsQuickExplorerProps> = ({ 
 
           {/* Quick Category Chips */}
           <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
-            <span className="text-xs font-mono text-[#787165] mr-1">Frequent:</span>
+            <span className="text-xs font-mono text-[#787165] mr-1">{t('exp_frequent', 'Frequent:')}</span>
             {categories.map((cat) => (
               <button
                 key={cat.name}
@@ -206,7 +209,7 @@ export const StandardsQuickExplorer: React.FC<StandardsQuickExplorerProps> = ({ 
                   {std.qco && (
                     <span className="inline-flex items-center gap-1 text-[9px] font-mono uppercase bg-emerald-100/70 text-emerald-800 px-2 py-0.5 rounded-full border border-emerald-300/50">
                       <ShieldCheck size={10} />
-                      <span>QCO Mandated</span>
+                      <span>{t('exp_qco_mandated', 'QCO Mandated')}</span>
                     </span>
                   )}
                 </div>
@@ -231,7 +234,7 @@ export const StandardsQuickExplorer: React.FC<StandardsQuickExplorerProps> = ({ 
                   className="inline-flex items-center gap-1.5 text-xs font-serif font-semibold text-[#2C6E80] hover:text-[#1E2320] transition-colors cursor-pointer"
                 >
                   <BookOpen size={12} />
-                  <span>View Clauses & Dependencies</span>
+                  <span>{t('exp_view_clauses', 'View Clauses & Dependencies')}</span>
                 </button>
               </div>
             </div>

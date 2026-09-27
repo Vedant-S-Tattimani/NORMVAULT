@@ -1,30 +1,45 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { TrendingUp, ShieldCheck, Clock, CheckCircle } from 'lucide-react';
 
 export const ImpactMetricsSection: React.FC = () => {
+  const { t } = useTranslation();
+
   const metrics = [
     {
       value: '50%',
-      label: 'Fewer Tender Ambiguities',
-      detail: 'Pre-tender gap detection eliminates contradictory clauses and missing testing parameters before tender publication.',
+      label: t('impact_m1_label', 'Fewer Tender Ambiguities'),
+      detail: t(
+        'impact_m1_detail',
+        'Pre-tender gap detection eliminates contradictory clauses and missing testing parameters before tender publication.'
+      ),
       icon: TrendingUp,
     },
     {
       value: '40%',
-      label: 'Faster Bid Evaluation',
-      detail: 'Procurement officers evaluate technical compliance in minutes using automated clause-level traceability matrices.',
+      label: t('impact_m2_label', 'Faster Bid Evaluation'),
+      detail: t(
+        'impact_m2_detail',
+        'Procurement officers evaluate technical compliance in minutes using automated clause-level traceability matrices.'
+      ),
       icon: Clock,
     },
     {
       value: '100%',
-      label: 'Statutory QCO Compliance',
-      detail: 'Mandatory Quality Control Orders under BIS Act Section 16 are automatically enforced across all procurement items.',
+      label: t('impact_m3_label', 'Statutory QCO Compliance'),
+      detail: t(
+        'impact_m3_detail',
+        'Mandatory Quality Control Orders under BIS Act Section 16 are automatically enforced across all procurement items.'
+      ),
       icon: ShieldCheck,
     },
     {
       value: '0',
-      label: 'Post-Award Standard Disputes',
-      detail: 'Deterministic provenance and normative reference mapping prevent vendor arbitration and CVC audit objections.',
+      label: t('impact_m4_label', 'Post-Award Standard Disputes'),
+      detail: t(
+        'impact_m4_detail',
+        'Deterministic provenance and normative reference mapping prevent vendor arbitration and CVC audit objections.'
+      ),
       icon: CheckCircle,
     },
   ];
@@ -34,14 +49,16 @@ export const ImpactMetricsSection: React.FC = () => {
       <div className="max-w-[1440px] mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="text-[10px] font-mono tracking-[0.25em] text-[#787165] uppercase mb-2">
-            MEASURABLE PROCUREMENT IMPACT
+            {t('impact_kicker', 'MEASURABLE PROCUREMENT IMPACT')}
           </div>
           <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#1E2320] leading-tight mb-4">
-            Quantifiable Integrity for India's Capital Projects
+            {t('impact_title', "Quantifiable Integrity for India's Capital Projects")}
           </h2>
           <p className="text-sm sm:text-base text-[#525650] font-serif leading-relaxed">
-            Delivering measurable time savings, complete legal compliance, and audit-proof documentation 
-            for Central Ministries, State Departments, and Public Sector Undertakings.
+            {t(
+              'impact_desc',
+              'Delivering measurable time savings, complete legal compliance, and audit-proof documentation for Central Ministries, State Departments, and Public Sector Undertakings.'
+            )}
           </p>
         </div>
 

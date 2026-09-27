@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Building, Layers, ShieldCheck, Users, ArrowRight } from 'lucide-react';
 import { ViewType } from '../common/EditorialHeader';
 
@@ -7,46 +8,56 @@ interface CapabilitiesSectionProps {
 }
 
 export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({ onNavigate }) => {
+  const { t } = useTranslation();
+
   const personas = [
     {
       icon: Building,
-      title: 'Tender Inviting Authorities (TIAs)',
-      role: 'Chief Engineers & Procurement Officers',
-      description:
-        'Pre-publication specification review that automatically flags superseded standards (e.g. IS 325 → IS 12615) and generates ready-to-issue corrigendum addenda before NIT release.',
+      title: t('cap_p1_title', 'Tender Inviting Authorities (TIAs)'),
+      role: t('cap_p1_role', 'Chief Engineers & Procurement Officers'),
+      description: t(
+        'cap_p1_desc',
+        'Pre-publication specification review that automatically flags superseded standards (e.g. IS 325 → IS 12615) and generates ready-to-issue corrigendum addenda before NIT release.'
+      ),
       action: 'analyze',
-      actionLabel: 'Scan Tender Specification',
-      stats: 'Zero Pre-Bid Corrigenda Delays',
+      actionLabel: t('cap_p1_btn', 'Scan Tender Specification'),
+      stats: t('cap_p1_stat', 'Zero Pre-Bid Corrigenda Delays'),
     },
     {
       icon: Layers,
-      title: 'Technical Evaluation Committees (TECs)',
-      role: 'Bid Scrutiny & Technical Qualification',
-      description:
-        'Clause-by-clause traceability matrices mapping bidder technical submittals directly against authoritative BIS requirements, test protocols, and dimensional limits without subjective bias.',
+      title: t('cap_p2_title', 'Technical Evaluation Committees (TECs)'),
+      role: t('cap_p2_role', 'Bid Scrutiny & Technical Qualification'),
+      description: t(
+        'cap_p2_desc',
+        'Clause-by-clause traceability matrices mapping bidder technical submittals directly against authoritative BIS requirements, test protocols, and dimensional limits without subjective bias.'
+      ),
       action: 'analyze',
-      actionLabel: 'Inspect Traceability Matrix',
-      stats: '40% Faster Technical Evaluation',
+      actionLabel: t('cap_p2_btn', 'Inspect Traceability Matrix'),
+      stats: t('cap_p2_stat', '40% Faster Technical Evaluation'),
     },
     {
       icon: ShieldCheck,
-      title: 'Vigilance & Audit Authorities',
-      role: 'Chief Vigilance Officers (CVOs) & CAG',
-      description:
-        'SHA-256 cryptographic provenance seals locking every evaluation run into an untamperable audit package aligned with CVC guidelines, GFR Rule 144(i), and the BIS Act 2016.',
+      title: t('cap_p3_title', 'Vigilance & Audit Authorities'),
+      role: t('cap_p3_role', 'Chief Vigilance Officers (CVOs) & CAG'),
+      description: t(
+        'cap_p3_desc',
+        'SHA-256 cryptographic provenance seals locking every evaluation run into an untamperable audit package aligned with CVC guidelines, GFR Rule 144(i), and the BIS Act 2016.'
+      ),
       action: 'decision-package',
-      actionLabel: 'Verify Decision Package',
-      stats: 'Cryptographic Audit Defense',
+      actionLabel: t('cap_p3_btn', 'Verify Decision Package'),
+      stats: t('cap_p3_stat', 'Cryptographic Audit Defense'),
     },
     {
       icon: Users,
-      title: 'Suppliers, MSMEs & Domestic Industry',
-      role: 'Fair Bidding & Make in India Access',
-      description:
-        'Clear, non-ambiguous tender specifications referencing active Indian Standards, eliminating restrictive proprietary clauses and establishing a transparent level playing field.',
+      title: t('cap_p4_title', 'Suppliers, MSMEs & Domestic Industry'),
+      role: t('cap_p4_role', 'Fair Bidding & Make in India Access'),
+      description: t(
+        'cap_p4_desc',
+        'Clear, non-ambiguous tender specifications referencing active Indian Standards, eliminating restrictive proprietary clauses and establishing a transparent level playing field.'
+      ),
       action: 'standards',
-      actionLabel: 'Browse Mandated Standards',
-      stats: 'Fair & Transparent Bidding',
+      actionLabel: t('cap_p4_btn', 'Browse Mandated Standards'),
+      stats: t('cap_p4_stat', 'Fair & Transparent Bidding'),
     },
   ];
 
@@ -56,14 +67,17 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({ onNavi
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
             <div className="text-[10px] font-mono tracking-[0.25em] text-[#787165] uppercase mb-2">
-              STAKEHOLDER INTEGRATION
+              {t('cap_kicker', 'STAKEHOLDER INTEGRATION')}
             </div>
             <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#1E2320] leading-tight">
-              Engineered for Every Public Procurement Stakeholder
+              {t('cap_title', 'Engineered for Every Public Procurement Stakeholder')}
             </h2>
           </div>
           <p className="text-sm text-[#525650] max-w-md font-serif leading-relaxed">
-            From pre-tender drafting to post-award audit, NORMVAULT provides role-specific rigor for India's procurement ecosystem.
+            {t(
+              'cap_desc',
+              "From pre-tender drafting to post-award audit, NORMVAULT provides role-specific rigor for India's procurement ecosystem."
+            )}
           </p>
         </div>
 

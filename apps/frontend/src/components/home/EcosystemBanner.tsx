@@ -1,34 +1,37 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { ShieldCheck, Building2, Landmark, Award, CheckCircle } from 'lucide-react';
 
 export const EcosystemBanner: React.FC = () => {
+  const { t } = useTranslation();
+
   const partners = [
     {
-      name: 'Bureau of Indian Standards',
+      name: t('partner_bis_name', 'Bureau of Indian Standards'),
       acronym: 'BIS',
-      role: 'National Standards Body of India',
-      badge: 'Statutory Authority',
+      role: t('partner_bis_role', 'National Standards Body of India'),
+      badge: t('partner_bis_badge', 'Statutory Authority'),
       icon: Award,
     },
     {
-      name: 'Government e-Marketplace',
+      name: t('partner_gem_name', 'Government e-Marketplace'),
       acronym: 'GeM',
-      role: 'National Public Procurement Portal',
-      badge: 'Procurement Integration',
+      role: t('partner_gem_role', 'National Public Procurement Portal'),
+      badge: t('partner_gem_badge', 'Procurement Integration'),
       icon: Landmark,
     },
     {
-      name: 'DPIIT Ministry of Commerce',
+      name: t('partner_dpiit_name', 'DPIIT Ministry of Commerce'),
       acronym: 'DPIIT QCO',
-      role: 'Quality Control Orders Mandate',
-      badge: 'Regulatory Framework',
+      role: t('partner_dpiit_role', 'Quality Control Orders Mandate'),
+      badge: t('partner_dpiit_badge', 'Regulatory Framework'),
       icon: ShieldCheck,
     },
     {
-      name: 'NTPC & Public Sector Undertakings',
+      name: t('partner_psu_name', 'NTPC & Public Sector Undertakings'),
       acronym: 'PSUs',
-      role: 'Power, Infrastructure & Rail Tenders',
-      badge: 'Enterprise Adoption',
+      role: t('partner_psu_role', 'Power, Infrastructure & Rail Tenders'),
+      badge: t('partner_psu_badge', 'Enterprise Adoption'),
       icon: Building2,
     },
   ];
@@ -39,15 +42,15 @@ export const EcosystemBanner: React.FC = () => {
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-8">
           <div>
             <div className="text-[10px] font-mono tracking-[0.25em] text-[#787165] uppercase mb-1">
-              INSTITUTIONAL TRUST & STATUTORY COMPLIANCE
+              {t('eco_kicker', 'INSTITUTIONAL TRUST & STATUTORY COMPLIANCE')}
             </div>
             <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#1E2320]">
-              Engineered for India's Public Procurement Ecosystem
+              {t('eco_title', "Engineered for India's Public Procurement Ecosystem")}
             </h2>
           </div>
           <div className="flex items-center gap-2 text-xs font-mono text-[#525650] bg-[#EFEAE0] px-3.5 py-1.5 rounded-full border border-[#8C8275]/30">
             <CheckCircle size={13} className="text-[#2C6E80]" />
-            <span>Aligned with BIS Act 2016 & GFR Rule 144(i)</span>
+            <span>{t('eco_aligned', 'Aligned with BIS Act 2016 & GFR Rule 144(i)')}</span>
           </div>
         </div>
 
@@ -85,20 +88,20 @@ export const EcosystemBanner: React.FC = () => {
         <div className="mt-8 p-4 rounded-xl bg-[#EFEAE0] border border-[#8C8275]/25 flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-[#525650]">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
-            <span className="font-bold text-[#1E2320]">LIVE BIS CATALOG:</span>
-            <span>22,418 Active Standards Indexed</span>
+            <span className="font-bold text-[#1E2320]">{t('eco_live_catalog', 'LIVE BIS CATALOG:')}</span>
+            <span>{t('eco_standards_count', '22,418 Active Standards Indexed')}</span>
           </div>
           <div className="hidden sm:block text-[#8C8275]">•</div>
           <div>
-            <strong className="text-[#1E2320]">142</strong> Mandatory DPIIT QCOs Synced
+            <span>{t('eco_qcos_synced', '142 Mandatory DPIIT QCOs Synced')}</span>
           </div>
           <div className="hidden md:block text-[#8C8275]">•</div>
           <div>
-            <strong className="text-[#1E2320]">100%</strong> GFR 144(i) & Make in India Aligned
+            <span>{t('eco_make_in_india', '100% GFR 144(i) & Make in India Aligned')}</span>
           </div>
           <div className="hidden lg:block text-[#8C8275]">•</div>
           <div className="text-[11px] text-[#787165]">
-            Real-Time Gazettes: <strong className="text-[#2C6E80]">v2026.09 Active</strong>
+            <span>{t('eco_audit_seal', 'CVC Provenance Seal Enabled')}</span>
           </div>
         </div>
       </div>

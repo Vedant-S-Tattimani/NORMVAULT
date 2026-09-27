@@ -24,4 +24,10 @@ export function changeAppLanguage(langCode: string): void {
   i18n.changeLanguage(langCode);
 }
 
+if (typeof window !== 'undefined') {
+  (window as any).i18n = i18n;
+  (window as any).changeAppLanguage = changeAppLanguage;
+}
+
 export default i18n;
+

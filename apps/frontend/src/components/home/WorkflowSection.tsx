@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { 
   FileText, 
   Search, 
@@ -17,17 +18,20 @@ interface WorkflowSectionProps {
 }
 
 export const WorkflowSection: React.FC<WorkflowSectionProps> = ({ onNavigate }) => {
+  const { t } = useTranslation();
   const [activeStage, setActiveStage] = useState<number>(0);
 
   const stages = [
     {
       step: '01',
-      title: 'Document Intelligence',
-      subtitle: 'Requirement Extraction',
+      title: t('wf_s1_title', 'Document Intelligence'),
+      subtitle: t('wf_s1_sub', 'Requirement Extraction'),
       icon: FileText,
-      tag: 'OCR & NLP Engine',
-      description:
-        'Ingests raw tender PDFs, scans, and technical tender text. Decomposes unstructured procurement documents into atomic requirements with verbatim source citations and page-level provenance.',
+      tag: t('wf_s1_tag', 'OCR & NLP Engine'),
+      description: t(
+        'wf_s1_desc',
+        'Ingests raw tender PDFs, scans, and technical tender text. Decomposes unstructured procurement documents into atomic requirements with verbatim source citations and page-level provenance.'
+      ),
       keyOutputs: [
         'Atomic requirement decomposition with unique IDs',
         'Verbatim citation strings with section and page numbers',
@@ -37,12 +41,14 @@ export const WorkflowSection: React.FC<WorkflowSectionProps> = ({ onNavigate }) 
     },
     {
       step: '02',
-      title: 'Hybrid Retrieval',
-      subtitle: 'Standards Catalog Search',
+      title: t('wf_s2_title', 'Hybrid Retrieval'),
+      subtitle: t('wf_s2_sub', 'Standards Catalog Search'),
       icon: Search,
-      tag: 'BM25 + Dense Vector',
-      description:
-        'Combines deterministic BM25 lexical keyword matching with dense neural vector embeddings across the authoritative catalog of 22,000+ Bureau of Indian Standards (BIS) publications.',
+      tag: t('wf_s2_tag', 'BM25 + Dense Vector'),
+      description: t(
+        'wf_s2_desc',
+        'Combines deterministic BM25 lexical keyword matching with dense neural vector embeddings across the authoritative catalog of 22,000+ Bureau of Indian Standards (BIS) publications.'
+      ),
       keyOutputs: [
         'Candidate standard retrieval with hybrid score fusion (RRF)',
         'Domain-specific expansion (e.g. "TMT bar" -> IS 1786)',
@@ -52,12 +58,14 @@ export const WorkflowSection: React.FC<WorkflowSectionProps> = ({ onNavigate }) 
     },
     {
       step: '03',
-      title: 'Applicability Engine',
-      subtitle: 'Deterministic Verification',
+      title: t('wf_s3_title', 'Applicability Engine'),
+      subtitle: t('wf_s3_sub', 'Deterministic Verification'),
       icon: CheckCircle2,
-      tag: '8 Evidence Categories',
-      description:
-        'Evaluates candidates against 8 rigorous evidence categories: scope, product form, operating parameters, test procedures, safety rules, dimensional limits, environmental conditions, and material grades.',
+      tag: t('wf_s3_tag', '8 Evidence Categories'),
+      description: t(
+        'wf_s3_desc',
+        'Evaluates candidates against 8 rigorous evidence categories: scope, product form, operating parameters, test procedures, safety rules, dimensional limits, environmental conditions, and material grades.'
+      ),
       keyOutputs: [
         'Category-by-category verification matrix',
         'Deterministic confidence scoring (Highly Relevant / Relevant / Inapplicable)',
@@ -67,12 +75,14 @@ export const WorkflowSection: React.FC<WorkflowSectionProps> = ({ onNavigate }) 
     },
     {
       step: '04',
-      title: 'Dependency Graph',
-      subtitle: 'Normative Reference Mapping',
+      title: t('wf_s4_title', 'Dependency Graph'),
+      subtitle: t('wf_s4_sub', 'Normative Reference Mapping'),
       icon: GitBranch,
-      tag: 'Graph Intelligence',
-      description:
-        'Recursively traverses the normative reference graph of the primary standard. Unpacks mandatory companion codes, testing methods, dimensional tolerances, and sampling standards.',
+      tag: t('wf_s4_tag', 'Graph Intelligence'),
+      description: t(
+        'wf_s4_desc',
+        'Recursively traverses the normative reference graph of the primary standard. Unpacks mandatory companion codes, testing methods, dimensional tolerances, and sampling standards.'
+      ),
       keyOutputs: [
         'Full dependency tree (Primary Standard -> Mandatory Normative References)',
         'Identifies downstream testing codes (e.g., IS 1608 for Tensile Test)',
@@ -82,12 +92,14 @@ export const WorkflowSection: React.FC<WorkflowSectionProps> = ({ onNavigate }) 
     },
     {
       step: '05',
-      title: 'Currentness & QCO',
-      subtitle: 'Edition & Statutory Mandates',
+      title: t('wf_s5_title', 'Currentness & QCO'),
+      subtitle: t('wf_s5_sub', 'Edition & Statutory Mandates'),
       icon: Clock,
-      tag: 'Statutory Verification',
-      description:
-        'Validates standard currency, tracks historical editions and active amendments, and verifies statutory Quality Control Orders (QCO) issued by DPIIT under Section 16 of the BIS Act 2016.',
+      tag: t('wf_s5_tag', 'Statutory Verification'),
+      description: t(
+        'wf_s5_desc',
+        'Validates standard currency, tracks historical editions and active amendments, and verifies statutory Quality Control Orders (QCO) issued by DPIIT under Section 16 of the BIS Act 2016.'
+      ),
       keyOutputs: [
         'Superseded standard detection with active replacement code',
         'Active amendment tracking with technical changes highlighted',
@@ -97,12 +109,14 @@ export const WorkflowSection: React.FC<WorkflowSectionProps> = ({ onNavigate }) 
     },
     {
       step: '06',
-      title: 'Specification Gap',
-      subtitle: 'Ambiguity & Gap Detection',
+      title: t('wf_s6_title', 'Specification Gap'),
+      subtitle: t('wf_s6_sub', 'Contradiction & Omission Detection'),
       icon: AlertCircle,
-      tag: 'Risk Prevention',
-      description:
-        'Analyzes the tender specification against BIS standard requirements to detect missing parameters, ambiguous tolerances (e.g. "as per engineer"), or conflicting test requirements.',
+      tag: t('wf_s6_tag', 'Deterministic Audit'),
+      description: t(
+        'wf_s6_desc',
+        'Analyzes the tender specification against BIS standard requirements to detect missing parameters, ambiguous tolerances (e.g. "as per engineer"), or conflicting test requirements.'
+      ),
       keyOutputs: [
         'Severity-classified gap flags (Critical, Warning, Advisory)',
         'Specific missing parameters (e.g. Impact test temperature unspecified)',
@@ -112,12 +126,14 @@ export const WorkflowSection: React.FC<WorkflowSectionProps> = ({ onNavigate }) 
     },
     {
       step: '07',
-      title: 'Decision Package',
-      subtitle: 'Cryptographic Audit Seal',
+      title: t('wf_s7_title', 'Decision Package'),
+      subtitle: t('wf_s7_sub', 'Corrigendum & Cryptographic Seal'),
       icon: FileCheck,
-      tag: 'SHA-256 Audit Trail',
-      description:
-        'Synthesizes all intelligence into an exportable, audit-ready Procurement Decision Package with an end-to-end traceability matrix, verifiable SHA-256 cryptographic seal, and CVC compliance certificate.',
+      tag: t('wf_s7_tag', 'Audit Defense'),
+      description: t(
+        'wf_s7_desc',
+        'Synthesizes all intelligence into an exportable, audit-ready Procurement Decision Package with an end-to-end traceability matrix, verifiable SHA-256 cryptographic seal, and CVC compliance certificate.'
+      ),
       keyOutputs: [
         'Full Clause Traceability Matrix (Tender Clause <-> BIS Clause)',
         'Cryptographic SHA-256 hash seal for tamper detection',
@@ -133,14 +149,16 @@ export const WorkflowSection: React.FC<WorkflowSectionProps> = ({ onNavigate }) 
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="text-[10px] font-mono tracking-[0.25em] text-[#787165] uppercase mb-2">
-            THE DETERMINISTIC PIPELINE
+            {t('wf_kicker', 'DETERMINISTIC ARCHITECTURE')}
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-serif font-bold text-[#1E2320] leading-tight mb-4">
-            How NORMVAULT Validates Procurement Specifications
+            {t('wf_title', 'The 7-Stage Procurement Intelligence Pipeline')}
           </h2>
           <p className="text-sm sm:text-base text-[#525650] font-serif leading-relaxed">
-            A seven-stage deterministic intelligence architecture that leaves nothing to guesswork—transforming 
-            complex engineering tenders into audit-ready, legally compliant procurement decision packages.
+            {t(
+              'wf_desc',
+              'NORMVAULT replaces guesswork and keyword search with an evidence-grounded, multi-stage pipeline designed specifically for public procurement specifications.'
+            )}
           </p>
         </div>
 
@@ -268,7 +286,7 @@ export const WorkflowSection: React.FC<WorkflowSectionProps> = ({ onNavigate }) 
             onClick={() => onNavigate('how-it-works')}
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#1E231D] hover:bg-[#0D100C] text-[#FCFAF6] font-serif font-medium text-xs sm:text-sm shadow-xs transition-all cursor-pointer group"
           >
-            <span>Explore Complete 7-Stage Technical Architecture & Methodology</span>
+            <span>{t('wf_btn', 'Experience the Full Pipeline in Workspace')}</span>
             <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
