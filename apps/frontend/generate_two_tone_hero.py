@@ -1,15 +1,50 @@
 import cv2
 import numpy as np
-from PIL import Image
 
 def generate_hero():
-    src = r'C:\Users\Lenovo\.gemini\antigravity-ide\brain\dc1bf6b2-4892-42aa-ac84-18350561f17e\seamless_hero_artwork_1790526034280.jpg'
-    img = cv2.imread(src)
-    h, w, c = img.shape
-    print(f"Loaded source image: {w}x{h}")
+    ref_src = r'C:\Users\Lenovo\.gemini\antigravity-ide\brain\dc1bf6b2-4892-42aa-ac84-18350561f17e\clean_reference_artwork_1790524015071.jpg'
+    base_src = r'C:\Users\Lenovo\.gemini\antigravity-ide\brain\dc1bf6b2-4892-42aa-ac84-18350561f17e\seamless_hero_artwork_1790526034280.jpg'
+    
+    ref = cv2.imread(ref_src)
+    base = cv2.imread(base_src)
+    h, w, c = base.shape
+    print(f"Loaded source assets ({w}x{h}).")
 
     # =========================================================================
-    # STEP 1: Clean bottom text/watermarks for multilingual overlay
+    # STEP 1: Restore authentic Indian Parliament (Sansad Bhavan) & Tiranga Flag
+    # =========================================================================
+    # Extract clean matte for flag and flagpole atop the dome
+    flag_zone_ref = ref[425:485, 680:735]
+    sky_ref_color = np.array([218.0, 240.0, 248.0])
+    sky_dist = np.linalg.norm(flag_zone_ref.astype(float) - sky_ref_color, axis=2)
+    flag_matte = np.clip((sky_dist - 18.0) / 22.0, 0, 1).astype(np.float32)
+    flag_matte = cv2.GaussianBlur(flag_matte, (3, 3), 0.6)
+
+    # Building mask for dome and sandstone colonnade
+    building_mask = np.zeros((h, w), dtype=np.float32)
+    building_mask[425:485, 680:735] = flag_matte
+
+    # Central dome
+    cv2.ellipse(building_mask, (693, 502), (32, 22), 0, 0, 360, 1.0, -1)
+
+    # Colonnade body
+    colonnade_pts = np.array([
+        [505, 535], [520, 518], [610, 510], [690, 508], [770, 510], [860, 518], [875, 535],
+        [875, 580], [505, 580]
+    ], dtype=np.int32)
+    cv2.fillPoly(building_mask, [colonnade_pts], 1.0)
+
+    # Smooth colonnade boundaries for seamless integration with flanking trees
+    b_mask_smooth = cv2.GaussianBlur(building_mask, (11, 11), 3.0)
+    b_mask_smooth[425:485, 680:735] = np.maximum(b_mask_smooth[425:485, 680:735], flag_matte)
+
+    # Composite authentic Sansad Bhavan and flag into canvas
+    img = base.astype(np.float32) * (1.0 - b_mask_smooth[:, :, np.newaxis]) + ref.astype(np.float32) * b_mask_smooth[:, :, np.newaxis]
+    img = np.clip(img, 0, 255).astype(np.uint8)
+    print("Step 1: Successfully composited authentic Sansad Bhavan and Indian Tricolor Flag.")
+
+    # =========================================================================
+    # STEP 2: Clean bottom text/watermarks for multilingual overlay
     # =========================================================================
     mask = np.zeros((h, w), dtype=np.uint8)
     # Bottom left: | BUILT FOR GOVERNMENT AND PSUS
@@ -25,12 +60,12 @@ def generate_hero():
     mask[680:755, 1040:1360] = cv2.dilate(mask_right, np.ones((5, 5), np.uint8), iterations=1)
 
     img = cv2.inpaint(img, mask, inpaintRadius=5, flags=cv2.INPAINT_TELEA)
-    print("Step 1: Cleaned bottom corners for clean i18n overlays.")
+    print("Step 2: Cleaned bottom corners for multilingual UI text.")
 
     # =========================================================================
-    # STEP 2: Fully eliminate the horizontal seam line across eyebrows
+    # STEP 3: Fully eliminate horizontal seam line across eyebrows
     # =========================================================================
-    # 2a. Inpaint anomalous bright seam pixels along y=580..596, x=530..870
+    # 3a. Inpaint anomalous bright seam pixels along y=581..595
     strip_mask = np.zeros((h, w), dtype=np.uint8)
     for y in range(581, 596):
         for x in range(530, 870):
@@ -46,16 +81,16 @@ def generate_hero():
     strip_mask = cv2.dilate(strip_mask, np.ones((3, 3), np.uint8), iterations=1)
     img = cv2.inpaint(img, strip_mask, inpaintRadius=3, flags=cv2.INPAINT_TELEA)
 
-    # 2b. Sample natural foliage colors from the canopy directly above (y=550..580)
+    # 3b. Sample natural foliage colors from canopy directly above
     foliage_palette = []
     for fy in range(550, 580, 2):
         for fx in range(500, 900, 3):
             bgr = img[fy, fx].astype(float)
-            if np.mean(bgr) < 95: # dark rich foliage
+            if np.mean(bgr) < 95:
                 foliage_palette.append(bgr)
     foliage_palette = np.array(foliage_palette)
 
-    # 2c. Paint cascading watercolor leaf clusters & botanical brushstrokes across x=515..885
+    # 3c. Paint cascading watercolor leaf clusters & botanical brushstrokes across x=515..885
     rng = np.random.RandomState(137)
     botanical = np.zeros((h, w, 4), dtype=np.float32)
 
@@ -67,17 +102,15 @@ def generate_hero():
 
     for cx_f in x_coords:
         cx = int(cx_f)
-        # Eyebrow arch curvature: center is slightly higher (585..588), arches curve down (588..593)
         center_dist = abs(cx - 692)
         base_y = int(585 + 3.5 * np.sin(cx * 0.035) + rng.uniform(-1.5, 2.5))
 
-        # Varied drop depths breaking the horizontal line completely:
         if center_dist < 35:
-            max_drop = rng.uniform(8, 16)   # delicate leaves over nose bridge
+            max_drop = rng.uniform(8, 16)
         elif center_dist < 90:
-            max_drop = rng.uniform(12, 22)  # fuller leaves over eyebrow arches
+            max_drop = rng.uniform(12, 22)
         else:
-            max_drop = rng.uniform(10, 26)  # lush leaves over temples
+            max_drop = rng.uniform(10, 26)
 
         num_leaves = rng.randint(2, 6)
         for _ in range(num_leaves):
@@ -120,7 +153,7 @@ def generate_hero():
                                 ) / out_a
                             botanical[y1 + py, x1 + px, 3] = out_a
 
-    # 2d. Soft ambient watercolor contact shadow on skin underneath leaves
+    # 3d. Ambient contact shadow under leaves
     alpha_mask = botanical[:, :, 3]
     shadow_mask = cv2.GaussianBlur(alpha_mask, (15, 15), 5.0)
     shadow_mask = np.clip(shadow_mask * 0.42, 0, 0.42)
@@ -129,91 +162,67 @@ def generate_hero():
     for c_i in range(3):
         img_float[:, :, c_i] *= (1.0 - shadow_mask)
 
-    # Composite botanical leaves
     bot_a = botanical[:, :, 3:4]
     bot_bgr = botanical[:, :, :3]
     blended = img_float * (1.0 - bot_a) + bot_bgr * bot_a
     img = np.clip(blended, 0, 255).astype(np.uint8)
 
-    # 2e. Seamless texture continuity pass across transition band
+    # 3e. Texture continuity glaze
     band = img[582:608, 490:910].copy()
     glaze = cv2.bilateralFilter(band, d=7, sigmaColor=28, sigmaSpace=7)
     img[582:608, 490:910] = cv2.addWeighted(band, 0.45, glaze, 0.55, 0)
-    print("Step 2: Fully eliminated horizontal seam with botanical foliage & watercolor blending.")
+    print("Step 3: Seamless botanical watercolor blending across eyebrows complete.")
 
     # =========================================================================
-    # STEP 3: Restore Two-Tone Painterly Palette (Cool Teal vs Warm Golden-Ochre)
+    # STEP 4: Restore Two-Tone Palette Contrast (Cool Teal vs Warm Golden-Ochre)
     # =========================================================================
-    # Convert to HSV float
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV).astype(np.float32)
     H, S, V = hsv[:, :, 0], hsv[:, :, 1], hsv[:, :, 2]
 
-    # 3a. Sky & Cool areas (Muted Teal-Grey-Blue):
-    # In OpenCV HSV: cyan/teal is H in 70..125
+    # Sky & Cool areas
     sky_mask = np.clip((H - 70) / 10.0, 0, 1) * np.clip((125 - H) / 10.0, 0, 1)
-    # Shift hue towards elegant vintage oceanic teal (H ~ 92..95 in OpenCV HSV)
     H = np.where(sky_mask > 0, 93.0 + (H - 85.0) * 0.35, H)
-    # Healthy saturation (not washed out to grey/brown, S ~ 80..115)
     S = np.where(sky_mask > 0, np.clip(S * 1.05 + 8.0, 65, 130), S)
 
-    # 3b. Foliage highlights, Parliament Building, and Warm Areas (Warm Golden-Ochre / Tan):
-    # Warm colors: H in 10..38
+    # Foliage highlights, Parliament Building, and Warm Areas
     warm_mask = np.clip((H - 8) / 6.0, 0, 1) * np.clip((38 - H) / 8.0, 0, 1)
-    # Golden ochre / amber hue (H ~ 17..23)
     H = np.where(warm_mask > 0, np.clip(H + 1.2, 14, 25), H)
-    # Vibrant warm golden saturation (prevent muddy brown wash)
     S = np.where(warm_mask > 0, np.clip(S * 1.08 + 8.0, 70, 185), S)
 
-    # 3c. Clothing areas (lower left & right) -> enhance muted teal-grey-blue
-    # Lower left (y > 700, x < 450) and Lower right (y > 700, x > 950)
+    # Clothing areas
     for y_cl in range(700, h):
         for x_cl in range(0, w):
             if (x_cl < 450 or x_cl > 950) and V[y_cl, x_cl] < 160:
-                # If it's clothing tone, nudge hue to cool teal-slate
                 if H[y_cl, x_cl] > 35 and H[y_cl, x_cl] < 130:
                     H[y_cl, x_cl] = 90.0
                     S[y_cl, x_cl] = np.clip(S[y_cl, x_cl] * 1.1 + 5.0, 40, 120)
 
-    # Reconstruct RGB
     hsv[:, :, 0] = np.clip(H, 0, 179)
     hsv[:, :, 1] = np.clip(S, 0, 255)
     hsv[:, :, 2] = np.clip(V, 0, 255)
     graded_rgb = cv2.cvtColor(hsv.astype(np.uint8), cv2.COLOR_HSV2RGB).astype(np.float32)
 
-    # 3d. Split-Tone Color Contrast (Shadows Teal-Grey-Blue vs Highlights Golden-Ochre):
+    # Split-toning
     lum = (0.299 * graded_rgb[:, :, 0] + 0.587 * graded_rgb[:, :, 1] + 0.114 * graded_rgb[:, :, 2]) / 255.0
-
-    # Cool teal tint in shadows & dark areas (lum < 0.5)
     shadow_w = np.clip(1.0 - lum * 1.8, 0, 1)[:, :, np.newaxis]
-    shadow_teal = np.array([-7.0, 3.0, 15.0], dtype=np.float32) # cool teal-blue
+    shadow_teal = np.array([-7.0, 3.0, 15.0], dtype=np.float32)
     graded_rgb = np.clip(graded_rgb + shadow_w * shadow_teal, 0, 255)
 
-    # Warm golden-ochre tint in highlights & light areas (lum > 0.35)
     highlight_w = np.clip((lum - 0.35) * 1.6, 0, 1)[:, :, np.newaxis]
-    highlight_gold = np.array([12.0, 6.0, -10.0], dtype=np.float32) # warm golden-ochre
+    highlight_gold = np.array([12.0, 6.0, -10.0], dtype=np.float32)
     graded_rgb = np.clip(graded_rgb + highlight_w * highlight_gold, 0, 255)
 
-    # 3e. Subtle fine-art watercolor rag paper tooth (1.5% micro-grain, crisp and clean)
+    # Micro paper texture
     np.random.seed(42)
     grain = cv2.GaussianBlur(np.random.normal(0, 1.0, (h, w)), (3, 3), 0.6)
     texture = 1.0 + grain * 0.015
     for c_i in range(3):
         graded_rgb[:, :, c_i] = np.clip(graded_rgb[:, :, c_i] * texture, 0, 255)
 
-    # Save output
     out_bgr = cv2.cvtColor(graded_rgb.astype(np.uint8), cv2.COLOR_RGB2BGR)
     target_path = 'public/hero_editorial_canvas.jpg'
     cv2.imwrite(target_path, out_bgr, [int(cv2.IMWRITE_JPEG_QUALITY), 96])
-    print(f"Successfully generated and saved to {target_path}!")
-
-    # Verify color statistics
-    sky_sample = graded_rgb[100:250, 100:300]
-    bld_sample = graded_rgb[480:540, 550:750]
-    fol_sample = graded_rgb[250:350, 20:150]
-    print("\nVerified Two-Tone Contrast:")
-    print(f"  Sky Mean RGB:        R={np.mean(sky_sample[:,:,0]):.1f}, G={np.mean(sky_sample[:,:,1]):.1f}, B={np.mean(sky_sample[:,:,2]):.1f} (Cool Muted Teal-Grey-Blue)")
-    print(f"  Building Mean RGB:   R={np.mean(bld_sample[:,:,0]):.1f}, G={np.mean(bld_sample[:,:,1]):.1f}, B={np.mean(bld_sample[:,:,2]):.1f} (Warm Golden-Ochre/Tan)")
-    print(f"  Warm Foliage Mean RGB: R={np.mean(fol_sample[:,:,0]):.1f}, G={np.mean(fol_sample[:,:,1]):.1f}, B={np.mean(fol_sample[:,:,2]):.1f} (Sunlit Golden-Amber)")
+    print(f"Step 4: Saved final artwork to {target_path} successfully!")
 
 if __name__ == '__main__':
     generate_hero()
