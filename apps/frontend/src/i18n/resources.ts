@@ -251,7 +251,9 @@ export const resources: Record<string, { translation: Record<string, string> }> 
       "footer_rights": "All Rights Reserved.",
       "footer_viksit": "Viksit Bharat 2047 Technical Infrastructure",
       "footer_hash_status": "Deterministic Hash Verification Active",
-      "footer_scroll_top": "Scroll to Top"
+      "footer_scroll_top": "Scroll to Top",
+      "hero_cta_analyze": "Analyze Specification",
+      "hero_cta_standards": "Explore Indian Standards"
     }
   },
   "hi": {
@@ -506,7 +508,9 @@ export const resources: Record<string, { translation: Record<string, string> }> 
       "footer_rights": "सर्वाधिकार सुरक्षित।",
       "footer_viksit": "विकसित भारत 2047 तकनीकी अवसंरचना",
       "footer_hash_status": "निश्चयात्मक हैश सत्यापन सक्रिय",
-      "footer_scroll_top": "शीर्ष पर वापस जाएँ"
+      "footer_scroll_top": "शीर्ष पर वापस जाएँ",
+      "hero_cta_analyze": "विशिष्टता का विश्लेषण करें",
+      "hero_cta_standards": "भारतीय मानक देखें"
     }
   },
   "bn": {
@@ -761,7 +765,9 @@ export const resources: Record<string, { translation: Record<string, string> }> 
       "footer_rights": "সর্বস্বত্ব সংরক্ষিত। ভারত সরকার।",
       "footer_viksit": "বিকশিত ভারত ২০৪৭ প্রযুক্তিগত অবকাঠামো",
       "footer_hash_status": "হ্যাশ যাচাইকরণ সক্রিয়",
-      "footer_scroll_top": "উপরে স্ক্রোল করুন"
+      "footer_scroll_top": "উপরে স্ক্রোল করুন",
+      "hero_cta_analyze": "স্পেসিফিকেশন বিশ্লেষণ করুন",
+      "hero_cta_standards": "ভারতীয় মানদণ্ড দেখুন"
     }
   },
   "te": {
@@ -1016,7 +1022,9 @@ export const resources: Record<string, { translation: Record<string, string> }> 
       "footer_rights": "సర్వ హక్కులు ప్రత్యేకించబడ్డాయి.",
       "footer_viksit": "వికసిత్ భారత్ 2047 సాంకేతిక మౌలిక సదుపాయాలు",
       "footer_hash_status": "నిర్దిష్ట హాష్ ధృవీకరణ సక్రియంగా ఉంది",
-      "footer_scroll_top": "పైకి స్క్రోల్ చేయండి"
+      "footer_scroll_top": "పైకి స్క్రోల్ చేయండి",
+      "hero_cta_analyze": "స్పెసిఫికేషన్ విశ్లేషించండి",
+      "hero_cta_standards": "భారతీయ ప్రమాణాలను అన్వేషించండి"
     }
   },
   "mr": {
@@ -1271,7 +1279,9 @@ export const resources: Record<string, { translation: Record<string, string> }> 
       "footer_rights": "सर्व हक्क राखीव.",
       "footer_viksit": "विकसित भारत 2047 तांत्रिक पायाभूत सुविधा",
       "footer_hash_status": "हॅश पडताळणी सक्रिय आहे",
-      "footer_scroll_top": "वर स्क्रोल करा"
+      "footer_scroll_top": "वर स्क्रोल करा",
+      "hero_cta_analyze": "तपशीलाचे विश्लेषण करा",
+      "hero_cta_standards": "भारतीय मानके एक्सप्लोर करा"
     }
   },
   "ta": {
@@ -1526,7 +1536,9 @@ export const resources: Record<string, { translation: Record<string, string> }> 
       "footer_rights": "அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.",
       "footer_viksit": "விக்சித் பாரத் 2047 தொழில்நுட்ப உள்கட்டமைப்பு",
       "footer_hash_status": "ஹாஷ் சரிபார்ப்பு செயலில் உள்ளது",
-      "footer_scroll_top": "மேலே உருட்டவும்"
+      "footer_scroll_top": "மேலே உருட்டவும்",
+      "hero_cta_analyze": "விவரக்குறிப்பை ஆய்வு செய்",
+      "hero_cta_standards": "இந்திய தரநிலைகளை ஆராயுங்கள்"
     }
   },
   "gu": {
@@ -1781,7 +1793,9 @@ export const resources: Record<string, { translation: Record<string, string> }> 
       "footer_rights": "સર્વ હક સુરક્ષિત.",
       "footer_viksit": "વિકસિત ભારત 2047 તકનીકી માળખું",
       "footer_hash_status": "હેશ ચકાસણી સક્રિય છે",
-      "footer_scroll_top": "ટોચ પર સ્ક્રોલ કરો"
+      "footer_scroll_top": "ટોચ પર સ્ક્રોલ કરો",
+      "hero_cta_analyze": "સ્પષ્ટીકરણનું વિશ્લેષણ કરો",
+      "hero_cta_standards": "ભારતીય ધોરણો શોધો"
     }
   },
   "kn": {
@@ -2036,7 +2050,9 @@ export const resources: Record<string, { translation: Record<string, string> }> 
       "footer_rights": "ಎಲ್ಲಾ ಹಕ್ಕುಗಳನ್ನು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ.",
       "footer_viksit": "ವಿಕಸಿತ ಭಾರತ 2047 ತಾಂತ್ರಿಕ ಮೂಲಸೌಕರ್ಯ",
       "footer_hash_status": "ಹ್ಯಾಶ್ ಪರಿಶೀಲನೆ ಸಕ್ರಿಯವಾಗಿದೆ",
-      "footer_scroll_top": "ಮೇಲಕ್ಕೆ ಸ್ಕ್ರೋಲ್ ಮಾಡಿ"
+      "footer_scroll_top": "ಮೇಲಕ್ಕೆ ಸ್ಕ್ರೋಲ್ ಮಾಡಿ",
+      "hero_cta_analyze": "ವಿವರಣೆಯನ್ನು ವಿಶ್ಲೇಷಿಸಿ",
+      "hero_cta_standards": "ಭಾರತೀಯ ಮಾನದಂಡಗಳನ್ನು ಅನ್ವೇಷಿಸಿ"
     }
   },
   "ur": {
@@ -2291,7 +2307,9 @@ export const resources: Record<string, { translation: Record<string, string> }> 
       "footer_rights": "جملہ حقوق محفوظ ہیں۔",
       "footer_viksit": "وکست بھارت 2047 تکنیکی انفراسٹرکچر",
       "footer_hash_status": "ہیش کی تصدیق فعال ہے",
-      "footer_scroll_top": "اوپر جائیں"
+      "footer_scroll_top": "اوپر جائیں",
+      "hero_cta_analyze": "وضاحت کا تجزیہ کریں",
+      "hero_cta_standards": "ہندوستانی معیارات دریافت کریں"
     }
   },
   "pa": {
@@ -2546,7 +2564,9 @@ export const resources: Record<string, { translation: Record<string, string> }> 
       "footer_rights": "ਸਾਰੇ ਹੱਕ ਰਾਖਵੇਂ ਹਨ। ਭਾਰਤ ਸਰਕਾਰ।",
       "footer_viksit": "ਵਿਕਸਿਤ ਭਾਰਤ 2047 ਤਕਨੀਕੀ ਬੁਨਿਆਦੀ ਢਾਂਚਾ",
       "footer_hash_status": "ਹੈਸ਼ ਤਸਦੀਕ ਸਰਗਰਮ ਹੈ",
-      "footer_scroll_top": "ਉੱਪਰ ਸਕ੍ਰੌਲ ਕਰੋ"
+      "footer_scroll_top": "ਉੱਪਰ ਸਕ੍ਰੌਲ ਕਰੋ",
+      "hero_cta_analyze": "ਵਿਸ਼ੇਸ਼ਤਾ ਦਾ ਵਿਸ਼ਲੇਸ਼ਣ ਕਰੋ",
+      "hero_cta_standards": "ਭਾਰਤੀ ਮਿਆਰਾਂ ਦੀ ਪੜਚੋਲ ਕਰੋ"
     }
   },
   "ml": {
@@ -2801,7 +2821,9 @@ export const resources: Record<string, { translation: Record<string, string> }> 
       "footer_rights": "എല്ലാ അവകാശങ്ങളും നിക്ഷിപ്തം.",
       "footer_viksit": "വികസിത് ഭാരത് 2047 സാങ്കേതിക ഇൻഫ്രാസ്ട്രക്ചർ",
       "footer_hash_status": "ഹാഷ് സ്ഥിരീകരണം സജീവം",
-      "footer_scroll_top": "മുകളിലേക്ക് സ്ക്രോൾ ചെയ്യുക"
+      "footer_scroll_top": "മുകളിലേക്ക് സ്ക്രോൾ ചെയ്യുക",
+      "hero_cta_analyze": "സ്പെസിഫിക്കേഷൻ വിശകലനം ചെയ്യുക",
+      "hero_cta_standards": "ഇന്ത്യൻ മാനദണ്ഡങ്ങൾ പര്യവേക്ഷണം ചെയ്യുക"
     }
   },
   "or": {
@@ -3056,7 +3078,9 @@ export const resources: Record<string, { translation: Record<string, string> }> 
       "footer_rights": "ସର୍ବସ୍ୱତ୍ୱ ସଂରକ୍ଷିତ। ଭାରତ ସରକାର।",
       "footer_viksit": "ବିକଶିତ ଭାରତ 2047 ବୈଷୟିକ ଭିତ୍ତିଭୂମି",
       "footer_hash_status": "ହ୍ୟାସ୍ ଯାଞ୍ଚ ସକ୍ରିୟ ଅଛି",
-      "footer_scroll_top": "ଉପରକୁ ସ୍କ୍ରୋଲ୍ କରନ୍ତୁ"
+      "footer_scroll_top": "ଉପରକୁ ସ୍କ୍ରୋଲ୍ କରନ୍ତୁ",
+      "hero_cta_analyze": "ନିର୍ଦ୍ଦିଷ୍ଟତା ବିଶ୍ଳେଷଣ କରନ୍ତୁ",
+      "hero_cta_standards": "ଭାରତୀୟ ମାନକ ଅନୁସନ୍ଧାନ କରନ୍ତୁ"
     }
   },
   "as": {
@@ -3311,7 +3335,9 @@ export const resources: Record<string, { translation: Record<string, string> }> 
       "footer_rights": "সকলো অধিকাৰ সংৰক্ষিত। ভাৰত চৰকাৰ।",
       "footer_viksit": "বিকশিত ভাৰত ২০৪৭ কাৰিকৰী আন্তঃগাঁথনি",
       "footer_hash_status": "হেছ পৰীক্ষণ সক্ৰিয়",
-      "footer_scroll_top": "ওপৰলৈ স্ক্ৰ'ল কৰক"
+      "footer_scroll_top": "ওপৰলৈ স্ক্ৰ'ল কৰক",
+      "hero_cta_analyze": "কাৰিকৰী নিৰ্দিষ্টতা বিশ্লেষণ কৰক",
+      "hero_cta_standards": "ভাৰতীয় মান অন্বেষণ কৰক"
     }
   },
   "mai": {
@@ -3566,7 +3592,9 @@ export const resources: Record<string, { translation: Record<string, string> }> 
       "footer_rights": "सर्वाधिकार सुरक्षित।",
       "footer_viksit": "विकसित भारत 2047 तकनीकी अवसंरचना",
       "footer_hash_status": "निश्चयात्मक हैश सत्यापन सक्रिय",
-      "footer_scroll_top": "शीर्ष पर वापस जाएँ"
+      "footer_scroll_top": "शीर्ष पर वापस जाएँ",
+      "hero_cta_analyze": "विशिष्टताक विश्लेषण करू",
+      "hero_cta_standards": "भारतीय मानक देखू"
     }
   },
   "sat": {
@@ -3821,7 +3849,9 @@ export const resources: Record<string, { translation: Record<string, string> }> 
       "footer_rights": "ᱡᱚᱛᱚ ᱦᱚᱠ ᱨᱩᱠᱷᱤᱭᱟᱹ ᱢᱮᱱᱟᱜᱼᱟ᱾ ᱵᱷᱟᱨᱚᱛ ᱥᱚᱨᱠᱟᱨ᱾",
       "footer_viksit": "ᱵᱤᱠᱥᱤᱛ ᱵᱷᱟᱨᱚᱛ ᱒᱐᱔᱗ ᱴᱮᱠᱱᱤᱠᱟᱞ ᱜᱟᱲ",
       "footer_hash_status": "ᱦᱮᱥ ᱯᱚᱨᱛᱟᱲ ᱪᱟᱹᱞᱩ",
-      "footer_scroll_top": "ᱪᱮᱛᱟᱱ ᱛᱮ ᱪᱟᱞᱟᱜ ᱢᱮ"
+      "footer_scroll_top": "ᱪᱮᱛᱟᱱ ᱛᱮ ᱪᱟᱞᱟᱜ ᱢᱮ",
+      "hero_cta_analyze": "ᱵᱤᱪᱟᱹᱨ ᱢᱮ",
+      "hero_cta_standards": "ᱵᱷᱟᱨᱚᱛᱤᱭᱚ ᱢᱟᱱᱚᱠ ᱧᱮᱞ ᱢᱮ"
     }
   },
   "ks": {
@@ -4076,7 +4106,9 @@ export const resources: Record<string, { translation: Record<string, string> }> 
       "footer_rights": "سٲری حق چھِ محفُوظ۔",
       "footer_viksit": "ترقی یافتہ ہندوستان 2047 تکنیکی بنیاد",
       "footer_hash_status": "تصدیق چالو چھِ",
-      "footer_scroll_top": "ہیر کن وِتھِو"
+      "footer_scroll_top": "ہیر کن وِتھِو",
+      "hero_cta_analyze": "تجزِیہٕ کٔرِو",
+      "hero_cta_standards": "ہندوستٲنؠ معیار وُچھِو"
     }
   },
   "ne": {
@@ -4331,7 +4363,9 @@ export const resources: Record<string, { translation: Record<string, string> }> 
       "footer_rights": "सर्वाधिकार सुरक्षित।",
       "footer_viksit": "विकसित भारत 2047 तकनीकी अवसंरचना",
       "footer_hash_status": "निश्चयात्मक हैश सत्यापन सक्रिय",
-      "footer_scroll_top": "शीर्ष पर वापस जाएँ"
+      "footer_scroll_top": "शीर्ष पर वापस जाएँ",
+      "hero_cta_analyze": "विशिष्टताको विश्लेषण गर्नुहोस्",
+      "hero_cta_standards": "भारतीय मानकहरू हेर्नुहोस्"
     }
   },
   "kok": {
@@ -4586,7 +4620,9 @@ export const resources: Record<string, { translation: Record<string, string> }> 
       "footer_rights": "सर्वाधिकार सुरक्षित।",
       "footer_viksit": "विकसित भारत 2047 तकनीकी अवसंरचना",
       "footer_hash_status": "निश्चयात्मक हैश सत्यापन सक्रिय",
-      "footer_scroll_top": "शीर्ष पर वापस जाएँ"
+      "footer_scroll_top": "शीर्ष पर वापस जाएँ",
+      "hero_cta_analyze": "तपशिलाचें विश्लेषण करात",
+      "hero_cta_standards": "भारतीय मानकां सोदात"
     }
   },
   "sd": {
@@ -4841,7 +4877,9 @@ export const resources: Record<string, { translation: Record<string, string> }> 
       "footer_rights": "سڀ حق محفوظ آهن.",
       "footer_viksit": "ترقي يافته ڀارت 2047 فني بنياد",
       "footer_hash_status": "تصديق چالو آهي",
-      "footer_scroll_top": "مٿي وڃو"
+      "footer_scroll_top": "مٿي وڃو",
+      "hero_cta_analyze": "وضاحت جو تجزيو ڪريو",
+      "hero_cta_standards": "ڀارتي معيار ڏسو"
     }
   },
   "doi": {
@@ -5096,7 +5134,9 @@ export const resources: Record<string, { translation: Record<string, string> }> 
       "footer_rights": "सर्वाधिकार सुरक्षित।",
       "footer_viksit": "विकसित भारत 2047 तकनीकी अवसंरचना",
       "footer_hash_status": "निश्चयात्मक हैश सत्यापन सक्रिय",
-      "footer_scroll_top": "शीर्ष पर वापस जाएँ"
+      "footer_scroll_top": "शीर्ष पर वापस जाएँ",
+      "hero_cta_analyze": "विशिष्टता दा विश्लेषण करो",
+      "hero_cta_standards": "भारतीय मानक दिक्खो"
     }
   },
   "sa": {
@@ -5351,7 +5391,9 @@ export const resources: Record<string, { translation: Record<string, string> }> 
       "footer_rights": "सर्वाधिकार सुरक्षित।",
       "footer_viksit": "विकसित भारत 2047 तकनीकी अवसंरचना",
       "footer_hash_status": "निश्चयात्मक हैश सत्यापन सक्रिय",
-      "footer_scroll_top": "शीर्ष पर वापस जाएँ"
+      "footer_scroll_top": "शीर्ष पर वापस जाएँ",
+      "hero_cta_analyze": "विशिष्टतायाः विश्लेषणं कुरुत",
+      "hero_cta_standards": "भारतीयमानकान् पश्यत"
     }
   }
 };
