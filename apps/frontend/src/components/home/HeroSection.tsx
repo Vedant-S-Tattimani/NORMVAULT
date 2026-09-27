@@ -33,11 +33,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenGuid
   };
 
   return (
-    <section className="relative w-full min-h-screen lg:h-screen lg:max-h-[1050px] flex flex-col justify-between overflow-x-hidden bg-[#FAF6EE] select-none border-b border-[#8C8275]/25">
-      {/* 1. Full-Screen Visual Artwork Background spanning the ENTIRE Viewport behind Nav, Content & Search */}
+    <section
+      className="relative w-full overflow-x-hidden bg-[#FAF6EE] select-none border-b border-[#8C8275]/25"
+      style={{ height: '100svh', minHeight: '700px', maxHeight: '1100px' }}
+    >
+      {/* 1. Full-Screen Visual Artwork Background — positioned so face stays in lower 30% */}
       <div
-        className="absolute inset-0 bg-cover bg-bottom bg-no-repeat pointer-events-none z-0"
-        style={{ backgroundImage: `url('/hero_editorial_canvas.jpg')` }}
+        className="absolute inset-0 pointer-events-none z-0"
+        style={{
+          backgroundImage: `url('/hero_editorial_canvas.jpg')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center 62%',
+          backgroundRepeat: 'no-repeat',
+        }}
       />
 
       {/* 2. Natural Paper Texture & Fine Grain Overlay */}
@@ -47,8 +55,42 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenGuid
       <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[#EAE4D8]/35 to-transparent pointer-events-none z-0" />
       <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#FAF6EE]/75 via-[#FAF6EE]/20 to-transparent pointer-events-none z-0" />
 
+      {/* Left Flanking Editorial Metadata — positioned on section, ~40% from top */}
+      <div className="absolute left-6 lg:left-12 top-[40%] -translate-y-1/2 hidden xl:block z-20 pointer-events-none">
+        <div className="border-l border-[#8C8275]/45 pl-3 text-[9.5px] tracking-[0.24em] text-[#525B53] font-serif leading-loose uppercase font-medium">
+          <div>{t('pillar_accurate', 'ACCURATE')}</div>
+          <div>{t('pillar_compliant', 'COMPLIANT')}</div>
+          <div>{t('pillar_transparent', 'TRANSPARENT')}</div>
+          <div>{t('pillar_auditable', 'AUDITABLE')}</div>
+        </div>
+      </div>
+
+      {/* Right Flanking Editorial Metadata */}
+      <div className="absolute right-6 lg:right-12 top-[40%] -translate-y-1/2 hidden xl:block z-20 text-right pointer-events-none">
+        <div className="border-r border-[#8C8275]/45 pr-3 text-[9.5px] tracking-[0.24em] text-[#525B53] font-serif leading-loose uppercase font-medium">
+          <div>GFR 144(I)</div>
+          <div>BIS ACT 2016</div>
+          <div>DPIIT QCOS</div>
+          <div>CVC / CAG</div>
+        </div>
+      </div>
+
+      {/* Bottom Left Corner Signature — positioned on section */}
+      <div className="absolute bottom-4 left-6 lg:left-12 z-20 pointer-events-none">
+        <div className="border-l border-[#8C8275]/45 pl-3 text-[9.5px] md:text-[10px] tracking-[0.24em] text-[#525B53] font-serif leading-relaxed uppercase font-medium">
+          <div>{t('sub_gov', 'BUILT FOR GOVERNMENT AND PSUS')}</div>
+        </div>
+      </div>
+
+      {/* Bottom Right Corner Signature — positioned on section */}
+      <div className="absolute bottom-4 right-6 lg:right-12 z-20 pointer-events-none">
+        <div className="border-r border-[#8C8275]/45 pr-3 text-[9.5px] md:text-[10px] tracking-[0.24em] text-[#525B53] font-serif leading-relaxed uppercase font-medium text-right">
+          <div>{t('sub_bis', 'POWERED BY INDIAN STANDARDS')}</div>
+        </div>
+      </div>
+
       {/* Top Header - Seamlessly Integrated into Artwork */}
-      <header className="max-w-[1480px] w-full mx-auto px-4 sm:px-6 lg:px-12 pt-5 pb-2 flex items-center justify-between z-30 shrink-0 gap-3">
+      <header className="relative max-w-[1480px] w-full mx-auto px-4 sm:px-6 lg:px-12 pt-5 pb-2 flex items-center justify-between z-30 gap-3">
         {/* Top-Left: Language Switcher & Brand Logo */}
         <div className="flex items-center gap-2.5 sm:gap-4 shrink-0">
           <LanguageSwitcher variant="compact" className="shrink-0" />
@@ -182,71 +224,30 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenGuid
         </div>
       )}
 
-      {/* Main Hero Container with Flanking Columns & Centerpiece Artwork Integration */}
-      <main className="max-w-[1480px] w-full mx-auto px-4 sm:px-6 lg:px-12 flex-1 relative flex flex-col items-center justify-start z-10 min-h-0 pt-4 sm:pt-6 lg:pt-8">
-        {/* Left Flanking Editorial Metadata */}
-        <div className="absolute left-6 lg:left-12 top-[44%] -translate-y-1/2 hidden xl:block z-20 pointer-events-none">
-          <div className="border-l border-[#8C8275]/45 pl-3 text-[9.5px] tracking-[0.24em] text-[#525B53] font-serif leading-loose uppercase font-medium">
-            <div>{t('pillar_accurate', 'ACCURATE')}</div>
-            <div>{t('pillar_compliant', 'COMPLIANT')}</div>
-            <div>{t('pillar_transparent', 'TRANSPARENT')}</div>
-            <div>{t('pillar_auditable', 'AUDITABLE')}</div>
-          </div>
-        </div>
-
-        {/* Right Flanking Editorial Metadata */}
-        <div className="absolute right-6 lg:right-12 top-[44%] -translate-y-1/2 hidden xl:block z-20 text-right pointer-events-none">
-          <div className="border-r border-[#8C8275]/45 pr-3 text-[9.5px] tracking-[0.24em] text-[#525B53] font-serif leading-loose uppercase font-medium">
-            <div>GFR 144(I)</div>
-            <div>BIS ACT 2016</div>
-            <div>DPIIT QCOS</div>
-            <div>CVC / CAG</div>
-          </div>
-        </div>
-
-        {/* Center Editorial Hero Content */}
-        <div className="text-center max-w-3xl mx-auto flex flex-col items-center shrink-0 z-20 relative w-full">
+      {/* Center Editorial Hero Content — positioned high, NOT vertically centered */}
+      <div className="relative z-10 flex flex-col items-center w-full px-4 sm:px-6 lg:px-12 mt-[2vh] sm:mt-[3vh] lg:mt-[2.5vh]">
+        <div className="text-center max-w-3xl mx-auto flex flex-col items-center w-full">
           {/* Eyebrow */}
-          <div className="text-[10px] sm:text-[11px] md:text-[12px] font-serif tracking-[0.26em] text-[#4D564E] uppercase mb-2.5 sm:mb-3 font-medium">
+          <div className="text-[10px] sm:text-[11px] md:text-[12px] font-serif tracking-[0.26em] text-[#4D564E] uppercase mb-2 sm:mb-2.5 font-medium">
             {t('hero_kicker', 'INDIAN STANDARDS. SMARTER PROCUREMENT.')}
           </div>
 
-          {/* Main Headline */}
-          <h1 className="text-3xl sm:text-5xl lg:text-[3.8rem] font-serif font-normal text-[#141916] tracking-tight leading-[1.14] sm:leading-[1.10] mb-3.5 sm:mb-4 max-w-3xl">
+          {/* Main Headline — slightly smaller than before to match reference proportions */}
+          <h1 className="text-[1.75rem] sm:text-[2.6rem] lg:text-[3.2rem] font-serif font-normal text-[#141916] tracking-tight leading-[1.12] sm:leading-[1.08] mb-3 sm:mb-3.5 max-w-2xl">
             {t('hero_title', 'From Specifications to the Right Standards.')}
           </h1>
 
-          {/* Supporting Copy */}
-          <p className="text-xs sm:text-[13.5px] md:text-[14.5px] text-[#3D453E] leading-[1.65] max-w-[620px] font-serif font-normal text-center mb-5 sm:mb-6">
+          {/* Supporting Copy — compact */}
+          <p className="text-[11px] sm:text-[13px] md:text-[14px] text-[#3D453E] leading-[1.6] max-w-[650px] font-serif font-normal text-center mb-4 sm:mb-5">
             {t('hero_desc', 'An AI-powered recommendation engine that helps government departments and PSUs identify applicable Indian Standards for accurate, compliant and future-ready procurement specifications.')}
           </p>
 
-          {/* HERO ACTIONS: Only Two Primary Actions as Requested */}
-          <div className="flex items-center justify-center gap-3 sm:gap-4 flex-wrap mb-5 sm:mb-6 z-30">
-            {/* PRIMARY: Analyze Specification */}
-            <button
-              onClick={() => onNavigate('analyze')}
-              className="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-[#18201B] hover:bg-[#111713] text-[#FAF7F0] text-xs sm:text-sm font-sans font-medium tracking-wide shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer active:scale-97 group"
-            >
-              <span>{t('hero_cta_analyze', 'Analyze Specification')}</span>
-              <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
-            </button>
-
-            {/* SECONDARY: Explore Indian Standards */}
-            <button
-              onClick={() => onNavigate('standards')}
-              className="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-[#FAF6ED]/95 hover:bg-[#FAF6ED] text-[#18201B] border border-[#8C8275]/45 hover:border-[#2C6E80] text-xs sm:text-sm font-sans font-medium tracking-wide shadow-2xs hover:shadow-xs transition-all duration-200 cursor-pointer active:scale-97"
-            >
-              <span>{t('hero_cta_standards', 'Explore Indian Standards')}</span>
-            </button>
-          </div>
-
-          {/* Existing Search & Category Functionality - Refined as Subtle Secondary Interaction */}
-          <div className="w-full max-w-xl z-30 px-2 sm:px-0">
-            {/* Search Bar matching reference composition */}
+          {/* Search & Category — the primary interactive element per the reference */}
+          <div className="w-full max-w-[640px] z-30 px-2 sm:px-0">
+            {/* Search Bar */}
             <form
               onSubmit={handleHeroSearch}
-              className="relative flex items-center bg-[#FAF6ED]/95 hover:bg-[#FAF6ED] border border-[#8C8275]/45 hover:border-[#2C6E80] focus-within:border-[#2C6E80] focus-within:ring-2 focus-within:ring-[#2C6E80]/20 rounded-full shadow-2xs transition-all duration-200 overflow-hidden"
+              className="relative flex items-center bg-white/90 hover:bg-white border border-[#8C8275]/40 hover:border-[#2C6E80] focus-within:border-[#2C6E80] focus-within:ring-2 focus-within:ring-[#2C6E80]/20 rounded-full shadow-sm transition-all duration-200 overflow-hidden"
             >
               <div className="pl-4 pr-2 text-[#4A544C]">
                 <Search size={15} />
@@ -267,56 +268,56 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenGuid
               </button>
             </form>
 
-            {/* Category Chips matching reference composition */}
-            <div className="flex items-center justify-center gap-1.5 sm:gap-2 flex-wrap mt-2.5 sm:mt-3 text-xs font-sans">
-              <span className="text-[10px] text-[#555C54] uppercase font-semibold tracking-wider mr-0.5 shrink-0 font-mono">
+            {/* Category Chips — compact, 2 rows max */}
+            <div className="flex items-center justify-center gap-1.5 sm:gap-2 flex-wrap mt-2 sm:mt-2.5 text-xs font-sans">
+              <span className="text-[9px] sm:text-[10px] text-[#555C54] uppercase font-semibold tracking-wider mr-0.5 shrink-0 font-mono">
                 {t('categories_label', 'CATEGORIES:')}
               </span>
               <button
                 onClick={() => handleChipClick('ETD')}
-                className="px-2.5 py-1 rounded-full bg-[#E5F0F2]/90 hover:bg-[#E5F0F2] text-[#2C6E80] hover:text-[#18201B] border border-[#2C6E80]/35 transition-all cursor-pointer whitespace-nowrap text-[11px] font-medium shadow-2xs"
+                className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-[#E5F0F2]/90 hover:bg-[#E5F0F2] text-[#2C6E80] hover:text-[#18201B] border border-[#2C6E80]/35 transition-all cursor-pointer whitespace-nowrap text-[10px] sm:text-[11px] font-medium"
                 title="Electrotechnical Standards (ETD)"
               >
                 {t('cat_etd', '⚡ Electrotechnical (ETD)')}
               </button>
               <button
                 onClick={() => handleChipClick('CED')}
-                className="px-2.5 py-1 rounded-full bg-[#F4EFE5]/90 hover:bg-[#ECE4D6] text-[#4A524A] hover:text-[#18201B] border border-[#8C8275]/35 transition-all cursor-pointer whitespace-nowrap text-[11px] font-medium shadow-2xs"
+                className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-[#F4EFE5]/90 hover:bg-[#ECE4D6] text-[#4A524A] hover:text-[#18201B] border border-[#8C8275]/35 transition-all cursor-pointer whitespace-nowrap text-[10px] sm:text-[11px] font-medium"
                 title="Civil & Structural Standards (CED)"
               >
                 {t('cat_ced', '🏛️ Civil & Structural (CED)')}
               </button>
               <button
                 onClick={() => handleChipClick('MED')}
-                className="px-2.5 py-1 rounded-full bg-[#F4EFE5]/90 hover:bg-[#ECE4D6] text-[#4A524A] hover:text-[#18201B] border border-[#8C8275]/35 transition-all cursor-pointer whitespace-nowrap text-[11px] font-medium shadow-2xs"
+                className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-[#F4EFE5]/90 hover:bg-[#ECE4D6] text-[#4A524A] hover:text-[#18201B] border border-[#8C8275]/35 transition-all cursor-pointer whitespace-nowrap text-[10px] sm:text-[11px] font-medium"
                 title="Mechanical Engineering Standards (MED)"
               >
                 {t('cat_med', '⚙️ Mechanical (MED)')}
               </button>
               <button
                 onClick={() => handleChipClick('MTD')}
-                className="px-2.5 py-1 rounded-full bg-[#F4EFE5]/90 hover:bg-[#ECE4D6] text-[#4A524A] hover:text-[#18201B] border border-[#8C8275]/35 transition-all cursor-pointer whitespace-nowrap text-[11px] font-medium shadow-2xs"
+                className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-[#F4EFE5]/90 hover:bg-[#ECE4D6] text-[#4A524A] hover:text-[#18201B] border border-[#8C8275]/35 transition-all cursor-pointer whitespace-nowrap text-[10px] sm:text-[11px] font-medium"
                 title="Metallurgical & Materials Standards (MTD)"
               >
                 {t('cat_mtd', '🔬 Metallurgical (MTD)')}
               </button>
               <button
                 onClick={() => handleChipClick('ITD')}
-                className="px-2.5 py-1 rounded-full bg-[#F4EFE5]/90 hover:bg-[#ECE4D6] text-[#4A524A] hover:text-[#18201B] border border-[#8C8275]/35 transition-all cursor-pointer whitespace-nowrap text-[11px] font-medium shadow-2xs"
+                className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-[#F4EFE5]/90 hover:bg-[#ECE4D6] text-[#4A524A] hover:text-[#18201B] border border-[#8C8275]/35 transition-all cursor-pointer whitespace-nowrap text-[10px] sm:text-[11px] font-medium"
                 title="Information Technology Standards (ITD)"
               >
                 {t('cat_itd', '💻 Information Tech (ITD)')}
               </button>
               <button
                 onClick={() => handleChipClick('FAD')}
-                className="px-2.5 py-1 rounded-full bg-[#F4EFE5]/90 hover:bg-[#ECE4D6] text-[#4A524A] hover:text-[#18201B] border border-[#8C8275]/35 transition-all cursor-pointer whitespace-nowrap text-[11px] font-medium shadow-2xs"
+                className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-[#F4EFE5]/90 hover:bg-[#ECE4D6] text-[#4A524A] hover:text-[#18201B] border border-[#8C8275]/35 transition-all cursor-pointer whitespace-nowrap text-[10px] sm:text-[11px] font-medium"
                 title="Food and Agriculture Division (FAD)"
               >
                 {t('cat_fad', '🌾 Food & Agriculture (FAD)')}
               </button>
               <button
                 onClick={() => handleChipClick('TXD')}
-                className="px-2.5 py-1 rounded-full bg-[#F4EFE5]/90 hover:bg-[#ECE4D6] text-[#4A524A] hover:text-[#18201B] border border-[#8C8275]/35 transition-all cursor-pointer whitespace-nowrap text-[11px] font-medium shadow-2xs"
+                className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-[#F4EFE5]/90 hover:bg-[#ECE4D6] text-[#4A524A] hover:text-[#18201B] border border-[#8C8275]/35 transition-all cursor-pointer whitespace-nowrap text-[10px] sm:text-[11px] font-medium"
                 title="Textile Division (TXD)"
               >
                 {t('cat_txd', '🧵 Textiles & Fabrics (TXD)')}
@@ -324,21 +325,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenGuid
             </div>
           </div>
         </div>
-
-        {/* Bottom Left Corner Signature */}
-        <div className="absolute bottom-4 left-6 lg:left-12 z-20 pointer-events-none">
-          <div className="border-l border-[#8C8275]/45 pl-3 text-[9.5px] md:text-[10px] tracking-[0.24em] text-[#525B53] font-serif leading-relaxed uppercase font-medium">
-            <div>{t('sub_gov', 'BUILT FOR GOVERNMENT AND PSUS')}</div>
-          </div>
-        </div>
-
-        {/* Bottom Right Corner Signature */}
-        <div className="absolute bottom-4 right-6 lg:right-12 z-20 pointer-events-none">
-          <div className="border-r border-[#8C8275]/45 pr-3 text-[9.5px] md:text-[10px] tracking-[0.24em] text-[#525B53] font-serif leading-relaxed uppercase font-medium text-right">
-            <div>{t('sub_bis', 'POWERED BY INDIAN STANDARDS')}</div>
-          </div>
-        </div>
-      </main>
+      </div>
     </section>
   );
 };
