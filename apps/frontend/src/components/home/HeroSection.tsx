@@ -37,16 +37,25 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenGuid
       className="relative w-full overflow-x-hidden bg-[#FAF6EE] select-none border-b border-[#8C8275]/25"
       style={{ height: '100svh', minHeight: '700px', maxHeight: '1100px' }}
     >
-      {/* 1. Full-Screen Visual Artwork Background — positioned so face stays in lower 30% */}
-      <div
-        className="absolute inset-0 pointer-events-none z-0"
-        style={{
-          backgroundImage: `url('/hero_editorial_canvas.jpg')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center 62%',
-          backgroundRepeat: 'no-repeat',
-        }}
-      />
+      {/* 1. Full-Screen Visual Artwork Background — shifted down seamlessly with dual-layer watercolor blend */}
+      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+        {/* Base Atmospheric Sky Layer (fills 0 to 100% with continuous watercolor sky) */}
+        <div
+          className="absolute inset-0 bg-cover bg-[center_top] bg-no-repeat"
+          style={{ backgroundImage: `url('/hero_editorial_canvas.jpg')` }}
+        />
+        {/* Main Composition Artwork Layer (shifted down ~135px so Parliament, books & portrait occupy lower-middle & bottom) */}
+        <div
+          className="absolute inset-0 bg-cover bg-[center_top] bg-no-repeat"
+          style={{
+            backgroundImage: `url('/hero_editorial_canvas.jpg')`,
+            top: 'clamp(80px, 14.5svh, 150px)',
+            height: '100%',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0px, black 65px, black 100%)',
+            maskImage: 'linear-gradient(to bottom, transparent 0px, black 65px, black 100%)',
+          }}
+        />
+      </div>
 
       {/* 2. Natural Paper Texture & Fine Grain Overlay */}
       <div className="absolute inset-0 bg-[radial-gradient(#8C8275_0.65px,transparent_0.65px)] [background-size:24px_24px] opacity-10 pointer-events-none z-0" />
@@ -76,14 +85,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenGuid
       </div>
 
       {/* Bottom Left Corner Signature — positioned on section */}
-      <div className="absolute bottom-4 left-6 lg:left-12 z-20 pointer-events-none">
+      <div className="absolute bottom-4 left-6 lg:left-12 z-20 pointer-events-none hidden sm:block">
         <div className="border-l border-[#8C8275]/45 pl-3 text-[9.5px] md:text-[10px] tracking-[0.24em] text-[#525B53] font-serif leading-relaxed uppercase font-medium">
           <div>{t('sub_gov', 'BUILT FOR GOVERNMENT AND PSUS')}</div>
         </div>
       </div>
 
       {/* Bottom Right Corner Signature — positioned on section */}
-      <div className="absolute bottom-4 right-6 lg:right-12 z-20 pointer-events-none">
+      <div className="absolute bottom-4 right-6 lg:right-12 z-20 pointer-events-none hidden sm:block">
         <div className="border-r border-[#8C8275]/45 pr-3 text-[9.5px] md:text-[10px] tracking-[0.24em] text-[#525B53] font-serif leading-relaxed uppercase font-medium text-right">
           <div>{t('sub_bis', 'POWERED BY INDIAN STANDARDS')}</div>
         </div>
@@ -243,11 +252,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenGuid
           </p>
 
           {/* Search & Category — the primary interactive element per the reference */}
-          <div className="w-full max-w-[640px] z-30 px-2 sm:px-0">
+          <div className="w-full max-w-[760px] z-30 px-2 sm:px-0">
             {/* Search Bar */}
             <form
               onSubmit={handleHeroSearch}
-              className="relative flex items-center bg-white/90 hover:bg-white border border-[#8C8275]/40 hover:border-[#2C6E80] focus-within:border-[#2C6E80] focus-within:ring-2 focus-within:ring-[#2C6E80]/20 rounded-full shadow-sm transition-all duration-200 overflow-hidden"
+              className="max-w-[640px] mx-auto relative flex items-center bg-white/90 hover:bg-white border border-[#8C8275]/40 hover:border-[#2C6E80] focus-within:border-[#2C6E80] focus-within:ring-2 focus-within:ring-[#2C6E80]/20 rounded-full shadow-sm transition-all duration-200 overflow-hidden"
             >
               <div className="pl-4 pr-2 text-[#4A544C]">
                 <Search size={15} />
@@ -269,55 +278,55 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenGuid
             </form>
 
             {/* Category Chips — compact, 2 rows max */}
-            <div className="flex items-center justify-center gap-1.5 sm:gap-2 flex-wrap mt-2 sm:mt-2.5 text-xs font-sans">
+            <div className="flex items-center justify-center gap-1.5 flex-wrap mt-2 sm:mt-2.5 text-xs font-sans">
               <span className="text-[9px] sm:text-[10px] text-[#555C54] uppercase font-semibold tracking-wider mr-0.5 shrink-0 font-mono">
                 {t('categories_label', 'CATEGORIES:')}
               </span>
               <button
                 onClick={() => handleChipClick('ETD')}
-                className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-[#E5F0F2]/90 hover:bg-[#E5F0F2] text-[#2C6E80] hover:text-[#18201B] border border-[#2C6E80]/35 transition-all cursor-pointer whitespace-nowrap text-[10px] sm:text-[11px] font-medium"
+                className="px-2 py-0.5 sm:px-2.5 sm:py-0.5 rounded-full bg-[#E5F0F2]/90 hover:bg-[#E5F0F2] text-[#2C6E80] hover:text-[#18201B] border border-[#2C6E80]/35 transition-all cursor-pointer whitespace-nowrap text-[10px] sm:text-[10.5px] font-medium"
                 title="Electrotechnical Standards (ETD)"
               >
                 {t('cat_etd', '⚡ Electrotechnical (ETD)')}
               </button>
               <button
                 onClick={() => handleChipClick('CED')}
-                className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-[#F4EFE5]/90 hover:bg-[#ECE4D6] text-[#4A524A] hover:text-[#18201B] border border-[#8C8275]/35 transition-all cursor-pointer whitespace-nowrap text-[10px] sm:text-[11px] font-medium"
+                className="px-2 py-0.5 sm:px-2.5 sm:py-0.5 rounded-full bg-[#F4EFE5]/90 hover:bg-[#ECE4D6] text-[#4A524A] hover:text-[#18201B] border border-[#8C8275]/35 transition-all cursor-pointer whitespace-nowrap text-[10px] sm:text-[10.5px] font-medium"
                 title="Civil & Structural Standards (CED)"
               >
                 {t('cat_ced', '🏛️ Civil & Structural (CED)')}
               </button>
               <button
                 onClick={() => handleChipClick('MED')}
-                className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-[#F4EFE5]/90 hover:bg-[#ECE4D6] text-[#4A524A] hover:text-[#18201B] border border-[#8C8275]/35 transition-all cursor-pointer whitespace-nowrap text-[10px] sm:text-[11px] font-medium"
+                className="px-2 py-0.5 sm:px-2.5 sm:py-0.5 rounded-full bg-[#F4EFE5]/90 hover:bg-[#ECE4D6] text-[#4A524A] hover:text-[#18201B] border border-[#8C8275]/35 transition-all cursor-pointer whitespace-nowrap text-[10px] sm:text-[10.5px] font-medium"
                 title="Mechanical Engineering Standards (MED)"
               >
                 {t('cat_med', '⚙️ Mechanical (MED)')}
               </button>
               <button
                 onClick={() => handleChipClick('MTD')}
-                className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-[#F4EFE5]/90 hover:bg-[#ECE4D6] text-[#4A524A] hover:text-[#18201B] border border-[#8C8275]/35 transition-all cursor-pointer whitespace-nowrap text-[10px] sm:text-[11px] font-medium"
+                className="px-2 py-0.5 sm:px-2.5 sm:py-0.5 rounded-full bg-[#F4EFE5]/90 hover:bg-[#ECE4D6] text-[#4A524A] hover:text-[#18201B] border border-[#8C8275]/35 transition-all cursor-pointer whitespace-nowrap text-[10px] sm:text-[10.5px] font-medium"
                 title="Metallurgical & Materials Standards (MTD)"
               >
                 {t('cat_mtd', '🔬 Metallurgical (MTD)')}
               </button>
               <button
                 onClick={() => handleChipClick('ITD')}
-                className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-[#F4EFE5]/90 hover:bg-[#ECE4D6] text-[#4A524A] hover:text-[#18201B] border border-[#8C8275]/35 transition-all cursor-pointer whitespace-nowrap text-[10px] sm:text-[11px] font-medium"
+                className="px-2 py-0.5 sm:px-2.5 sm:py-0.5 rounded-full bg-[#F4EFE5]/90 hover:bg-[#ECE4D6] text-[#4A524A] hover:text-[#18201B] border border-[#8C8275]/35 transition-all cursor-pointer whitespace-nowrap text-[10px] sm:text-[10.5px] font-medium"
                 title="Information Technology Standards (ITD)"
               >
                 {t('cat_itd', '💻 Information Tech (ITD)')}
               </button>
               <button
                 onClick={() => handleChipClick('FAD')}
-                className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-[#F4EFE5]/90 hover:bg-[#ECE4D6] text-[#4A524A] hover:text-[#18201B] border border-[#8C8275]/35 transition-all cursor-pointer whitespace-nowrap text-[10px] sm:text-[11px] font-medium"
+                className="px-2 py-0.5 sm:px-2.5 sm:py-0.5 rounded-full bg-[#F4EFE5]/90 hover:bg-[#ECE4D6] text-[#4A524A] hover:text-[#18201B] border border-[#8C8275]/35 transition-all cursor-pointer whitespace-nowrap text-[10px] sm:text-[10.5px] font-medium"
                 title="Food and Agriculture Division (FAD)"
               >
                 {t('cat_fad', '🌾 Food & Agriculture (FAD)')}
               </button>
               <button
                 onClick={() => handleChipClick('TXD')}
-                className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-[#F4EFE5]/90 hover:bg-[#ECE4D6] text-[#4A524A] hover:text-[#18201B] border border-[#8C8275]/35 transition-all cursor-pointer whitespace-nowrap text-[10px] sm:text-[11px] font-medium"
+                className="px-2 py-0.5 sm:px-2.5 sm:py-0.5 rounded-full bg-[#F4EFE5]/90 hover:bg-[#ECE4D6] text-[#4A524A] hover:text-[#18201B] border border-[#8C8275]/35 transition-all cursor-pointer whitespace-nowrap text-[10px] sm:text-[10.5px] font-medium"
                 title="Textile Division (TXD)"
               >
                 {t('cat_txd', '🧵 Textiles & Fabrics (TXD)')}
