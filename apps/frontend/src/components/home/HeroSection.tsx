@@ -219,7 +219,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenGuid
           </div>
 
           {/* Headline */}
-          <h1 className="text-3xl sm:text-5xl lg:text-[3.6rem] font-serif font-normal text-[#1E2320] tracking-normal leading-[1.08] mb-3">
+          <h1 className="text-3xl sm:text-5xl lg:text-[3.5rem] font-serif font-normal text-[#1E2320] tracking-normal leading-[1.22] sm:leading-[1.18] mb-3 pt-1.5 pb-0.5">
             {t('hero_title', 'From Specifications to the Right Standards.')}
           </h1>
 

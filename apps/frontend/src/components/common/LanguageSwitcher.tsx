@@ -57,6 +57,9 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
     changeAppLanguage(lang.code);
     setIsOpen(false);
     setSearchQuery('');
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   // Determine sizing according to variant
