@@ -37,36 +37,20 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenGuid
       className="relative w-full overflow-x-hidden bg-[#FAF6EE] select-none border-b border-[#8C8275]/25"
       style={{ height: '100svh', minHeight: '700px', maxHeight: '1100px' }}
     >
-      {/* 1. Full-Screen Visual Artwork Background — shifted down seamlessly with dual-layer watercolor blend */}
-      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-        {/* Base Atmospheric Sky Layer (fills 0 to 100% with continuous watercolor sky) */}
-        <div
-          className="absolute inset-0 bg-cover bg-[center_top] bg-no-repeat"
-          style={{ backgroundImage: `url('/hero_editorial_canvas.jpg')` }}
-        />
-        {/* Main Composition Artwork Layer (shifted down ~135px so Parliament, books & portrait occupy lower-middle & bottom) */}
-        <div
-          className="absolute inset-0 bg-cover bg-[center_top] bg-no-repeat"
-          style={{
-            backgroundImage: `url('/hero_editorial_canvas.jpg')`,
-            top: 'clamp(80px, 14.5svh, 150px)',
-            height: '100%',
-            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0px, black 65px, black 100%)',
-            maskImage: 'linear-gradient(to bottom, transparent 0px, black 65px, black 100%)',
-          }}
-        />
-      </div>
+      {/* 1. Full-Screen Visual Artwork Background — exact reference canvas: crisp, high contrast, fully opaque */}
+      <div
+        className="absolute inset-0 pointer-events-none z-0"
+        style={{
+          backgroundImage: `url('/hero_editorial_canvas.jpg')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center 46%',
+          backgroundRepeat: 'no-repeat',
+        }}
+      />
 
-      {/* 2. Natural Paper Texture & Fine Grain Overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(#8C8275_0.65px,transparent_0.65px)] [background-size:24px_24px] opacity-10 pointer-events-none z-0" />
-
-      {/* 3. Subtle Edge Watercolor Vignette Blend */}
-      <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[#EAE4D8]/35 to-transparent pointer-events-none z-0" />
-      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#FAF6EE]/75 via-[#FAF6EE]/20 to-transparent pointer-events-none z-0" />
-
-      {/* Left Flanking Editorial Metadata — positioned on section, ~40% from top */}
-      <div className="absolute left-6 lg:left-12 top-[40%] -translate-y-1/2 hidden xl:block z-20 pointer-events-none">
-        <div className="border-l border-[#8C8275]/45 pl-3 text-[9.5px] tracking-[0.24em] text-[#525B53] font-serif leading-loose uppercase font-medium">
+      {/* Left Flanking Editorial Metadata — solid, fully legible, not translucent */}
+      <div className="absolute left-6 lg:left-12 top-[44%] -translate-y-1/2 hidden xl:block z-20 pointer-events-none">
+        <div className="border-l-2 border-[#1E2320] pl-3 text-[10.5px] tracking-[0.24em] text-[#1E2320] font-serif leading-loose uppercase font-bold">
           <div>{t('pillar_accurate', 'ACCURATE')}</div>
           <div>{t('pillar_compliant', 'COMPLIANT')}</div>
           <div>{t('pillar_transparent', 'TRANSPARENT')}</div>
@@ -74,27 +58,27 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenGuid
         </div>
       </div>
 
-      {/* Right Flanking Editorial Metadata */}
-      <div className="absolute right-6 lg:right-12 top-[40%] -translate-y-1/2 hidden xl:block z-20 text-right pointer-events-none">
-        <div className="border-r border-[#8C8275]/45 pr-3 text-[9.5px] tracking-[0.24em] text-[#525B53] font-serif leading-loose uppercase font-medium">
-          <div>GFR 144(I)</div>
+      {/* Right Flanking Editorial Metadata — solid, fully legible, not translucent */}
+      <div className="absolute right-6 lg:right-12 top-[44%] -translate-y-1/2 hidden xl:block z-20 text-right pointer-events-none">
+        <div className="border-r-2 border-[#1E2320] pr-3 text-[10.5px] tracking-[0.24em] text-[#1E2320] font-serif leading-loose uppercase font-bold">
+          <div>GFR 144(1)</div>
           <div>BIS ACT 2016</div>
           <div>DPIIT QCOS</div>
           <div>CVC / CAG</div>
         </div>
       </div>
 
-      {/* Bottom Left Corner Signature — positioned on section */}
-      <div className="absolute bottom-4 left-6 lg:left-12 z-20 pointer-events-none hidden sm:block">
-        <div className="border-l border-[#8C8275]/45 pl-3 text-[9.5px] md:text-[10px] tracking-[0.24em] text-[#525B53] font-serif leading-relaxed uppercase font-medium">
-          <div>{t('sub_gov', 'BUILT FOR GOVERNMENT AND PSUS')}</div>
+      {/* Bottom Left Corner Signature — solid, legible small caps with divider pipe */}
+      <div className="absolute bottom-5 left-6 lg:left-12 z-20 pointer-events-none hidden sm:block">
+        <div className="text-[11px] tracking-[0.24em] text-[#FAF6EE] font-serif leading-relaxed uppercase font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.85)]">
+          | {t('sub_gov', 'BUILT FOR GOVERNMENT AND PSUS')}
         </div>
       </div>
 
-      {/* Bottom Right Corner Signature — positioned on section */}
-      <div className="absolute bottom-4 right-6 lg:right-12 z-20 pointer-events-none hidden sm:block">
-        <div className="border-r border-[#8C8275]/45 pr-3 text-[9.5px] md:text-[10px] tracking-[0.24em] text-[#525B53] font-serif leading-relaxed uppercase font-medium text-right">
-          <div>{t('sub_bis', 'POWERED BY INDIAN STANDARDS')}</div>
+      {/* Bottom Right Corner Signature — solid, legible small caps with divider pipe */}
+      <div className="absolute bottom-5 right-6 lg:right-12 z-20 pointer-events-none hidden sm:block">
+        <div className="text-[11px] tracking-[0.24em] text-[#FAF6EE] font-serif leading-relaxed uppercase font-bold text-right drop-shadow-[0_1px_2px_rgba(0,0,0,0.85)]">
+          {t('sub_bis', 'POWERED BY INDIAN STANDARDS')} |
         </div>
       </div>
 
@@ -107,42 +91,42 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenGuid
             onClick={() => onNavigate('home')}
             className="cursor-pointer flex items-center gap-0.5 tracking-tight group"
           >
-            <span className="text-xl sm:text-2xl lg:text-[1.8rem] font-serif font-semibold text-[#181D1A] group-hover:text-[#2C6E80] transition-colors">
-              NORM<span className="text-[#2C6E80] font-serif font-semibold">VAULT</span>
+            <span className="text-xl sm:text-2xl lg:text-[1.8rem] font-serif font-semibold text-[#181D1A] group-hover:text-[#1B6A78] transition-colors">
+              NORM<span className="text-[#1B6A78] font-serif font-semibold">VAULT</span>
             </span>
           </div>
         </div>
 
         {/* Center Nav Links (Desktop) */}
-        <nav className="hidden md:flex items-center space-x-6 lg:space-x-8 text-[13px] font-serif text-[#3D453E] tracking-normal">
+        <nav className="hidden md:flex items-center space-x-6 lg:space-x-8 text-[13.5px] font-serif text-[#2B332D] tracking-normal">
           <button
             onClick={() => onNavigate('home')}
-            className="text-[#181D1A] font-medium border-b border-[#181D1A] pb-0.5 transition-colors cursor-pointer"
+            className="text-[#141916] font-semibold border-b-2 border-[#141916] pb-0.5 transition-colors cursor-pointer"
           >
             {t('nav_home', 'Home')}
           </button>
           <button
             onClick={() => onNavigate('standards')}
-            className="hover:text-[#181D1A] transition-colors cursor-pointer"
+            className="hover:text-[#141916] transition-colors cursor-pointer"
           >
             {t('nav_standards', 'Standards')}
           </button>
           <button
             onClick={() => onNavigate('analyze')}
-            className="hover:text-[#181D1A] transition-colors cursor-pointer"
+            className="hover:text-[#141916] transition-colors cursor-pointer"
           >
             {t('nav_workspace', 'Workspace')}
           </button>
           <button
             onClick={() => onNavigate('dashboard')}
-            className="hover:text-[#181D1A] transition-colors cursor-pointer"
+            className="hover:text-[#141916] transition-colors cursor-pointer"
           >
             {t('nav_dashboard', 'Dashboard')}
           </button>
           {onOpenGuide && (
             <button
               onClick={onOpenGuide}
-              className="text-[#2C6E80] font-medium hover:text-[#181D1A] transition-colors cursor-pointer flex items-center gap-1.5"
+              className="text-[#1B6A78] font-semibold hover:text-[#141916] transition-colors cursor-pointer flex items-center gap-1.5"
             >
               <Compass size={13} />
               <span>{t('nav_user_guide', 'User Guide')}</span>
@@ -152,8 +136,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenGuid
 
         {/* Top Right Header Text & Mobile Menu Button */}
         <div className="flex items-center gap-3">
-          <div className="hidden sm:block text-right text-[9.5px] md:text-[10px] tracking-[0.24em] text-[#4E564F] uppercase font-serif font-medium leading-tight">
-            <div>{t('brand_tagline', 'STANDARDS FOR A STRONGER INDIA')}</div>
+          <div className="hidden sm:block text-right text-[10.5px] md:text-[11px] tracking-[0.22em] text-[#141916] uppercase font-serif font-bold leading-tight">
+            | {t('brand_tagline', 'STANDARDS FOR A STRONGER INDIA')}
           </div>
 
           <button
@@ -233,30 +217,35 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenGuid
         </div>
       )}
 
-      {/* Center Editorial Hero Content — positioned high, NOT vertically centered */}
-      <div className="relative z-10 flex flex-col items-center w-full px-4 sm:px-6 lg:px-12 mt-[2vh] sm:mt-[3vh] lg:mt-[2.5vh]">
+      {/* Center Editorial Hero Content — positioned in calm upper-middle sky */}
+      <div className="relative z-10 flex flex-col items-center w-full px-4 sm:px-6 lg:px-12 mt-[2.5vh] sm:mt-[3.5vh] lg:mt-[4vh]">
         <div className="text-center max-w-3xl mx-auto flex flex-col items-center w-full">
           {/* Eyebrow */}
-          <div className="text-[10px] sm:text-[11px] md:text-[12px] font-serif tracking-[0.26em] text-[#4D564E] uppercase mb-2 sm:mb-2.5 font-medium">
+          <div className="text-[10.5px] sm:text-[11px] md:text-[11.5px] font-serif tracking-[0.24em] text-[#1E2320] uppercase mb-2 sm:mb-2.5 font-bold">
             {t('hero_kicker', 'INDIAN STANDARDS. SMARTER PROCUREMENT.')}
           </div>
 
-          {/* Main Headline — slightly smaller than before to match reference proportions */}
-          <h1 className="text-[1.75rem] sm:text-[2.6rem] lg:text-[3.2rem] font-serif font-normal text-[#141916] tracking-tight leading-[1.12] sm:leading-[1.08] mb-3 sm:mb-3.5 max-w-2xl">
-            {t('hero_title', 'From Specifications to the Right Standards.')}
+          {/* Main Headline — split across exactly two lines */}
+          <h1 className="text-[2.2rem] sm:text-[2.9rem] lg:text-[3.5rem] font-serif font-medium tracking-tight leading-[1.08] mb-3 max-w-3xl">
+            <span className="block text-[#141A17]">
+              {t('hero_title_line1', 'From Specifications to the')}
+            </span>
+            <span className="block text-[#1B6A78]">
+              {t('hero_title_line2', 'Right Standards.')}
+            </span>
           </h1>
 
-          {/* Supporting Copy — compact */}
-          <p className="text-[11px] sm:text-[13px] md:text-[14px] text-[#3D453E] leading-[1.6] max-w-[650px] font-serif font-normal text-center mb-4 sm:mb-5">
+          {/* Supporting Copy — tight spacing, centered, max-width so it wraps in 2 lines */}
+          <p className="text-[12.5px] sm:text-[14px] text-[#222824] leading-[1.55] max-w-[640px] font-serif font-normal text-center mb-3.5 sm:mb-4">
             {t('hero_desc', 'An AI-powered recommendation engine that helps government departments and PSUs identify applicable Indian Standards for accurate, compliant and future-ready procurement specifications.')}
           </p>
 
           {/* Search & Category — the primary interactive element per the reference */}
-          <div className="w-full max-w-[760px] z-30 px-2 sm:px-0">
+          <div className="w-full max-w-[860px] z-30 px-2 sm:px-0">
             {/* Search Bar */}
             <form
               onSubmit={handleHeroSearch}
-              className="max-w-[640px] mx-auto relative flex items-center bg-white/90 hover:bg-white border border-[#8C8275]/40 hover:border-[#2C6E80] focus-within:border-[#2C6E80] focus-within:ring-2 focus-within:ring-[#2C6E80]/20 rounded-full shadow-sm transition-all duration-200 overflow-hidden"
+              className="max-w-[640px] mx-auto relative flex items-center bg-white border border-[#7D766A]/70 hover:border-[#1B6A78] focus-within:border-[#1B6A78] focus-within:ring-2 focus-within:ring-[#1B6A78]/25 rounded-full shadow-[0_2px_8px_rgba(0,0,0,0.06)] transition-all duration-200 overflow-hidden"
             >
               <div className="pl-4 pr-2 text-[#4A544C]">
                 <Search size={15} />
@@ -266,71 +255,78 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenGuid
                 value={heroSearchQuery}
                 onChange={(e) => setHeroSearchQuery(e.target.value)}
                 placeholder={t('hero_search_placeholder', 'Search standard, equipment, or clause (e.g. IS 12615, 3-Phase Motor)...')}
-                className="w-full py-2 sm:py-2.5 text-xs text-[#181D1A] placeholder-[#666D64]/75 bg-transparent focus:outline-none font-sans"
+                className="w-full py-2 sm:py-2.5 text-xs text-[#141916] placeholder-[#666D64] bg-transparent focus:outline-none font-sans"
               />
               <button
                 type="submit"
-                className="mr-1.5 px-3.5 py-1.5 rounded-full bg-[#18201B] hover:bg-[#2C6E80] text-[#FAF7F0] text-[11px] font-sans font-medium transition-colors flex items-center gap-1 cursor-pointer shrink-0"
+                className="mr-1.5 px-4 py-1.5 rounded-full bg-[#141916] hover:bg-[#1B6A78] text-[#FAF7F0] text-[11px] font-sans font-medium transition-colors flex items-center gap-1 cursor-pointer shrink-0"
               >
                 <span>{t('hero_search_btn', 'Search')}</span>
                 <ArrowRight size={12} />
               </button>
             </form>
 
-            {/* Category Chips — compact, 2 rows max */}
-            <div className="flex items-center justify-center gap-1.5 flex-wrap mt-2 sm:mt-2.5 text-xs font-sans">
-              <span className="text-[9px] sm:text-[10px] text-[#555C54] uppercase font-semibold tracking-wider mr-0.5 shrink-0 font-mono">
-                {t('categories_label', 'CATEGORIES:')}
-              </span>
-              <button
-                onClick={() => handleChipClick('ETD')}
-                className="px-2 py-0.5 sm:px-2.5 sm:py-0.5 rounded-full bg-[#E5F0F2]/90 hover:bg-[#E5F0F2] text-[#2C6E80] hover:text-[#18201B] border border-[#2C6E80]/35 transition-all cursor-pointer whitespace-nowrap text-[10px] sm:text-[10.5px] font-medium"
-                title="Electrotechnical Standards (ETD)"
-              >
-                {t('cat_etd', '⚡ Electrotechnical (ETD)')}
-              </button>
-              <button
-                onClick={() => handleChipClick('CED')}
-                className="px-2 py-0.5 sm:px-2.5 sm:py-0.5 rounded-full bg-[#F4EFE5]/90 hover:bg-[#ECE4D6] text-[#4A524A] hover:text-[#18201B] border border-[#8C8275]/35 transition-all cursor-pointer whitespace-nowrap text-[10px] sm:text-[10.5px] font-medium"
-                title="Civil & Structural Standards (CED)"
-              >
-                {t('cat_ced', '🏛️ Civil & Structural (CED)')}
-              </button>
-              <button
-                onClick={() => handleChipClick('MED')}
-                className="px-2 py-0.5 sm:px-2.5 sm:py-0.5 rounded-full bg-[#F4EFE5]/90 hover:bg-[#ECE4D6] text-[#4A524A] hover:text-[#18201B] border border-[#8C8275]/35 transition-all cursor-pointer whitespace-nowrap text-[10px] sm:text-[10.5px] font-medium"
-                title="Mechanical Engineering Standards (MED)"
-              >
-                {t('cat_med', '⚙️ Mechanical (MED)')}
-              </button>
-              <button
-                onClick={() => handleChipClick('MTD')}
-                className="px-2 py-0.5 sm:px-2.5 sm:py-0.5 rounded-full bg-[#F4EFE5]/90 hover:bg-[#ECE4D6] text-[#4A524A] hover:text-[#18201B] border border-[#8C8275]/35 transition-all cursor-pointer whitespace-nowrap text-[10px] sm:text-[10.5px] font-medium"
-                title="Metallurgical & Materials Standards (MTD)"
-              >
-                {t('cat_mtd', '🔬 Metallurgical (MTD)')}
-              </button>
-              <button
-                onClick={() => handleChipClick('ITD')}
-                className="px-2 py-0.5 sm:px-2.5 sm:py-0.5 rounded-full bg-[#F4EFE5]/90 hover:bg-[#ECE4D6] text-[#4A524A] hover:text-[#18201B] border border-[#8C8275]/35 transition-all cursor-pointer whitespace-nowrap text-[10px] sm:text-[10.5px] font-medium"
-                title="Information Technology Standards (ITD)"
-              >
-                {t('cat_itd', '💻 Information Tech (ITD)')}
-              </button>
-              <button
-                onClick={() => handleChipClick('FAD')}
-                className="px-2 py-0.5 sm:px-2.5 sm:py-0.5 rounded-full bg-[#F4EFE5]/90 hover:bg-[#ECE4D6] text-[#4A524A] hover:text-[#18201B] border border-[#8C8275]/35 transition-all cursor-pointer whitespace-nowrap text-[10px] sm:text-[10.5px] font-medium"
-                title="Food and Agriculture Division (FAD)"
-              >
-                {t('cat_fad', '🌾 Food & Agriculture (FAD)')}
-              </button>
-              <button
-                onClick={() => handleChipClick('TXD')}
-                className="px-2 py-0.5 sm:px-2.5 sm:py-0.5 rounded-full bg-[#F4EFE5]/90 hover:bg-[#ECE4D6] text-[#4A524A] hover:text-[#18201B] border border-[#8C8275]/35 transition-all cursor-pointer whitespace-nowrap text-[10px] sm:text-[10.5px] font-medium"
-                title="Textile Division (TXD)"
-              >
-                {t('cat_txd', '🧵 Textiles & Fabrics (TXD)')}
-              </button>
+            {/* Category Chips — arranged neatly in exactly 2 rows (5 pills row 1, 2 pills row 2) */}
+            <div className="flex flex-col items-center gap-1.5 mt-2.5 text-xs font-sans">
+              {/* Row 1: CATEGORIES: + 5 Pills */}
+              <div className="flex items-center justify-center gap-1.5 flex-wrap sm:flex-nowrap">
+                <span className="text-[9.5px] sm:text-[10px] text-[#3D453E] uppercase font-bold tracking-wider mr-1 shrink-0 font-mono">
+                  {t('categories_label', 'CATEGORIES:')}
+                </span>
+                <button
+                  onClick={() => handleChipClick('ETD')}
+                  className="px-2.5 py-0.5 sm:py-1 rounded-full bg-[#E5F0F2] hover:bg-[#D5E8EC] text-[#1B6A78] hover:text-[#141916] border border-[#1B6A78]/40 transition-all cursor-pointer whitespace-nowrap text-[10.5px] sm:text-[11px] font-medium shadow-2xs"
+                  title="Electrotechnical Standards (ETD)"
+                >
+                  {t('cat_etd', '⚡ Electrotechnical (ETD)')}
+                </button>
+                <button
+                  onClick={() => handleChipClick('CED')}
+                  className="px-2.5 py-0.5 sm:py-1 rounded-full bg-[#FAF5EB] hover:bg-[#F0E8D6] text-[#3D453E] hover:text-[#141916] border border-[#8C8275]/40 transition-all cursor-pointer whitespace-nowrap text-[10.5px] sm:text-[11px] font-medium shadow-2xs"
+                  title="Civil & Structural Standards (CED)"
+                >
+                  {t('cat_ced', '🏛️ Civil & Structural (CED)')}
+                </button>
+                <button
+                  onClick={() => handleChipClick('MED')}
+                  className="px-2.5 py-0.5 sm:py-1 rounded-full bg-[#FAF5EB] hover:bg-[#F0E8D6] text-[#3D453E] hover:text-[#141916] border border-[#8C8275]/40 transition-all cursor-pointer whitespace-nowrap text-[10.5px] sm:text-[11px] font-medium shadow-2xs"
+                  title="Mechanical Engineering Standards (MED)"
+                >
+                  {t('cat_med', '⚙️ Mechanical (MED)')}
+                </button>
+                <button
+                  onClick={() => handleChipClick('MTD')}
+                  className="px-2.5 py-0.5 sm:py-1 rounded-full bg-[#FAF5EB] hover:bg-[#F0E8D6] text-[#3D453E] hover:text-[#141916] border border-[#8C8275]/40 transition-all cursor-pointer whitespace-nowrap text-[10.5px] sm:text-[11px] font-medium shadow-2xs"
+                  title="Metallurgical & Materials Standards (MTD)"
+                >
+                  {t('cat_mtd', '🔬 Metallurgical (MTD)')}
+                </button>
+                <button
+                  onClick={() => handleChipClick('ITD')}
+                  className="px-2.5 py-0.5 sm:py-1 rounded-full bg-[#FAF5EB] hover:bg-[#F0E8D6] text-[#3D453E] hover:text-[#141916] border border-[#8C8275]/40 transition-all cursor-pointer whitespace-nowrap text-[10.5px] sm:text-[11px] font-medium shadow-2xs"
+                  title="Information Technology Standards (ITD)"
+                >
+                  {t('cat_itd', '💻 Information Tech (ITD)')}
+                </button>
+              </div>
+
+              {/* Row 2: 2 Pills */}
+              <div className="flex items-center justify-center gap-1.5 flex-wrap">
+                <button
+                  onClick={() => handleChipClick('FAD')}
+                  className="px-2.5 py-0.5 sm:py-1 rounded-full bg-[#FAF5EB] hover:bg-[#F0E8D6] text-[#3D453E] hover:text-[#141916] border border-[#8C8275]/40 transition-all cursor-pointer whitespace-nowrap text-[10.5px] sm:text-[11px] font-medium shadow-2xs"
+                  title="Food and Agriculture Division (FAD)"
+                >
+                  {t('cat_fad', '🌾 Food & Agriculture (FAD)')}
+                </button>
+                <button
+                  onClick={() => handleChipClick('TXD')}
+                  className="px-2.5 py-0.5 sm:py-1 rounded-full bg-[#FAF5EB] hover:bg-[#F0E8D6] text-[#3D453E] hover:text-[#141916] border border-[#8C8275]/40 transition-all cursor-pointer whitespace-nowrap text-[10.5px] sm:text-[11px] font-medium shadow-2xs"
+                  title="Textile Division (TXD)"
+                >
+                  {t('cat_txd', '🧵 Textiles & Fabrics (TXD)')}
+                </button>
+              </div>
             </div>
           </div>
         </div>
