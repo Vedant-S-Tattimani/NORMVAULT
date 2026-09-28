@@ -10,9 +10,26 @@ interface HeroSectionProps {
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenGuide }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [heroSearchQuery, setHeroSearchQuery] = useState('');
+
+  // 2-line headline split: line 1 = dark navy/black serif, line 2 = deep teal (#1B6A78)
+  const rawTitle = t('hero_title', 'From Specifications to the Right Standards.');
+  let headlineLine1 = t('hero_title_line1', '');
+  let headlineLine2 = t('hero_title_line2', '');
+
+  if (!headlineLine1 || !headlineLine2) {
+    if (!i18n.language || i18n.language.startsWith('en') || rawTitle === 'From Specifications to the Right Standards.') {
+      headlineLine1 = 'From Specifications to the';
+      headlineLine2 = 'Right Standards.';
+    } else {
+      const words = rawTitle.trim().split(/\s+/);
+      const mid = Math.ceil(words.length / 2);
+      headlineLine1 = words.slice(0, mid).join(' ');
+      headlineLine2 = words.slice(mid).join(' ');
+    }
+  }
 
   const handleHeroSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,7 +67,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenGuid
 
       {/* Left Flanking Editorial Metadata — solid, fully legible, not translucent */}
       <div className="absolute left-6 lg:left-12 top-[44%] -translate-y-1/2 hidden xl:block z-20 pointer-events-none">
-        <div className="border-l-2 border-[#1E2320] pl-3 text-[10.5px] tracking-[0.24em] text-[#1E2320] font-serif leading-loose uppercase font-bold">
+        <div className="border-l border-[#141A17] pl-3 text-[10.5px] tracking-[0.24em] text-[#141A17] font-serif leading-loose uppercase font-bold">
           <div>{t('pillar_accurate', 'ACCURATE')}</div>
           <div>{t('pillar_compliant', 'COMPLIANT')}</div>
           <div>{t('pillar_transparent', 'TRANSPARENT')}</div>
@@ -58,9 +75,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenGuid
         </div>
       </div>
 
-      {/* Right Flanking Editorial Metadata — solid, fully legible, not translucent */}
-      <div className="absolute right-6 lg:right-12 top-[44%] -translate-y-1/2 hidden xl:block z-20 text-right pointer-events-none">
-        <div className="border-r-2 border-[#1E2320] pr-3 text-[10.5px] tracking-[0.24em] text-[#1E2320] font-serif leading-loose uppercase font-bold">
+      {/* Right Flanking Editorial Metadata — solid, fully legible, not translucent, same style with divider before it */}
+      <div className="absolute right-6 lg:right-12 top-[44%] -translate-y-1/2 hidden xl:block z-20 text-left pointer-events-none">
+        <div className="border-l border-[#141A17] pl-3 text-[10.5px] tracking-[0.24em] text-[#141A17] font-serif leading-loose uppercase font-bold">
           <div>GFR 144(1)</div>
           <div>BIS ACT 2016</div>
           <div>DPIIT QCOS</div>
@@ -70,14 +87,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenGuid
 
       {/* Bottom Left Corner Signature — solid, legible small caps with divider pipe */}
       <div className="absolute bottom-5 left-6 lg:left-12 z-20 pointer-events-none hidden sm:block">
-        <div className="text-[11px] tracking-[0.24em] text-[#FAF6EE] font-serif leading-relaxed uppercase font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.85)]">
+        <div className="text-[11px] tracking-[0.24em] text-[#FAF6EE] font-serif leading-relaxed uppercase font-bold drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
           | {t('sub_gov', 'BUILT FOR GOVERNMENT AND PSUS')}
         </div>
       </div>
 
       {/* Bottom Right Corner Signature — solid, legible small caps with divider pipe */}
       <div className="absolute bottom-5 right-6 lg:right-12 z-20 pointer-events-none hidden sm:block">
-        <div className="text-[11px] tracking-[0.24em] text-[#FAF6EE] font-serif leading-relaxed uppercase font-bold text-right drop-shadow-[0_1px_2px_rgba(0,0,0,0.85)]">
+        <div className="text-[11px] tracking-[0.24em] text-[#FAF6EE] font-serif leading-relaxed uppercase font-bold text-right drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
           {t('sub_bis', 'POWERED BY INDIAN STANDARDS')} |
         </div>
       </div>
@@ -137,7 +154,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenGuid
         {/* Top Right Header Text & Mobile Menu Button */}
         <div className="flex items-center gap-3">
           <div className="hidden sm:block text-right text-[10.5px] md:text-[11px] tracking-[0.22em] text-[#141916] uppercase font-serif font-bold leading-tight">
-            | {t('brand_tagline', 'STANDARDS FOR A STRONGER INDIA')}
+            {t('brand_tagline', 'STANDARDS FOR A STRONGER INDIA')}
           </div>
 
           <button
@@ -221,17 +238,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenGuid
       <div className="relative z-10 flex flex-col items-center w-full px-4 sm:px-6 lg:px-12 mt-[2.5vh] sm:mt-[3.5vh] lg:mt-[4vh]">
         <div className="text-center max-w-3xl mx-auto flex flex-col items-center w-full">
           {/* Eyebrow */}
-          <div className="text-[10.5px] sm:text-[11px] md:text-[11.5px] font-serif tracking-[0.24em] text-[#1E2320] uppercase mb-2 sm:mb-2.5 font-bold">
+          <div className="text-[10.5px] sm:text-[11px] md:text-[11.5px] font-serif tracking-[0.24em] text-[#141A17] uppercase mb-2 sm:mb-2.5 font-bold">
             {t('hero_kicker', 'INDIAN STANDARDS. SMARTER PROCUREMENT.')}
           </div>
 
           {/* Main Headline — split across exactly two lines */}
           <h1 className="text-[2.2rem] sm:text-[2.9rem] lg:text-[3.5rem] font-serif font-medium tracking-tight leading-[1.08] mb-3 max-w-3xl">
             <span className="block text-[#141A17]">
-              {t('hero_title_line1', 'From Specifications to the')}
+              {headlineLine1}
             </span>
             <span className="block text-[#1B6A78]">
-              {t('hero_title_line2', 'Right Standards.')}
+              {headlineLine2}
             </span>
           </h1>
 
